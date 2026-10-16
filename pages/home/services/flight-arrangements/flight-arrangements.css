@@ -1,0 +1,17 @@
+.srv-flight-board {
+  background: #09131C;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+  border-radius: 16px;
+  padding: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+}
+.srv-flight-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 12px;
+  border-radius: 12px;
+  margin-top: 10px;
+}

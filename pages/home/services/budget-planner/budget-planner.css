@@ -1,0 +1,16 @@
+.srv-budget-kpis {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  text-align: center;
+}
+.srv-budget-kpi {
+  background: #0A0507;
+  padding: 14px;
+  border-radius: 12px;
+}
+.srv-budget-split-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+}

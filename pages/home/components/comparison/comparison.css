@@ -1,0 +1,48 @@
+.hp-grid3 {
+  display: grid;
+  gap: 22px;
+}
+@media (min-width: 780px) {
+  .hp-grid3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.hp-card {
+  background: linear-gradient(180deg, #1B0E13, #130A0D);
+  border: 1px solid var(--edge);
+  border-radius: 22px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 20px;
+  transition: transform 0.25s, border-color 0.25s;
+}
+.hp-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(245, 196, 81, 0.45);
+}
+.comp-badge-without {
+  padding: 4px 12px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: rgba(239, 68, 68, 0.15);
+  color: #EF4444;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+}
+.comp-fix-box {
+  background: rgba(34, 197, 94, 0.1);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: 16px;
+  padding: 16px;
+}
+.comp-fix-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #22C55E;
+  display: block;
+  margin-bottom: 6px;
+}

@@ -1,0 +1,23 @@
+.srv-invite-stage {
+  padding: 32px;
+  text-align: center;
+  background: radial-gradient(circle at center, rgba(245, 196, 81, 0.18), transparent 70%);
+}
+.srv-wax-seal {
+  margin: 16px auto;
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #F5C451, #F59E0B, #92400E);
+  border: 4px solid rgba(255, 253, 249, 0.5);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+.srv-wax-seal:hover {
+  transform: scale(1.05);
+}

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <title>Shaadi Saathi — Complete Wedding Hospitality & Planning OS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./pages/home/home.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#0A0507',
+            surface: '#140A0D',
+            card: '#1D0F14',
+            cardHover: '#28151C',
+            borderWarm: '#3D2029',
+            gold: '#F5C451',
+            goldBright: '#FFE082',
+            emeraldSS: '#22C55E',
+            crimsonSS: '#EF4444',
+            amberSS: '#F59E0B',
+            skySS: '#38BDF8',
+            waGreen: '#25D366',
+            cream: '#FFFDF9',
+            ink: '#F5ECEE',
+            muted: '#C8B0B6'
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="selection:bg-gold selection:text-obsidian">
+  <div id="root-home" class="hp w-full"></div>
+  <script type="module" src="./global/state.js"></script>
+</body>
+</html>

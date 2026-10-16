@@ -1,0 +1,10 @@
+.srv-guestbook-list {
+  display: grid;
+  gap: 12px;
+}
+.srv-guestbook-quote {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  font-style: italic;
+  font-size: 1.125rem;
+  color: #FFFDF9;
+}

@@ -1,0 +1,14 @@
+.hp-faq details { border-bottom: 1px solid var(--edge); padding: 22px 0; }
+.hp-faq summary {
+  cursor: pointer;
+  font: 700 1.15rem 'Plus Jakarta Sans', sans-serif;
+  color: var(--cream);
+  list-style: none;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.hp-faq summary::-webkit-details-marker { display: none; }
+.hp-faq summary::after { content: "+"; color: var(--gold); font-size: 1.6rem; }
+.hp-faq details[open] summary::after { content: "−"; }
+.hp-faq details p { margin-top: 12px; font-size: 1.02rem; }
