@@ -189,3 +189,34 @@ body {
 
 .hp-split { display: grid; gap: 40px; align-items: center; }
 @media (min-width: 960px) { .hp-split { grid-template-columns: 1fr 1.05fr; } }
+
+.hp-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+}
+.hp-chip {
+  min-height: 44px;
+  padding: 0 20px;
+  border-radius: 999px;
+  border: 1px solid #2C171D;
+  background: #180C10;
+  color: #F5ECEE;
+  font: 600 0.9rem 'Plus Jakarta Sans', sans-serif;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.hp-chip:hover {
+  border-color: #F5C451;
+}
+.hp-chip[aria-selected="true"] {
+  background: linear-gradient(135deg, #F5C451, #D99722);
+  border-color: #F5C451;
+  color: #14070A;
+  font-weight: 700;
+  box-shadow: 0 10px 24px -10px rgba(245, 196, 81, 0.55);
+}

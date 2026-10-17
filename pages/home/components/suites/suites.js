@@ -43,23 +43,71 @@ export const FEATURE_GROUPS = [
   }
 ];
 
-export const HOME_SERVICE_SLUGS = [
-  'telemetry',
-  'whatsapp-deck',
-  'family-hosts',
-  'events',
-  'guest',
-  'web-invite',
-  'stay-accomodation',
-  'flight-arrangements',
-  'train-arrangements',
-  'sangeeth-lineup',
-  'guestbook',
-  'gallery',
-  'shagun-gifts',
-  'tasks-checklist',
-  'event-vendors',
-  'budget-planner',
-  'team-access',
-  'calendar'
-];
+let activeSuiteTab = 'suite1';
+
+export async function initSuites(slotSelector) {
+  const slot = document.querySelector(slotSelector);
+  if (!slot) return;
+
+  const res = await fetch('./pages/home/components/suites/suites.html');
+  slot.innerHTML = await res.text();
+
+  window.selectSuiteTab = function(suiteId) {
+    activeSuiteTab = suiteId;
+    renderSuiteTabsAndContent();
+  };
+
+  renderSuiteTabsAndContent();
+}
+
+export function renderSuiteTabsAndContent() {
+  const tabsBar = document.getElementById('suiteTabsBar');
+  const container = document.getElementById('allSuitesContainer');
+  if (!tabsBar || !container) return;
+
+  const tabLabels = [
+    { id: 'suite1', icon: '📊', label: '1. Command, Invites & Guests (6)' },
+    { id: 'suite2', icon: '🏨', label: '2. Stay, Travel & Sangeeth (4)' },
+    { id: 'suite3', icon: '🎁', label: '3. Memories, Shagun & Tasks (4)' },
+    { id: 'suite4', icon: '₹', label: '4. Vendors, Budget & Timeline (4)' },
+    { id: 'all', icon: '✨', label: 'View All 18 Services' }
+  ];
+
+  tabsBar.innerHTML = tabLabels.map(t => `
+    <button
+      role="tab"
+      aria-selected="${activeSuiteTab === t.id}"
+      onclick="selectSuiteTab('${t.id}')"
+      class="hp-chip">
+      <span>${t.icon}</span>
+      <span>${t.label}</span>
+    </button>
+  `).join('');
+
+  const groupsToShow = activeSuiteTab === 'all'
+    ? FEATURE_GROUPS
+    : FEATURE_GROUPS.filter(g => g.groupId === activeSuiteTab);
+
+  container.innerHTML = groupsToShow.map(grp => `
+    <div class="hp-tour">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+        <h3 class="text-2xl font-serif font-bold text-cream">${grp.groupTitle}</h3>
+        <button onclick="openWorkspaceDirect('${grp.items[0].id}')" class="hp-link">Open in Workspace →</button>
+      </div>
+      <div class="hp-tour-grid hp-tour-grid-2col">
+        ${grp.items.map(it => `
+          <div class="hp-tour-row cursor-pointer" onclick="openWorkspaceDirect('${it.id}')">
+            <div>
+              <strong>${it.icon}${it.name}</strong>
+              <small>${it.desc}</small>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="hp-tag">${it.badge}</span>
+              <span class="px-3 py-1 rounded-full bg-gold/15 border border-gold/40 text-xs font-bold text-gold">Open →</span>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `).join('');
+}

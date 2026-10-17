@@ -1,32 +1,48 @@
-import { HOME_SERVICE_SLUGS } from '../api/home-api.js';
+export const HOME_SERVICE_SLUGS = [
+  'telemetry',
+  'whatsapp-deck',
+  'family-hosts',
+  'events',
+  'guest',
+  'web-invite',
+  'stay-accomodation',
+  'flight-arrangements',
+  'train-arrangements',
+  'sangeeth-lineup',
+  'guestbook',
+  'gallery',
+  'shagun-gifts',
+  'tasks-checklist',
+  'event-vendors',
+  'budget-planner',
+  'team-access',
+  'calendar'
+];
 
-function loadCssOnce(href) {
+function loadCss(href) {
   if (document.querySelector(`link[href="${href}"]`)) return;
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = href;
-  document.head.appendChild(link);
+  const l = document.createElement('link');
+  l.rel = 'stylesheet';
+  l.href = href;
+  document.head.appendChild(l);
 }
 
 export async function initServices(slotSelector) {
   const slot = document.querySelector(slotSelector);
   if (!slot) return;
 
-  loadCssOnce('./pages/home/components/services/services.css');
+  loadCss('./pages/home/services/services.css');
+  const res = await fetch('./pages/home/services/services.html');
+  slot.innerHTML = await res.text();
 
-  const shellRes = await fetch('./pages/home/components/services/services.html');
-  slot.innerHTML = await shellRes.text();
-
-  const container = slot.querySelector('#servicesDeepDivesContainer');
+  const container = document.getElementById('servicesDeepDivesContainer');
   if (!container) return;
 
-  const fragments = await Promise.all(
-    HOME_SERVICE_SLUGS.map(async (slug) => {
-      loadCssOnce(`./pages/home/services/${slug}/${slug}.css`);
-      const res = await fetch(`./pages/home/services/${slug}/${slug}.html`);
-      return res.text();
-    })
-  );
-
-  container.innerHTML = fragments.join('\n');
+  for (const slug of HOME_SERVICE_SLUGS) {
+    loadCss(`./pages/home/services/${slug}/${slug}.css`);
+    const sRes = await fetch(`./pages/home/services/${slug}/${slug}.html`);
+    const wrap = document.createElement('div');
+    wrap.innerHTML = await sRes.text();
+    container.appendChild(wrap);
+  }
 }

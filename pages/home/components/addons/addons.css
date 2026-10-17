@@ -1,7 +1,8 @@
 .addons-band {
-  padding-top: 0;
+  padding-top: 16px;
   padding-bottom: clamp(56px, 7vw, 96px);
-  background: var(--bg);
+  background: #140A0D;
+  border-bottom: 1px solid #2C171D;
 }
 .addon-card {
   padding: 20px;
