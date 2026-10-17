@@ -1,0 +1,20 @@
+<nav class="fixed bottom-3 inset-x-0 z-40 px-4 pointer-events-none" style="padding-bottom: var(--safe-bottom);">
+  <div class="max-w-md mx-auto bg-[#140A0D]/95 backdrop-blur-2xl border-2 border-[#46232D] rounded-2xl p-1.5 shadow-[0_20px_50px_rgba(0,0,0,0.9)] grid grid-cols-4 gap-1.5 pointer-events-auto">
+    <button onclick="switchRootMode('home')" id="dock-home" class="flex flex-col items-center justify-center py-2 px-2 rounded-xl text-xs font-bold transition bg-gold text-obsidian shadow">
+      <span class="text-base leading-none mb-1">✨</span>
+      <span>Home</span>
+    </button>
+    <button onclick="switchRootMode('creator')" id="dock-creator" class="flex flex-col items-center justify-center py-2 px-2 rounded-xl text-xs font-semibold text-cream hover:text-gold transition">
+      <span class="text-base leading-none mb-1">👑</span>
+      <span>Planner OS</span>
+    </button>
+    <button onclick="switchRootMode('host')" id="dock-host" class="flex flex-col items-center justify-center py-2 px-2 rounded-xl text-xs font-semibold text-cream hover:text-gold transition">
+      <span class="text-base leading-none mb-1">🏠</span>
+      <span>Host View</span>
+    </button>
+    <button onclick="switchRootMode('guest')" id="dock-guest" class="flex flex-col items-center justify-center py-2 px-2 rounded-xl text-xs font-semibold text-cream hover:text-gold transition">
+      <span class="text-base leading-none mb-1">🎟️</span>
+      <span>Guest Pass</span>
+    </button>
+  </div>
+</nav>
