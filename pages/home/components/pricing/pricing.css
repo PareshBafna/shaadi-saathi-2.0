@@ -47,22 +47,3 @@
   border-color: rgba(245, 196, 81, 0.65);
   background: linear-gradient(180deg, #2A1319, #150A0E);
 }
-.addon-card {
-  padding: 20px;
-  border-radius: 16px;
-  border: 1px solid #3D2029;
-  background: rgba(10, 5, 7, 0.9);
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 16px;
-  transition: border-color 0.2s, background 0.2s;
-}
-.addon-card:hover {
-  border-color: rgba(245, 196, 81, 0.5);
-}
-.addon-card.selected {
-  background: rgba(245, 196, 81, 0.15);
-  border-color: #F5C451;
-}

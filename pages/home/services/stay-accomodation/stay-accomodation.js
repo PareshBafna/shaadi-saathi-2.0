@@ -1,4 +1,4 @@
-import { loadCssOnce } from '../../components/services/services.js';
+import { loadCssOnce } from '../services.js';
 
 export async function initService(mountEl) {
   loadCssOnce('./pages/home/services/stay-accomodation/stay-accomodation.css');

@@ -1,4 +1,4 @@
-import { HOME_SERVICE_SLUGS } from '../../api/home-api.js';
+import { HOME_SERVICE_SLUGS } from '../api/home-api.js';
 
 function loadCssOnce(href) {
   if (document.querySelector(`link[href="${href}"]`)) return;

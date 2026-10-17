@@ -1,4 +1,4 @@
-<section class="hp-band" id="pricing">
+<section class="hp-band !pb-10" id="pricing">
   <div class="hp-wrap space-y-14">
     <div class="hp-head">
       <span class="hp-kicker">Per-Wedding Pricing</span>
@@ -7,6 +7,7 @@
     </div>
 
     <div class="hp-grid3">
+      <!-- Plan 1: ₹9,999 -->
       <article class="hp-plan">
         <h3>Silver Celebration</h3>
         <div class="hp-price">&#8377;9,999<span>per wedding &middot; Includes 2,000 WhatsApp Credits</span></div>
@@ -21,6 +22,7 @@
         <button onclick="switchRootMode('creator')" class="hp-btn hp-ghost w-full">Choose Silver (₹9,999)</button>
       </article>
 
+      <!-- Plan 2: ₹14,999 -->
       <article class="hp-plan hp-pick">
         <div class="flex justify-between items-center mb-1">
           <h3>Royal Gold Suite</h3>
@@ -38,35 +40,19 @@
         <button onclick="switchRootMode('creator')" class="hp-btn hp-gold w-full">Choose Royal Gold (₹14,999)</button>
       </article>
 
+      <!-- Plan 3: ₹19,999 -->
       <article class="hp-plan">
         <h3>Imperial Destination</h3>
         <div class="hp-price">&#8377;19,999<span>per wedding &middot; Includes 6,000 WhatsApp Credits</span></div>
         <ul>
           <li><strong>6,000 Verified WhatsApp Messages</strong> included (Extra @ ₹1/message)</li>
-          <li>Everything in Royal Gold Suite</li>
-          <li><strong>3D Interactive Wax-Seal Web Invitation Included</strong></li>
+          <li>Everything in Royal Gold Suite (incl. 3D Web Invite)</li>
           <li><strong>Custom WhatsApp Message Templates</strong> (Tailored copy &amp; buttons)</li>
           <li>Multiple Host Profiles Salutation Routing &amp; Team Access</li>
-          <li>Dedicated Priority Onboarding Specialist</li>
+          <li>Dedicated Priority Onboarding &amp; Data Concierge</li>
         </ul>
         <button onclick="switchRootMode('creator')" class="hp-btn hp-ghost w-full">Choose Imperial (₹19,999)</button>
       </article>
-    </div>
-
-    <div class="bento-card p-6 sm:p-8 space-y-6 border-gold/40">
-      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
-        <div>
-          <span class="hp-kicker !mb-2">Optional Add-Ons</span>
-          <h3 class="text-2xl sm:text-3xl font-serif font-bold text-cream">Need a specific digital upgrade? Add it separately.</h3>
-          <p class="text-sm text-muted mt-1">Customize any wedding plan with standalone software add-ons. Tap any add-on to test adding it to your estimate.</p>
-        </div>
-        <div class="bg-obsidian border border-gold/50 rounded-2xl px-5 py-3 text-right shrink-0">
-          <span class="text-xs text-muted block">Selected Add-Ons Total</span>
-          <strong id="addonTotalDisplay" class="font-serif text-2xl font-bold text-gold">₹0</strong>
-        </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="addonsGrid"></div>
     </div>
   </div>
 </section>
