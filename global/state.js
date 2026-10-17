@@ -37,6 +37,9 @@ window.showToast = function(msg) {
 
 async function initAllModules() {
   loadCss('./pages/home/home.css');
+  loadCss('./global/components/header/header.css');
+  loadCss('./global/components/footer/footer.css');
+  loadCss('./global/components/navigation/navigation.css');
   loadCss('./pages/home/components/hero/hero.css');
   loadCss('./pages/home/components/comparison/comparison.css');
   loadCss('./pages/home/components/suites/suites.css');
@@ -45,8 +48,8 @@ async function initAllModules() {
   loadCss('./pages/home/components/addons/addons.css');
   loadCss('./pages/home/components/faq/faq.css');
 
-  document.getElementById('home-header-slot').innerHTML = await (await fetch('./pages/home/components/header/header.html')).text();
-  document.getElementById('home-navigation-slot').innerHTML = await (await fetch('./pages/home/components/navigation/navigation.html')).text();
+  document.getElementById('home-header-slot').innerHTML = await (await fetch('./global/components/header/header.html')).text();
+  document.getElementById('home-navigation-slot').innerHTML = await (await fetch('./global/components/navigation/navigation.html')).text();
 
   await initHero('#home-hero-slot');
   await initComparison('#home-comparison-slot');
@@ -56,7 +59,7 @@ async function initAllModules() {
   await initAddons('#home-addons-slot');
   await initFaq('#home-faq-slot');
 
-  document.getElementById('home-footer-slot').innerHTML = await (await fetch('./pages/home/components/footer/footer.html')).text();
+  document.getElementById('home-footer-slot').innerHTML = await (await fetch('./global/components/footer/footer.html')).text();
 }
 
 initAllModules();

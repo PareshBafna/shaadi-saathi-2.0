@@ -5,16 +5,19 @@
   border-bottom: 1px solid #2C171D;
 }
 .addon-card {
-  padding: 20px;
-  border-radius: 16px;
+  padding: 16px;
+  border-radius: 14px;
   border: 1px solid #3D2029;
   background: rgba(10, 5, 7, 0.9);
   cursor: pointer;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 16px;
+  gap: 14px;
   transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+}
+@media (min-width: 768px) {
+  .addon-card { padding: 20px; border-radius: 16px; gap: 16px; }
 }
 .addon-card:hover {
   border-color: rgba(245, 196, 81, 0.5);
