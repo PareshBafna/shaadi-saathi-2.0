@@ -1,0 +1,104 @@
+.ss-scroll-rail {
+  position: fixed;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  height: 74vh;
+  max-height: 620px;
+  min-height: 400px;
+  z-index: 45;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+@media (min-width: 1024px) {
+  .ss-scroll-rail {
+    display: flex;
+  }
+}
+.ss-rail-track {
+  position: relative;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+  pointer-events: auto;
+}
+.ss-rail-line {
+  position: absolute;
+  top: 20px;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2px;
+  background: linear-gradient(
+    180deg,
+    #FFFDF9 0%,
+    #F5C451 18%,
+    #EF4444 35%,
+    #38BDF8 52%,
+    #F472B6 68%,
+    #A855F7 84%,
+    #22D3EE 100%
+  );
+  opacity: 0.65;
+  z-index: 0;
+}
+.ss-rail-node {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+.ss-rail-ring {
+  width: 30px;
+  height: 30px;
+  border-radius: 9999px;
+  border: 2px solid color-mix(in srgb, var(--dot-color) 55%, transparent);
+  background: rgba(10, 5, 7, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
+}
+.ss-rail-core {
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background-color: var(--dot-color);
+  transition: transform 0.22s ease, box-shadow 0.22s ease;
+}
+.ss-rail-node:hover .ss-rail-ring,
+.ss-rail-node.active .ss-rail-ring {
+  transform: scale(1.22);
+  border-color: var(--dot-color);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--dot-color) 65%, transparent);
+}
+.ss-rail-label {
+  position: absolute;
+  right: 44px;
+  background: rgba(20, 10, 13, 0.96);
+  border: 1px solid var(--dot-color);
+  color: #FFFDF9;
+  font: 700 0.8rem/1.2 'Plus Jakarta Sans', sans-serif;
+  padding: 7px 14px;
+  border-radius: 999px;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(10px);
+  transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.85);
+  pointer-events: none;
+}
+.ss-rail-node:hover .ss-rail-label {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}

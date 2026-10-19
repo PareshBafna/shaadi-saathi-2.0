@@ -1,12 +1,13 @@
-import { initHero } from '../pages/home/components/hero/hero.js';
-import { initComparison } from '../pages/home/components/comparison/comparison.js';
-import { initSuites } from '../pages/home/components/suites/suites.js';
-import { initServices } from '../pages/home/services/services.js';
-import { initPricing } from '../pages/home/components/pricing/pricing.js';
-import { initAddons } from '../pages/home/components/addons/addons.js';
-import { initFaq } from '../pages/home/components/faq/faq.js';
+import { initHero } from '../home/components/hero/hero.js';
+import { initComparison } from '../home/components/comparison/comparison.js';
+import { initSuites } from '../home/components/suites/suites.js';
+import { initScrollbar } from '../home/components/scrollbar/scrollbar.js';
+import { initServices } from '../home/services/services.js';
+import { initPricing } from '../home/components/pricing/pricing.js';
+import { initAddons } from '../home/components/addons/addons.js';
+import { initFaq } from '../home/components/faq/faq.js';
 
-function loadCss(href) {
+export function loadCss(href) {
   if (document.querySelector(`link[href="${href}"]`)) return;
   const l = document.createElement('link');
   l.rel = 'stylesheet';
@@ -18,6 +19,12 @@ window.switchRootMode = function(mode) {
   ['home', 'creator', 'host', 'guest'].forEach(m => {
     const el = document.getElementById('root-' + m);
     if (el) el.classList.toggle('hidden', m !== mode);
+    const d = document.getElementById('dock-' + m);
+    if (d) {
+      d.className = m === mode
+        ? 'flex flex-col items-center justify-center py-2 px-2 rounded-xl text-xs font-bold transition bg-gold text-obsidian shadow'
+        : 'flex flex-col items-center justify-center py-2 px-2 rounded-xl text-xs font-semibold text-cream hover:text-gold transition';
+    }
   });
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
@@ -35,18 +42,19 @@ window.showToast = function(msg) {
   window._t = setTimeout(() => box.classList.add('hidden'), 2800);
 };
 
-async function initAllModules() {
-  loadCss('./pages/home/home.css');
+export async function initAllModules() {
+  loadCss('./home/home.css');
   loadCss('./global/components/header/header.css');
   loadCss('./global/components/footer/footer.css');
   loadCss('./global/components/navigation/navigation.css');
-  loadCss('./pages/home/components/hero/hero.css');
-  loadCss('./pages/home/components/comparison/comparison.css');
-  loadCss('./pages/home/components/suites/suites.css');
-  loadCss('./pages/home/services/services.css');
-  loadCss('./pages/home/components/pricing/pricing.css');
-  loadCss('./pages/home/components/addons/addons.css');
-  loadCss('./pages/home/components/faq/faq.css');
+  loadCss('./home/components/scrollbar/scrollbar.css');
+  loadCss('./home/components/hero/hero.css');
+  loadCss('./home/components/comparison/comparison.css');
+  loadCss('./home/components/suites/suites.css');
+  loadCss('./home/services/services.css');
+  loadCss('./home/components/pricing/pricing.css');
+  loadCss('./home/components/addons/addons.css');
+  loadCss('./home/components/faq/faq.css');
 
   document.getElementById('home-header-slot').innerHTML = await (await fetch('./global/components/header/header.html')).text();
   document.getElementById('home-navigation-slot').innerHTML = await (await fetch('./global/components/navigation/navigation.html')).text();
@@ -58,8 +66,7 @@ async function initAllModules() {
   await initPricing('#home-pricing-slot');
   await initAddons('#home-addons-slot');
   await initFaq('#home-faq-slot');
+  await initScrollbar('#home-scrollbar-slot');
 
   document.getElementById('home-footer-slot').innerHTML = await (await fetch('./global/components/footer/footer.html')).text();
 }
-
-initAllModules();
