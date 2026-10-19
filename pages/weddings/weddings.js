@@ -1,4 +1,4 @@
-import { FEATURE_GROUPS } from '../home/components/suites/suites.js';
+import { FEATURE_GROUPS } from '../../home/components/suites/suites.js';
 
 let activeWeddingId = 'w1';
 let currentModuleId = 'overview';

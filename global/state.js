@@ -6,6 +6,7 @@ import { initServices } from '../home/services/services.js';
 import { initPricing } from '../home/components/pricing/pricing.js';
 import { initAddons } from '../home/components/addons/addons.js';
 import { initFaq } from '../home/components/faq/faq.js';
+import { initWeddingsView } from '../pages/weddings/weddings.js';
 
 export function loadCss(href) {
   if (document.querySelector(`link[href="${href}"]`)) return;
@@ -15,7 +16,7 @@ export function loadCss(href) {
   document.head.appendChild(l);
 }
 
-window.switchRootMode = function(mode) {
+window.switchRootMode = async function(mode) {
   ['home', 'creator', 'host', 'guest'].forEach(m => {
     const el = document.getElementById('root-' + m);
     if (el) el.classList.toggle('hidden', m !== mode);
@@ -26,6 +27,16 @@ window.switchRootMode = function(mode) {
         : 'flex flex-col items-center justify-center py-2 px-2 rounded-xl text-xs font-semibold text-cream hover:text-gold transition';
     }
   });
+
+  if (mode === 'creator') {
+    loadCss('./pages/weddings/weddings.css');
+    const creatorEl = document.getElementById('root-creator');
+    if (creatorEl && !creatorEl.hasChildNodes()) {
+      creatorEl.innerHTML = await (await fetch('./pages/weddings/weddings.html')).text();
+      initWeddingsView();
+    }
+  }
+
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
