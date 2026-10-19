@@ -26,14 +26,28 @@
   align-items: center;
   padding: 8px 0;
   pointer-events: auto;
+  --rail-total-h: 500px;
 }
-.ss-rail-line {
+
+/* Growing Line Joining Reached Dots */
+.ss-rail-progress {
   position: absolute;
-  top: 20px;
-  bottom: 20px;
+  top: 23px;
   left: 50%;
   transform: translateX(-50%);
   width: 2px;
+  height: 0px;
+  overflow: hidden;
+  z-index: 0;
+  transition: height 0.12s ease-out;
+}
+.ss-rail-progress::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--rail-total-h);
   background: linear-gradient(
     180deg,
     #FFFDF9 0%,
@@ -44,9 +58,8 @@
     #A855F7 84%,
     #22D3EE 100%
   );
-  opacity: 0.65;
-  z-index: 0;
 }
+
 .ss-rail-node {
   position: relative;
   z-index: 1;
@@ -56,30 +69,50 @@
   text-decoration: none;
   cursor: pointer;
 }
+
+/* Default Unreached State (Hollow & Dim) */
 .ss-rail-ring {
   width: 30px;
   height: 30px;
   border-radius: 9999px;
-  border: 2px solid color-mix(in srgb, var(--dot-color) 55%, transparent);
-  background: rgba(10, 5, 7, 0.9);
+  border: 1.5px solid rgba(120, 100, 160, 0.35);
+  background: #0B0507;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
 }
 .ss-rail-core {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: 9999px;
-  background-color: var(--dot-color);
-  transition: transform 0.22s ease, box-shadow 0.22s ease;
+  background-color: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.22);
+  transition: background-color 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
 }
-.ss-rail-node:hover .ss-rail-ring,
-.ss-rail-node.active .ss-rail-ring {
+
+/* Reached State (Filled Color) */
+.ss-rail-node.reached .ss-rail-ring {
+  border-color: color-mix(in srgb, var(--dot-color) 65%, transparent);
+}
+.ss-rail-node.reached .ss-rail-core {
+  background-color: var(--dot-color);
+  border-color: var(--dot-color);
+}
+
+/* Current Active / Hover State (Big Ring + Glow) */
+.ss-rail-node.active .ss-rail-ring,
+.ss-rail-node:hover .ss-rail-ring {
   transform: scale(1.22);
   border-color: var(--dot-color);
-  box-shadow: 0 0 18px color-mix(in srgb, var(--dot-color) 65%, transparent);
+  box-shadow: 0 0 16px color-mix(in srgb, var(--dot-color) 60%, transparent);
 }
+.ss-rail-node:hover .ss-rail-core {
+  background-color: var(--dot-color);
+  border-color: var(--dot-color);
+}
+
+/* Hover Tooltip Label */
 .ss-rail-label {
   position: absolute;
   right: 44px;
