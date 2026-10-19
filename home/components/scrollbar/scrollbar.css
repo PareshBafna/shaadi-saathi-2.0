@@ -1,20 +1,23 @@
 .ss-scroll-rail {
   position: fixed;
-  right: 16px;
+  right: 6px;
   top: 50%;
   transform: translateY(-50%);
-  height: 74vh;
-  max-height: 620px;
-  min-height: 400px;
+  height: 62vh;
+  max-height: 520px;
+  min-height: 280px;
   z-index: 45;
-  display: none;
+  display: flex; /* Visible on mobile and desktop */
   align-items: center;
   justify-content: center;
   pointer-events: none;
 }
 @media (min-width: 1024px) {
   .ss-scroll-rail {
-    display: flex;
+    right: 16px;
+    height: 74vh;
+    max-height: 620px;
+    min-height: 400px;
   }
 }
 .ss-rail-track {
@@ -24,15 +27,13 @@
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  padding: 8px 0;
+  padding: 6px 0;
   pointer-events: auto;
-  --rail-total-h: 500px;
+  --rail-total-h: 400px;
 }
-
-/* Growing Line Joining Reached Dots */
 .ss-rail-progress {
   position: absolute;
-  top: 23px;
+  top: 18px;
   left: 50%;
   transform: translateX(-50%);
   width: 2px;
@@ -59,7 +60,6 @@
     #22D3EE 100%
   );
 }
-
 .ss-rail-node {
   position: relative;
   z-index: 1;
@@ -69,29 +69,29 @@
   text-decoration: none;
   cursor: pointer;
 }
-
-/* Default Unreached State (Hollow & Dim) */
 .ss-rail-ring {
-  width: 30px;
-  height: 30px;
+  width: 22px;
+  height: 22px;
   border-radius: 9999px;
   border: 1.5px solid rgba(120, 100, 160, 0.35);
-  background: #0B0507;
+  background: rgba(11, 5, 7, 0.92);
   display: flex;
   align-items: center;
   justify-content: center;
   transition: transform 0.22s ease, border-color 0.22s ease, box-shadow 0.22s ease;
 }
 .ss-rail-core {
-  width: 14px;
-  height: 14px;
+  width: 10px;
+  height: 10px;
   border-radius: 9999px;
   background-color: transparent;
   border: 1.5px solid rgba(255, 255, 255, 0.22);
   transition: background-color 0.22s ease, border-color 0.22s ease, transform 0.22s ease;
 }
-
-/* Reached State (Filled Color) */
+@media (min-width: 1024px) {
+  .ss-rail-ring { width: 30px; height: 30px; }
+  .ss-rail-core { width: 14px; height: 14px; }
+}
 .ss-rail-node.reached .ss-rail-ring {
   border-color: color-mix(in srgb, var(--dot-color) 65%, transparent);
 }
@@ -99,8 +99,6 @@
   background-color: var(--dot-color);
   border-color: var(--dot-color);
 }
-
-/* Current Active / Hover State (Big Ring + Glow) */
 .ss-rail-node.active .ss-rail-ring,
 .ss-rail-node:hover .ss-rail-ring {
   transform: scale(1.22);
@@ -111,16 +109,14 @@
   background-color: var(--dot-color);
   border-color: var(--dot-color);
 }
-
-/* Hover Tooltip Label */
 .ss-rail-label {
   position: absolute;
-  right: 44px;
+  right: 34px;
   background: rgba(20, 10, 13, 0.96);
   border: 1px solid var(--dot-color);
   color: #FFFDF9;
-  font: 700 0.8rem/1.2 'Plus Jakarta Sans', sans-serif;
-  padding: 7px 14px;
+  font: 700 0.75rem/1.2 'Plus Jakarta Sans', sans-serif;
+  padding: 6px 12px;
   border-radius: 999px;
   white-space: nowrap;
   opacity: 0;
@@ -129,6 +125,9 @@
   transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.85);
   pointer-events: none;
+}
+@media (min-width: 1024px) {
+  .ss-rail-label { right: 44px; font-size: 0.8rem; padding: 7px 14px; }
 }
 .ss-rail-node:hover .ss-rail-label {
   opacity: 1;

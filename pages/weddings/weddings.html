@@ -1,52 +1,52 @@
-<!-- Sub-View A: All Weddings List & Telemetry Dashboard -->
-<div id="creator-all-weddings" class="space-y-6 pb-12">
-  <div class="bento-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+<!-- Sub-View 1: All Weddings Command Dashboard -->
+<div id="creator-all-weddings" class="space-y-6">
+  <div class="bento-card p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
     <div>
       <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-gold/20 text-gold">👑 Weddings Command Center • Paresh Bafna</span>
-      <h1 class="font-serif text-3xl sm:text-4xl font-bold text-cream mt-2">All Weddings Telemetry Dashboard</h1>
-      <p class="text-sm text-muted mt-1">Full-width command center across all weddings. Click any wedding to open its Workspace.</p>
+      <h1 class="font-serif text-2xl sm:text-4xl font-bold text-cream mt-2">All Weddings Telemetry Dashboard</h1>
+      <p class="text-xs sm:text-sm text-muted mt-1">Full-width command center across all weddings. Click any wedding to open its Planner OS Workspace.</p>
     </div>
     <button onclick="openCreateWeddingModal()" class="btn-gold px-5 py-3 rounded-xl text-sm font-bold shrink-0">+ Create New Wedding</button>
   </div>
-  <div id="globalRollupStrip" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"></div>
+  <div id="globalRollupStrip" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4"></div>
   <div id="creatorWeddingsGrid" class="grid grid-cols-1 xl:grid-cols-2 gap-6"></div>
 </div>
 
-<!-- Sub-View B: Single Wedding Workspace -->
-<div id="creator-single-workspace" class="space-y-6 pb-12 hidden">
-  <div class="bento-card p-5 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-    <div class="flex flex-wrap items-center gap-3.5">
-      <button onclick="backToAllWeddings()" class="px-4 py-2.5 rounded-xl bg-card border border-borderWarm hover:border-gold text-sm font-bold text-gold">← All Weddings</button>
+<!-- Sub-View 2: Single Wedding Full-Width Workspace -->
+<div id="creator-single-workspace" class="space-y-6 hidden">
+  <div class="bento-card p-4 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+    <div class="flex flex-wrap items-center gap-3">
+      <button onclick="backToAllWeddings()" class="px-3.5 py-2 rounded-xl bg-card border border-borderWarm hover:border-gold text-xs sm:text-sm font-bold text-gold">← All Weddings</button>
       <div>
-        <h2 id="wsBannerCouple" class="font-serif text-2xl sm:text-3xl font-bold text-cream leading-tight">Aarav &amp; Ananya Wedding</h2>
-        <span id="wsBannerDates" class="text-sm text-muted">12–14 Dec 2026 • Taj Lake Palace, Udaipur</span>
+        <h2 id="wsBannerCouple" class="font-serif text-xl sm:text-3xl font-bold text-cream leading-tight">Aarav &amp; Ananya Wedding</h2>
+        <span id="wsBannerDates" class="text-xs sm:text-sm text-muted">12–14 Dec 2026 • Taj Lake Palace, Udaipur</span>
       </div>
     </div>
 
-    <div class="flex flex-wrap items-center gap-2.5">
-      <button onclick="toggleAppGridLauncher()" id="btnToggleLauncher" class="btn-gold px-4 py-2.5 rounded-xl text-sm font-bold shadow">
+    <div class="flex flex-wrap items-center gap-2">
+      <button onclick="toggleAppGridLauncher()" id="btnToggleLauncher" class="btn-gold px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold shadow">
         📱 Show / Hide App Launcher
       </button>
-      <button onclick="openImportGuestsModal()" class="px-4 py-2.5 rounded-xl bg-card border border-gold/40 text-gold text-sm font-bold">📥 Import CSV</button>
-      <button onclick="openSampleExportPreviewModal()" class="px-4 py-2.5 rounded-xl bg-card border border-borderWarm text-cream text-sm font-bold">👁️ Sample Export</button>
-      <button onclick="exportCurrentGuestsCSV()" class="px-4 py-2.5 rounded-xl bg-emeraldSS/20 border border-emeraldSS/40 text-emeraldSS text-sm font-bold">⬇ Export Live CSV</button>
+      <button onclick="openImportGuestsModal()" class="px-3.5 py-2 rounded-xl bg-card border border-gold/40 text-gold text-xs sm:text-sm font-bold">📥 Import CSV</button>
+      <button onclick="openSampleExportPreviewModal()" class="px-3.5 py-2 rounded-xl bg-card border border-borderWarm text-cream text-xs sm:text-sm font-bold">👁️ Sample Export</button>
+      <button onclick="exportCurrentGuestsCSV()" class="px-3.5 py-2 rounded-xl bg-emeraldSS/20 border border-emeraldSS/40 text-emeraldSS text-xs sm:text-sm font-bold">⬇ Export CSV</button>
     </div>
   </div>
 
-  <!-- App Launcher Grid + Critical Alerts -->
+  <!-- APP LAUNCHER GRID + CRITICAL ALERTS -->
   <div id="wsAppLauncherSection" class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
-    <div class="xl:col-span-8 bento-card p-5 sm:p-6 space-y-4">
+    <div class="xl:col-span-8 bento-card p-4 sm:p-6 space-y-4">
       <div class="flex flex-wrap items-center justify-between gap-2">
         <div>
-          <span class="text-xs font-mono uppercase tracking-wider text-gold">Wedding App Launcher</span>
-          <h3 class="font-serif text-2xl font-bold text-cream">All Wedding Services — Tap any tool to open below</h3>
+          <span class="text-xs font-mono uppercase tracking-wider text-gold">Wedding OS App Launcher</span>
+          <h3 class="font-serif text-xl sm:text-2xl font-bold text-cream">All Wedding Services — Tap any tool to open below</h3>
         </div>
         <span class="text-xs font-mono text-gold">Telemetry → Calendar</span>
       </div>
-      <div id="wsAppIconGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3"></div>
+      <div id="wsAppIconGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2.5 sm:gap-3"></div>
     </div>
 
-    <div class="xl:col-span-4 bento-card p-5 sm:p-6 space-y-4 border-gold/40">
+    <div class="xl:col-span-4 bento-card p-4 sm:p-6 space-y-4 border-gold/40">
       <div class="flex items-center justify-between">
         <span class="text-xs font-mono uppercase tracking-wider text-gold font-bold">⚡ Critical Alerts &amp; Credits</span>
         <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-gold/20 text-gold">Royal Gold (₹14,999)</span>
@@ -55,11 +55,11 @@
     </div>
   </div>
 
-  <!-- Dynamic Active Module Viewport -->
+  <!-- DYNAMIC FULL-WIDTH ACTIVE MODULE VIEWPORT -->
   <div id="activeModuleViewport" class="w-full space-y-6"></div>
 </div>
 
-<!-- Modals -->
+<!-- WEDDINGS MODALS -->
 <div id="importGuestsModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
   <div class="bg-surface border border-borderWarm rounded-2xl w-full max-w-lg p-5 space-y-4">
     <div class="flex justify-between items-center"><h3 class="font-serif text-2xl font-bold text-cream">Import Guests CSV</h3><button onclick="closeImportGuestsModal()" class="text-lg">✕</button></div>
