@@ -1,5 +1,5 @@
 import { weddingsPortfolio, activeRoleFilter, setActiveRoleFilter } from '../../data/weddings-store.js';
-import { computeLiveTelemetry, buildTelemetryCardHTML } from '../../utils/weddings-helpers.js';
+import { computeLiveTelemetry, buildTelemetryCardHTML, formatINR } from '../../utils/weddings-helpers.js';
 
 export function filterPortfolioByRole(role) {
   setActiveRoleFilter(role);

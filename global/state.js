@@ -79,7 +79,6 @@ async function handleRouting(event) {
 }
 
 export async function initAllModules() {
-  // Temporarily set root path while legacy components fetch ./home/... relative files
   const initialPathname = window.location.pathname;
   const initialState = window.history.state;
   const detectedMode = getRouteMode(initialPathname);

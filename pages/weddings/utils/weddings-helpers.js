@@ -4,6 +4,22 @@ export function formatINR(n) {
   return '₹' + Number(n || 0).toLocaleString('en-IN');
 }
 
+export function showToast(msg) {
+  let toast = document.getElementById('ssToast');
+  if (!toast) {
+    toast = document.createElement('div');
+    toast.id = 'ssToast';
+    toast.className = 'fixed bottom-6 right-6 z-50 px-5 py-3 rounded-xl bg-gold text-obsidian text-xs font-extrabold shadow-2xl transition-opacity duration-300 pointer-events-none';
+    document.body.appendChild(toast);
+  }
+  toast.textContent = msg;
+  toast.style.opacity = '1';
+  clearTimeout(window.__ssToastTimer);
+  window.__ssToastTimer = setTimeout(() => {
+    toast.style.opacity = '0';
+  }, 2600);
+}
+
 export function getStayLocationsList() {
   return [...new Set(roomInventory.map(r => r.location))];
 }

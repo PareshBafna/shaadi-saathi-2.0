@@ -1,6 +1,6 @@
-import { ALL_SERVICES_ORDERED, currentModuleId, messageCreditsRemaining, messageCreditsTotal, guests, familyTasks, weddingsPortfolio } from '../../data/weddings-store.js';
+import { ALL_SERVICES_ORDERED, currentModuleId, setActiveWeddingId, setCurrentModuleId, messageCreditsRemaining, messageCreditsTotal, guests, familyTasks, weddingsPortfolio } from '../../data/weddings-store.js';
 import { renderCreatorWeddings } from '../directory/directory.js';
-import { showToast } from '../../utils/weddings-helpers.js';
+import { showToast, computeLiveTelemetry } from '../../utils/weddings-helpers.js';
 import { navigateTo } from '../../../../global/router.js';
 
 export function renderWorkspaceAppLauncher() {
@@ -85,6 +85,9 @@ export function backToAllWeddings(skipPush = false) {
 }
 
 export function openWeddingWorkspace(id, targetModule = 'overview', skipPush = false) {
+  setActiveWeddingId(id);
+  setCurrentModuleId(targetModule);
+
   const w = weddingsPortfolio.find(x => x.id === id) || weddingsPortfolio[0];
   const coupleEl = document.getElementById('wsBannerCouple');
   const datesEl = document.getElementById('wsBannerDates');
@@ -96,6 +99,10 @@ export function openWeddingWorkspace(id, targetModule = 'overview', skipPush = f
 
   document.getElementById('creator-all-weddings')?.classList.add('hidden');
   document.getElementById('creator-single-workspace')?.classList.remove('hidden');
+
+  if (typeof window.openSubPage === 'function') {
+    window.openSubPage(targetModule, true);
+  }
 
   if (!skipPush) navigateTo('creator', { wedding: id, module: targetModule });
 }

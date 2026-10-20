@@ -1,4 +1,4 @@
-import { activeWeddingId, currentModuleId, weddingEvents, guests, vendors, familyTasks, sangeetLineup, guestbookEntries, roomInventory, AVAILABLE_WEDDING_DATES } from './data/weddings-store.js';
+import { activeWeddingId, currentModuleId, setCurrentModuleId, weddingEvents, guests, vendors, familyTasks, sangeetLineup, guestbookEntries, roomInventory, AVAILABLE_WEDDING_DATES } from './data/weddings-store.js';
 import { formatINR, getStayLocationsList, getTierLabel, getRoomOccupants, computeLiveTelemetry, buildTelemetryCardHTML, showToast } from './utils/weddings-helpers.js';
 import { filterPortfolioByRole, renderCreatorWeddings } from './components/directory/directory.js';
 import { renderWorkspaceAppLauncher, toggleAppGridLauncher, backToAllWeddings, openWeddingWorkspace, openImportGuestsModal, closeImportGuestsModal, openSampleExportPreviewModal, closeSampleExportPreviewModal, downloadSampleGuestCSV, exportCurrentGuestsCSV, openCreateWeddingModal, closeCreateWeddingModal, saveNewWedding } from './components/workspace-shell/workspace-shell.js';
@@ -21,7 +21,27 @@ import { renderVendorsModule } from './modules/vendors.js';
 
 import { navigateTo } from '../../global/router.js';
 
+export {
+  openWeddingWorkspace,
+  backToAllWeddings,
+  filterPortfolioByRole,
+  renderCreatorWeddings,
+  renderWorkspaceAppLauncher,
+  toggleAppGridLauncher,
+  openImportGuestsModal,
+  closeImportGuestsModal,
+  openSampleExportPreviewModal,
+  closeSampleExportPreviewModal,
+  downloadSampleGuestCSV,
+  exportCurrentGuestsCSV,
+  openCreateWeddingModal,
+  closeCreateWeddingModal,
+  saveNewWedding
+};
+
 export function openSubPage(moduleId, skipPush = false) {
+  setCurrentModuleId(moduleId);
+
   if (!skipPush && !document.getElementById('creator-single-workspace')?.classList.contains('hidden')) {
     navigateTo('creator', { wedding: activeWeddingId, module: moduleId });
   }
@@ -34,7 +54,9 @@ export function openSubPage(moduleId, skipPush = false) {
     whatsapp: { icon: '💬', name: 'WhatsApp Blaster', badge: 'Messaging', desc: 'Meta-verified invite dispatch & delivery status' },
     hosts: { icon: '👑', name: 'Family Hosts', badge: 'Hosts', desc: 'Individual family host profiles & details' },
     events: { icon: '📅', name: 'Events Schedule', badge: 'Events', desc: 'Ceremonies, venues, timings & dress codes' },
+    rsvp: { icon: '👥', name: 'Guest List', badge: 'Guests', desc: 'Family members, RSVP status, pax & tiers' },
     guests: { icon: '👥', name: 'Guest List', badge: 'Guests', desc: 'Family members, RSVP status, pax & tiers' },
+    webinvites: { icon: '💌', name: 'Web Invite Pass', badge: 'Invitation', desc: 'Interactive 3D wax-seal royal web invitation' },
     'web-invite': { icon: '💌', name: 'Web Invite Pass', badge: 'Invitation', desc: 'Interactive 3D wax-seal royal web invitation' },
     rooms: { icon: '🏨', name: 'Stay Accommodation', badge: 'Rooms', desc: 'Hotel inventory, room cards & outstation stay' },
     flights: { icon: '✈️', name: 'Flight Manifest', badge: 'Travel', desc: 'Air arrivals, route groups & PNR tracker' },
@@ -44,7 +66,8 @@ export function openSubPage(moduleId, skipPush = false) {
     gallery: { icon: '🖼️', name: 'Photo Gallery', badge: 'Media', desc: 'Cloud albums & event photography' },
     shagun: { icon: '🧧', name: 'Shagun Ledger', badge: 'Finance', desc: 'Traditional envelopes & gift registry' },
     tasks: { icon: '✅', name: 'Tasks Checklist', badge: 'Operations', desc: 'Family responsibility task assignments' },
-    vendors: { icon: '🤝', name: 'Vendors & Payouts', badge: 'Contracts', desc: 'Supplier contracts & payment milestones' }
+    vendors: { icon: '🤝', name: 'Vendors & Payouts', badge: 'Contracts', desc: 'Supplier contracts & payment milestones' },
+    budget: { icon: '₹', name: 'Budget Planner', badge: 'Cashflow Ledger', desc: 'Supplier contracts, advance paid & remaining balance due' }
   };
 
   const modInfo = names[moduleId] || { icon: '📊', name: moduleId.toUpperCase(), badge: 'Module', desc: 'Service module view' };
@@ -67,8 +90,8 @@ export function openSubPage(moduleId, skipPush = false) {
   else if (moduleId === 'whatsapp') renderWhatsAppModule(viewport, headerBanner);
   else if (moduleId === 'hosts') renderHostsModule(viewport, headerBanner);
   else if (moduleId === 'events') renderEventsModule(viewport, headerBanner);
-  else if (moduleId === 'guests') renderGuestsModule(viewport, headerBanner);
-  else if (moduleId === 'web-invite') renderWebInviteModule(viewport, headerBanner);
+  else if (moduleId === 'guests' || moduleId === 'rsvp') renderGuestsModule(viewport, headerBanner);
+  else if (moduleId === 'web-invite' || moduleId === 'webinvites') renderWebInviteModule(viewport, headerBanner);
   else if (moduleId === 'rooms') renderRoomsModule(viewport, headerBanner);
   else if (moduleId === 'flights') renderFlightsModule(viewport, headerBanner);
   else if (moduleId === 'trains') renderTrainsModule(viewport, headerBanner);
@@ -77,7 +100,7 @@ export function openSubPage(moduleId, skipPush = false) {
   else if (moduleId === 'gallery') renderGalleryModule(viewport, headerBanner);
   else if (moduleId === 'shagun') renderShagunModule(viewport, headerBanner);
   else if (moduleId === 'tasks') renderTasksModule(viewport, headerBanner);
-  else if (moduleId === 'vendors') renderVendorsModule(viewport, headerBanner);
+  else if (moduleId === 'vendors' || moduleId === 'budget') renderVendorsModule(viewport, headerBanner);
   else {
     viewport.innerHTML = headerBanner + `<div class="bento-card p-6 text-cream">Module ${moduleId} active.</div>`;
   }

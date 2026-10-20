@@ -26,6 +26,26 @@ export let activeRoleFilter = 'ALL';
 export let messageCreditsRemaining = 2840;
 export let messageCreditsTotal = 4000;
 
+export function setActiveWeddingId(id) {
+  activeWeddingId = id;
+}
+
+export function setCurrentModuleId(id) {
+  currentModuleId = id;
+}
+
+export function setSelectedCalendarDate(date) {
+  selectedCalendarDate = date;
+}
+
+export function setActiveRoleFilter(role) {
+  activeRoleFilter = role;
+}
+
+export function setMessageCreditsRemaining(val) {
+  messageCreditsRemaining = val;
+}
+
 export const AVAILABLE_WEDDING_DATES = ['11 Dec 2026', '12 Dec 2026', '13 Dec 2026', '14 Dec 2026', '15 Dec 2026'];
 
 export let weddingEvents = [
@@ -191,3 +211,5 @@ export let weddingsPortfolio = [
     telemetry: { guestsTotal: 180, attending: 150, declined: 12, na: 18, attendingPax: 380, eventsCount: 4, roomsTotal: 48, roomsFull: 40, roomsPartial: 5, roomsVacant: 3, flightPax: 140, trainPax: 110, budgetTotal: 3800000, budgetPaid: 2900000, tasksTotal: 15, tasksCompleted: 11, tasksInProgress: 3, tasksPending: 1, tasksNotStarted: 0 }
   }
 ];
+
+export { formatINR, showToast, getStayLocationsList, getTierLabel, getRoomOccupants, computeLiveTelemetry, buildTelemetryCardHTML } from '../utils/weddings-helpers.js';
