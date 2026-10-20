@@ -1,77 +1,83 @@
-<!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Planner OS — Shaadi Saathi</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="../../home/home.css">
-  <link rel="stylesheet" href="../../global/components/header/header.css">
-  <link rel="stylesheet" href="./weddings.css">
-</head>
-<body class="selection:bg-gold selection:text-obsidian bg-[#0B0507] text-[#F7EFEE] pb-24">
-  <div id="home-header-slot"></div>
-
-  <div class="w-full px-4 sm:px-8 lg:px-12 pt-6 space-y-6">
-    <div id="creator-all-weddings" class="space-y-6">
-      <div class="bento-card p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <div>
-          <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-gold/20 text-gold">👑 Planner OS • Role-Based Wedding Directory</span>
-          <h1 class="font-serif text-3xl sm:text-4xl font-bold text-cream mt-2">Your Weddings by Role</h1>
-          <p class="text-sm text-muted mt-1">View every wedding part of, organized by assigned role.</p>
-        </div>
-        <div>
-          <button onclick="openCreateWeddingModal()" class="btn-gold px-5 py-3 rounded-xl text-sm font-bold">+ Create New Wedding</button>
-        </div>
+<div id="root-creator" class="min-h-screen bg-obsidian text-cream p-4 sm:p-8 space-y-6">
+  <!-- All Weddings View -->
+  <div id="creator-all-weddings" class="space-y-6">
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bento-card p-6">
+      <div>
+        <span class="text-xs font-mono uppercase tracking-widest text-gold">Creator Super Admin OS</span>
+        <h1 class="font-serif text-3xl font-bold text-cream mt-1">Shaadi Saathi Multi-Wedding Portfolio</h1>
+        <p class="text-sm text-muted">Manage all active client weddings, roles, global telemetry, and live workflows.</p>
       </div>
-
-      <div class="flex flex-wrap gap-2" id="roleFilterButtons">
-        <button onclick="filterPortfolioByRole('ALL')" data-rolebtn="ALL" class="px-4 py-2 rounded-xl text-xs font-bold bg-gold text-obsidian">All Roles</button>
-        <button onclick="filterPortfolioByRole('CREATOR SUPER ADMIN')" data-rolebtn="CREATOR SUPER ADMIN" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">👑 Creator Super Admin</button>
-        <button onclick="filterPortfolioByRole('FAMILY HOST ADMIN')" data-rolebtn="FAMILY HOST ADMIN" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">🏠 Family Host Admin</button>
-        <button onclick="filterPortfolioByRole('LOGISTICS COORDINATOR')" data-rolebtn="LOGISTICS COORDINATOR" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">✈️ Logistics Coordinator</button>
-        <button onclick="filterPortfolioByRole('INVITED GUEST PASS')" data-rolebtn="INVITED GUEST PASS" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">🎟️ Invited Guest Pass</button>
+      <div class="flex items-center gap-3">
+        <button onclick="openCreateWeddingModal()" class="btn-gold px-5 py-3 rounded-xl text-xs font-bold">+ Create New Wedding</button>
       </div>
-
-      <div id="globalRollupStrip" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"></div>
-      <div id="creatorWeddingsGrid" class="grid grid-cols-1 xl:grid-cols-2 gap-6"></div>
     </div>
 
-    <div id="creator-single-workspace" class="space-y-6 hidden">
-      <div class="bento-card p-5 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <div class="flex flex-wrap items-center gap-3.5">
-          <button onclick="backToAllWeddings()" class="px-4 py-2.5 rounded-xl bg-card border border-borderWarm hover:border-gold text-sm font-bold text-gold">← All Weddings</button>
-          <div>
-            <div class="flex items-center gap-2">
-              <h2 id="wsBannerCouple" class="font-serif text-2xl sm:text-3xl font-bold text-cream leading-tight">Wedding</h2>
-              <span id="wsBannerRoleBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-gold/20 text-gold">ADMIN</span>
-            </div>
-            <span id="wsBannerDates" class="text-sm text-muted">Udaipur</span>
-          </div>
-        </div>
-      </div>
-      <div id="wsAppLauncherSection" class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
-        <div class="xl:col-span-8 bento-card p-5 sm:p-6 space-y-4">
-          <div id="wsAppIconGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3"></div>
-        </div>
-        <div class="xl:col-span-4 bento-card p-5 sm:p-6 space-y-4 border-gold/40">
-          <div class="space-y-3" id="wsCriticalAlertsBox"></div>
-        </div>
-      </div>
-      <div id="activeModuleViewport" class="w-full space-y-6"></div>
+    <!-- Role Filter Buttons -->
+    <div id="roleFilterButtons" class="flex flex-wrap items-center gap-2">
+      <button onclick="filterPortfolioByRole('ALL')" data-rolebtn="ALL" class="px-4 py-2 rounded-xl text-xs font-bold bg-gold text-obsidian">ALL ROLES</button>
+      <button onclick="filterPortfolioByRole('CREATOR SUPER ADMIN')" data-rolebtn="CREATOR SUPER ADMIN" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">CREATOR ADMIN</button>
+      <button onclick="filterPortfolioByRole('BRIDE')" data-rolebtn="BRIDE" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">BRIDE</button>
+      <button onclick="filterPortfolioByRole('GROOM')" data-rolebtn="GROOM" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">GROOM</button>
+      <button onclick="filterPortfolioByRole('INVITED GUEST PASS')" data-rolebtn="INVITED GUEST PASS" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">GUEST PASS</button>
     </div>
+
+    <!-- Global Rollup Strip -->
+    <div id="globalRollupStrip" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"></div>
+
+    <!-- Creator Weddings Grid -->
+    <div id="creatorWeddingsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
   </div>
 
-  <div id="toastBox" class="fixed top-5 right-4 z-50 hidden bg-card border-2 border-gold text-cream px-5 py-3 rounded-xl shadow-2xl text-sm font-bold"></div>
+  <!-- Single Wedding Workspace View -->
+  <div id="creator-single-workspace" class="hidden space-y-6">
+    <div class="bento-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div class="flex items-center gap-4">
+        <button onclick="backToAllWeddings()" class="px-4 py-2 rounded-xl bg-card border border-borderWarm text-xs font-bold text-cream hover:bg-gold hover:text-obsidian transition">← All Weddings</button>
+        <div>
+          <div class="flex items-center gap-2">
+            <h2 id="wsBannerCouple" class="font-serif text-3xl font-bold text-cream">Wedding Workspace</h2>
+            <span id="wsBannerRoleBadge" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-gold text-obsidian">CREATOR ADMIN</span>
+          </div>
+          <span id="wsBannerDates" class="text-xs text-gold">18–20 Nov 2026 • Udaipur</span>
+        </div>
+      </div>
+      <div class="flex items-center gap-3">
+        <button onclick="toggleAppGridLauncher()" class="px-4 py-2.5 rounded-xl bg-gold/20 border border-gold/40 text-gold text-xs font-bold">📂 Toggle App Launcher</button>
+      </div>
+    </div>
 
-  <script type="module">
-    import { initWeddingsView } from './weddings.js';
-    import { loadCss } from '../../global/state.js';
-    loadCss('../../global/components/header/header.html');
-    fetch('../../global/components/header/header.html').then(r => r.text()).then(html => {
-      document.getElementById('home-header-slot').innerHTML = html;
-    });
-    initWeddingsView();
-  </script>
-</body>
-</html>
+    <!-- App Launcher Section -->
+    <div id="wsAppLauncherSection" class="bento-card p-6 space-y-5">
+      <div class="flex justify-between items-center">
+        <h3 class="font-serif text-xl font-bold text-cream">Shaadi Saathi OS App Launcher (15 Modules)</h3>
+        <span class="text-xs text-muted">Click any app icon to switch service workspace</span>
+      </div>
+      <div id="wsAppIconGrid" class="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-8 gap-3"></div>
+      <div id="wsCriticalAlertsBox" class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-borderWarm"></div>
+    </div>
+
+    <!-- Active Module Viewport -->
+    <div id="activeModuleViewport" class="space-y-6"></div>
+  </div>
+</div>
+
+<!-- Modals -->
+<div id="createWeddingModal" class="fixed inset-0 bg-obsidian/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+  <div class="bento-card p-6 max-w-md w-full space-y-4 bg-obsidian border border-gold/40">
+    <h3 class="font-serif text-2xl font-bold text-cream">Create New Wedding Instance</h3>
+    <div class="space-y-3">
+      <div>
+        <label class="text-xs text-muted block mb-1">Couple Names</label>
+        <input type="text" id="cwCoupleInput" placeholder="e.g. Aarav & Ananya" class="ss-input w-full" />
+      </div>
+      <div>
+        <label class="text-xs text-muted block mb-1">City / Venue</label>
+        <input type="text" id="cwCityInput" placeholder="e.g. Udaipur" class="ss-input w-full" />
+      </div>
+    </div>
+    <div class="flex justify-end gap-3 pt-2">
+      <button onclick="closeCreateWeddingModal()" class="px-4 py-2 rounded-xl bg-card border border-borderWarm text-xs font-bold text-cream">Cancel</button>
+      <button onclick="saveNewWedding()" class="btn-gold px-5 py-2 rounded-xl text-xs font-bold">Create Workspace</button>
+    </div>
+  </div>
+</div>
