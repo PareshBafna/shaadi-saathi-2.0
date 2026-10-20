@@ -1,57 +1,74 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
-  <title>Shaadi Saathi — Complete Wedding Hospitality & Planning OS</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shaadi Saathi - Wedding OS</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./index.css">
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            obsidian: '#0A0507', surface: '#140A0D', card: '#1D0F14', cardHover: '#28151C',
-            borderWarm: '#3D2029', gold: '#F5C451', goldBright: '#FFE082', emeraldSS: '#22C55E',
-            crimsonSS: '#EF4444', amberSS: '#F59E0B', skySS: '#38BDF8', waGreen: '#25D366',
-            cream: '#FFFDF9', ink: '#F5ECEE', muted: '#C8B0B6'
-          },
-          fontFamily: {
-            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace']
-          }
-        }
-      }
-    }
-  </script>
+  <link rel="stylesheet" href="pages/weddings/weddings.css">
 </head>
-<body class="selection:bg-gold selection:text-obsidian">
-  <div id="home-header-slot"></div>
-  <div id="home-scrollbar-slot"></div>
+<body class="bg-obsidian text-cream min-h-screen flex flex-col justify-between p-4 sm:p-8 space-y-6">
+  
+  <main class="flex-1 max-w-4xl mx-auto w-full space-y-6">
+    <!-- Header Bento Card -->
+    <div class="bento-card p-6 sm:p-8 space-y-5 bg-gradient-to-br from-card via-surface to-card">
+      <div class="flex items-center gap-4">
+        <div class="w-14 h-14 rounded-2xl bg-gold/20 border border-gold/40 flex items-center justify-center text-3xl font-bold text-gold">SS</div>
+        <div>
+          <h3 class="font-serif text-3xl font-bold text-cream">Shaadi Saathi</h3>
+          <p class="text-xs font-mono uppercase tracking-widest text-gold mt-0.5">Complete Wedding Hospitality &amp; Planning OS</p>
+        </div>
+      </div>
+      
+      <div class="space-y-2">
+        <span class="text-xs font-mono text-muted uppercase">For families hosting and planners running a wedding</span>
+        <h1 class="font-serif text-4xl sm:text-5xl font-bold text-cream leading-tight">Invite every guest to the right events. Manage RSVPs, room allotments, and travel in one place.</h1>
+        <p class="text-sm text-muted">Shaadi Saathi dispatches each guest's personalised web invitation on WhatsApp showing only their assigned events. Edit guest lists, hotel room allotments, flight/train PNR arrivals, wedding budgets, vendors, and family task checklists directly in live tables.</p>
+      </div>
 
-  <div id="root-home" class="hp w-full">
-    <div id="home-hero-slot"></div>
-    <div id="home-comparison-slot"></div>
-    <div id="home-suites-slot"></div>
-    <div id="home-services-slot"></div>
-    <div id="home-pricing-slot"></div>
-    <div id="home-addons-slot"></div>
-    <div id="home-faq-slot"></div>
-    <div id="home-footer-slot"></div>
-  </div>
+      <div class="flex flex-wrap items-center gap-3 pt-2">
+        <button onclick="navigateTo('creator')" class="btn-gold px-6 py-3.5 rounded-2xl text-sm font-bold shadow-xl">
+          Open Planner OS (All Weddings) →
+        </button>
+      </div>
 
-  <div id="root-creator" class="w-full px-4 sm:px-8 lg:px-12 pt-6 space-y-6 hidden"></div>
-  <div id="root-host" class="w-full px-4 sm:px-8 lg:px-12 pt-6 space-y-6 hidden"></div>
-  <div id="root-guest" class="w-full px-4 sm:px-8 lg:px-12 pt-6 space-y-6 hidden"></div>
+      <!-- Features Pills -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-4 border-t border-borderWarm">
+        <div class="bg-obsidian/60 p-3 rounded-xl border border-borderWarm text-xs font-bold text-cream">✓ Complete Wedding Suite</div>
+        <div class="bg-obsidian/60 p-3 rounded-xl border border-borderWarm text-xs font-bold text-cream">✓ Unlimited Events &amp; Variants</div>
+        <div class="bg-obsidian/60 p-3 rounded-xl border border-borderWarm text-xs font-bold text-cream">✓ Room Allotments &amp; Travel Decks</div>
+        <div class="bg-obsidian/60 p-3 rounded-xl border border-borderWarm text-xs font-bold text-cream">✓ Pay Per Wedding</div>
+      </div>
+    </div>
 
-  <div id="home-navigation-slot"></div>
-  <div id="toastBox" class="fixed top-5 right-4 z-50 hidden bg-card border-2 border-gold text-cream px-5 py-3 rounded-xl shadow-2xl text-sm font-bold"></div>
+    <!-- Active Wedding Preview Card -->
+    <div class="bento-card p-6 space-y-4">
+      <div class="flex justify-between items-start">
+        <div>
+          <span class="text-xs font-mono uppercase text-gold font-bold">Featured Client Wedding</span>
+          <h3 class="font-serif text-2xl font-bold text-cream mt-1">Aarav &amp; Ananya</h3>
+          <span class="text-xs text-muted">12–14 Dec 2026 • Taj Lake Palace, Udaipur</span>
+        </div>
+        <span class="px-3 py-1 rounded-full text-xs font-bold bg-emeraldSS/20 text-emeraldSS border border-emeraldSS/30">Live Demo</span>
+      </div>
 
-  <script type="module" src="./index.js"></script>
+      <div class="grid grid-cols-3 gap-4 pt-2">
+        <div class="bg-obsidian p-4 rounded-xl border border-borderWarm"><span class="text-xs text-muted block">Guests Attending</span><strong class="text-xl text-cream">412 Pax</strong></div>
+        <div class="bg-obsidian p-4 rounded-xl border border-borderWarm"><span class="text-xs text-muted block">RSVP Confirmed</span><strong class="text-xl text-emeraldSS">78%</strong></div>
+        <div class="bg-obsidian p-4 rounded-xl border border-borderWarm"><span class="text-xs text-muted block">Awaiting Response</span><strong class="text-xl text-amberSS">46 Families</strong></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation Bar -->
+  <nav class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 bg-surface/95 backdrop-blur-md border border-borderWarm p-2 rounded-2xl flex items-center gap-2 shadow-2xl">
+    <button onclick="navigateTo('home')" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-card text-cream hover:bg-gold hover:text-obsidian transition">🏠 Home</button>
+    <button onclick="navigateTo('creator')" class="px-5 py-2.5 rounded-xl text-xs font-bold bg-gold text-obsidian shadow-lg">💒 Weddings OS</button>
+  </nav>
+
+  <script type="module">
+    import { navigateTo } from './global/router.js';
+    window.navigateTo = navigateTo;
+  </script>
 </body>
 </html>

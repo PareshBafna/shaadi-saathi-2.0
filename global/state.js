@@ -1,38 +1,17 @@
-// global/state.js
-import { initHero } from '../home/components/hero/hero.js';
-import { initComparison } from '../home/components/comparison/comparison.js';
-import { initSuites } from '../home/components/suites/suites.js';
+import { initHomePage } from '../home/home.js';
 import { initScrollbar } from '../home/components/scrollbar/scrollbar.js';
-import { initServices } from '../home/services/services.js';
-import { initPricing } from '../home/components/pricing/pricing.js';
-import { initAddons } from '../home/components/addons/addons.js';
-import { initFaq } from '../home/components/faq/faq.js';
 import { initWeddingsView, openWeddingWorkspace, backToAllWeddings } from '../pages/weddings/weddings.js';
-import { getRouteMode, navigateTo } from './router.js';
-
-const SITE_ROOT = new URL('./', import.meta.url);
-function rootUrl(relPath) {
-  const clean = relPath.replace(/^\.\//, '');
-  return new URL('../' + clean, SITE_ROOT).pathname;
-}
+import { rootUrl, getRouteMode, navigateTo } from './router.js';
 
 export function loadCss(href) {
-  const resolved = href.startsWith('./') ? rootUrl(href) : href;
+  const resolved = href.startsWith('./') || href.startsWith('../')
+    ? rootUrl(href.replace(/^(\.\/|\.\.\/)+/, ''))
+    : href;
   if (document.querySelector(`link[href="${resolved}"]`)) return;
   const l = document.createElement('link');
   l.rel = 'stylesheet';
   l.href = resolved;
   document.head.appendChild(l);
-}
-
-async function ensureCreatorLoaded() {
-  loadCss('./pages/weddings/weddings.css');
-  const creatorEl = document.getElementById('root-creator');
-  if (creatorEl && !creatorEl.children.length) {
-    const res = await fetch(rootUrl('./pages/weddings/weddings.html'));
-    creatorEl.innerHTML = await res.text();
-    initWeddingsView();
-  }
 }
 
 window.switchRootMode = async function(mode, skipPush = false) {
@@ -50,8 +29,11 @@ window.switchRootMode = async function(mode, skipPush = false) {
   const sbSlot = document.getElementById('home-scrollbar-slot');
   if (sbSlot) sbSlot.classList.toggle('hidden', mode !== 'home');
 
-  if (mode === 'creator') {
-    await ensureCreatorLoaded();
+  if (mode === 'home') {
+    await initHomePage('#root-home');
+  } else if (mode === 'creator') {
+    loadCss('./pages/weddings/weddings.css');
+    initWeddingsView('#root-creator');
     backToAllWeddings(true);
   }
 
@@ -63,9 +45,10 @@ window.switchRootMode = async function(mode, skipPush = false) {
 };
 
 window.openWorkspaceDirect = async function(moduleId) {
+  const mod = moduleId || 'overview';
   await window.switchRootMode('creator', true);
-  navigateTo('creator', 'w1', moduleId || 'overview');
-  openWeddingWorkspace('w1', moduleId || 'overview', true);
+  navigateTo('creator', { wedding: 'w1', module: mod });
+  openWeddingWorkspace('w1', mod, true);
 };
 
 window.showToast = function(msg) {
@@ -79,28 +62,30 @@ window.showToast = function(msg) {
 
 async function handleRouting(event) {
   const st = event?.state || window.history.state || {};
-  const mode = st.mode || getRouteMode();
+  const mode = st.mode || getRouteMode(window.location.pathname);
+  const wedding = st.wedding || sessionStorage.getItem('ss_active_wedding');
+  const mod = st.module || sessionStorage.getItem('ss_active_module') || 'overview';
+
+  await window.switchRootMode(mode, true);
+  navigateTo(mode, wedding ? { wedding, module: mod } : {}, true);
 
   if (mode === 'creator') {
-    await window.switchRootMode('creator', true);
-    if (st.wedding) {
-      openWeddingWorkspace(st.wedding, st.module || 'overview', true);
+    if (wedding) {
+      openWeddingWorkspace(wedding, mod, true);
     } else {
       backToAllWeddings(true);
     }
-  } else if (mode === 'host') {
-    await window.switchRootMode('host', true);
-  } else if (mode === 'guest') {
-    await window.switchRootMode('guest', true);
-  } else {
-    await window.switchRootMode('home', true);
   }
 }
 
 export async function initAllModules() {
-  const initialPath = window.location.pathname;
-  if (initialPath !== rootUrl('./index.html').replace(/index\.html$/, '')) {
-    window.history.replaceState({ mode: getRouteMode(initialPath) }, '', initialPath);
+  // Temporarily set root path while legacy components fetch ./home/... relative files
+  const initialPathname = window.location.pathname;
+  const initialState = window.history.state;
+  const detectedMode = getRouteMode(initialPathname);
+
+  if (initialPathname !== rootUrl('')) {
+    window.history.replaceState(initialState, '', rootUrl(''));
   }
 
   loadCss('./home/home.css');
@@ -116,20 +101,18 @@ export async function initAllModules() {
   loadCss('./home/components/addons/addons.css');
   loadCss('./home/components/faq/faq.css');
 
-  document.getElementById('home-header-slot').innerHTML = await (await fetch(rootUrl('./global/components/header/header.html'))).text();
-  document.getElementById('home-navigation-slot').innerHTML = await (await fetch(rootUrl('./global/components/navigation/navigation.html'))).text();
+  const headerSlot = document.getElementById('home-header-slot');
+  if (headerSlot) headerSlot.innerHTML = await (await fetch(rootUrl('global/components/header/header.html'))).text();
 
-  await initHero('#home-hero-slot');
-  await initComparison('#home-comparison-slot');
-  await initSuites('#home-suites-slot');
-  await initServices('#home-services-slot');
-  await initPricing('#home-pricing-slot');
-  await initAddons('#home-addons-slot');
-  await initFaq('#home-faq-slot');
+  const navSlot = document.getElementById('home-navigation-slot');
+  if (navSlot) navSlot.innerHTML = await (await fetch(rootUrl('global/components/navigation/navigation.html'))).text();
+
+  await initHomePage('#root-home');
   await initScrollbar('#home-scrollbar-slot');
 
-  document.getElementById('home-footer-slot').innerHTML = await (await fetch(rootUrl('./global/components/footer/footer.html'))).text();
+  const footerSlot = document.getElementById('home-footer-slot');
+  if (footerSlot) footerSlot.innerHTML = await (await fetch(rootUrl('global/components/footer/footer.html'))).text();
 
-  await handleRouting();
+  await handleRouting({ state: { ...initialState, mode: detectedMode } });
   window.addEventListener('popstate', handleRouting);
 }
