@@ -1,6 +1,7 @@
-import { buildTelemetryCardHTML, computeLiveTelemetry } from '../utils/weddings-helpers.js';
+import { renderModuleHeader } from '../components/module-header/module-header.js';
+import { computeLiveTelemetry, buildTelemetryCardHTML } from '../utils/weddings-helpers.js';
 
-export function renderTelemetryModule(viewport, headerBanner) {
+export function renderTelemetryModule() {
   const t = computeLiveTelemetry();
-    viewport.innerHTML = headerBanner + `<div class="bento-card p-6">${buildTelemetryCardHTML(t)}</div>`;
+  return renderModuleHeader('overview') + `<div class="bento-card p-6">${buildTelemetryCardHTML(t)}</div>`;
 }

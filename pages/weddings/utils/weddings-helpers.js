@@ -1,6 +1,17 @@
-import { guests, roomInventory, vendors, weddingEvents, familyTasks, weddingsPortfolio, ss } from '../data/weddings-store.js';
+import { guests, roomInventory, weddingEvents, vendors, familyTasks } from '../data/weddings-store.js';
 
-export function formatINR(n) { return '₹' + Number(n || 0).toLocaleString('en-IN'); }
+export function showToast(msg) {
+  const box = document.getElementById('toastBox');
+  if (!box) return;
+  box.textContent = msg;
+  box.classList.remove('hidden');
+  clearTimeout(window._t);
+  window._t = setTimeout(() => box.classList.add('hidden'), 2800);
+}
+
+export function formatINR(n) {
+  return '₹' + Number(n || 0).toLocaleString('en-IN');
+}
 
 export function getStayLocationsList() {
   return [...new Set(roomInventory.map(r => r.location))];
@@ -12,21 +23,6 @@ export function getTierLabel(tier) {
   return 'Variant C: All Events VIP';
 }
 
-export function showToast(msg) {
-  let box = document.getElementById('toastBox');
-  if (!box) {
-    box = document.createElement('div');
-    box.id = 'toastBox';
-    box.className = 'fixed top-5 right-4 z-50 hidden bg-card border-2 border-gold text-cream px-5 py-3 rounded-xl shadow-2xl text-sm font-bold';
-    document.body.appendChild(box);
-  }
-  box.textContent = msg;
-  box.classList.remove('hidden');
-  clearTimeout(window._ssToastTimer);
-  window._ssToastTimer = setTimeout(() => box.classList.add('hidden'), 2800);
-}
-
-
 export function getRoomOccupants(roomId) {
   const list = [];
   guests.forEach(g => {
@@ -37,7 +33,6 @@ export function getRoomOccupants(roomId) {
   });
   return list;
 }
-
 
 export function computeLiveTelemetry() {
   const att = guests.filter(g => g.status === 'Attending');
@@ -134,4 +129,3 @@ export function buildTelemetryCardHTML(t) {
     </div>
   `;
 }
-

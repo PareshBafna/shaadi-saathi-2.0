@@ -1,4 +1,8 @@
-export function renderModuleHeader(modInfo) {
+import { ALL_SERVICES_ORDERED } from '../../data/weddings-store.js';
+
+export function renderModuleHeader(moduleId) {
+  const modInfo = ALL_SERVICES_ORDERED.find(it => it.id === moduleId) || ALL_SERVICES_ORDERED[0];
+
   return `
     <div class="bento-card p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-surface via-card to-surface">
       <div class="flex items-center gap-4">

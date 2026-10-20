@@ -1,133 +1,76 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shaadi Saathi - Wedding OS</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <title>Shaadi Saathi — Planner OS</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="weddings.css">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#0A0507',
+            surface: '#140A0D',
+            card: '#1D0F14',
+            borderWarm: '#3D2029',
+            gold: '#F5C451',
+            emeraldSS: '#22C55E',
+            crimsonSS: '#EF4444',
+            amberSS: '#F59E0B',
+            skySS: '#38BDF8',
+            waGreen: '#25D366',
+            cream: '#FFFDF9',
+            muted: '#C8B0B6'
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
 </head>
-<body class="bg-[#0b0c10] text-[#f4f1ea]">
-  <div id="root-creator" class="min-h-screen bg-[#0b0c10] text-[#f4f1ea] p-4 sm:p-8 space-y-6">
-    <!-- All Weddings View -->
-    <div id="creator-all-weddings" class="space-y-6">
-      <div class="bento-card p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+<body class="selection:bg-gold selection:text-obsidian">
+
+  <!-- STICKY HEADER -->
+  <header class="sticky top-0 z-40 bg-obsidian/90 backdrop-blur-xl border-b border-borderWarm w-full px-4 sm:px-8 lg:px-14 py-3.5">
+    <div class="w-full flex items-center justify-between">
+      <div class="flex items-center gap-3 cursor-pointer" onclick="window.location.reload()">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold to-amber-700 p-[1.5px]">
+          <div class="w-full h-full bg-obsidian rounded-[10px] flex items-center justify-center font-serif font-bold text-lg gold-text">SS</div>
+        </div>
         <div>
-          <span class="px-3 py-1 rounded-full text-xs font-mono font-bold bg-gold/20 text-gold">👑 Planner OS • Role-Based Wedding Directory</span>
-          <h1 class="font-serif text-3xl sm:text-4xl font-bold text-cream mt-2">Your Weddings by Role</h1>
-          <p class="text-sm text-muted mt-1">View every wedding you are part of, organized by your assigned role in each celebration. Click any wedding to launch its workspace.</p>
-        </div>
-        <div class="flex flex-wrap items-center gap-2.5">
-          <button onclick="openCreateWeddingModal()" class="btn-gold px-5 py-3 rounded-xl text-sm font-bold shrink-0">+ Create New Wedding</button>
+          <span class="font-serif italic text-2xl font-bold gold-text block leading-none">Shaadi Saathi</span>
+          <span class="text-xs text-muted">Complete Wedding Hospitality &amp; Planning OS</span>
         </div>
       </div>
-
-      <!-- Role Filter Tabs -->
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <div class="flex flex-wrap gap-2" id="roleFilterButtons">
-          <button onclick="filterPortfolioByRole('ALL')" data-rolebtn="ALL" class="px-4 py-2 rounded-xl text-xs font-bold bg-gold text-obsidian">All Roles (4 Weddings)</button>
-          <button onclick="filterPortfolioByRole('CREATOR SUPER ADMIN')" data-rolebtn="CREATOR SUPER ADMIN" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">👑 Creator Super Admin</button>
-          <button onclick="filterPortfolioByRole('FAMILY HOST ADMIN')" data-rolebtn="FAMILY HOST ADMIN" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">🏠 Family Host Admin</button>
-          <button onclick="filterPortfolioByRole('LOGISTICS COORDINATOR')" data-rolebtn="LOGISTICS COORDINATOR" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">✈️ Logistics Coordinator</button>
-          <button onclick="filterPortfolioByRole('INVITED GUEST PASS')" data-rolebtn="INVITED GUEST PASS" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">🎟️ Invited Guest Pass</button>
-        </div>
-      </div>
-
-      <!-- Global Rollup Strip -->
-      <div id="globalRollupStrip" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4"></div>
-
-      <!-- Creator Weddings Grid -->
-      <div id="creatorWeddingsGrid" class="grid grid-cols-1 xl:grid-cols-2 gap-6"></div>
     </div>
+  </header>
 
-    <!-- Single Wedding Workspace View -->
-    <div id="creator-single-workspace" class="space-y-6 hidden">
-      <!-- Top Workspace Header Bar -->
-      <div class="bento-card p-5 sm:p-6 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-        <div class="flex flex-wrap items-center gap-3.5">
-          <button onclick="backToAllWeddings()" class="px-4 py-2.5 rounded-xl bg-card border border-borderWarm hover:border-gold text-sm font-bold text-gold">← All Weddings by Role</button>
-          <div>
-            <div class="flex items-center gap-2">
-              <h2 id="wsBannerCouple" class="font-serif text-2xl sm:text-3xl font-bold text-cream leading-tight">Aarav &amp; Ananya Wedding</h2>
-              <span id="wsBannerRoleBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-gold/20 text-gold">CREATOR SUPER ADMIN</span>
-            </div>
-            <span id="wsBannerDates" class="text-sm text-muted">12–14 Dec 2026 • Taj Lake Palace, Udaipur</span>
-          </div>
-        </div>
+  <!-- ROOT SLOT FOR SUB-VIEWS -->
+  <main id="app-root" class="w-full px-4 sm:px-8 lg:px-12 pt-6 space-y-6">
+    <!-- View 1: Directory -->
+    <section id="creator-all-weddings" class="space-y-6"></section>
 
-        <div class="flex flex-wrap items-center gap-2.5">
-          <button onclick="toggleAppGridLauncher()" id="btnToggleLauncher" class="btn-gold px-4 py-2.5 rounded-xl text-sm font-bold shadow">
-            📱 Show / Hide App Launcher
-          </button>
-          <button onclick="openImportGuestsModal()" class="px-4 py-2.5 rounded-xl bg-card border border-gold/40 text-gold text-sm font-bold">📥 Import CSV</button>
-          <button onclick="openSampleExportPreviewModal()" class="px-4 py-2.5 rounded-xl bg-card border border-borderWarm text-cream text-sm font-bold">👁️ Sample Export</button>
-          <button onclick="exportCurrentGuestsCSV()" class="px-4 py-2.5 rounded-xl bg-emeraldSS/20 border border-emeraldSS/40 text-emeraldSS text-sm font-bold">⬇ Export Live CSV</button>
-        </div>
-      </div>
+    <!-- View 2: Single Wedding Workspace -->
+    <section id="creator-single-workspace" class="space-y-6 hidden"></section>
+  </main>
 
-      <!-- APP LAUNCHER GRID + CRITICAL ALERTS -->
-      <div id="wsAppLauncherSection" class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start">
-        <div class="xl:col-span-8 bento-card p-5 sm:p-6 space-y-4">
-          <div class="flex flex-wrap items-center justify-between gap-2">
-            <div>
-              <span class="text-xs font-mono uppercase tracking-wider text-gold">Wedding OS App Launcher</span>
-              <h3 class="font-serif text-2xl font-bold text-cream">All Wedding Services — Tap any tool to open below</h3>
-            </div>
-            <span class="text-xs font-mono text-gold">Default: Telemetry</span>
-          </div>
-          <div id="wsAppIconGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3"></div>
-        </div>
+  <!-- MODALS SLOT -->
+  <div id="modal-slot"></div>
 
-        <div class="xl:col-span-4 bento-card p-5 sm:p-6 space-y-4 border-gold/40">
-          <div class="flex items-center justify-between">
-            <span class="text-xs font-mono uppercase tracking-wider text-gold font-bold">⚡ Critical Alerts &amp; Credits</span>
-            <span class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-gold/20 text-gold">Royal Gold (₹14,999)</span>
-          </div>
-          <div class="space-y-3" id="wsCriticalAlertsBox"></div>
-        </div>
-      </div>
-
-      <!-- DYNAMIC FULL-WIDTH ACTIVE MODULE VIEWPORT -->
-      <div id="activeModuleViewport" class="w-full space-y-6"></div>
-    </div>
-  </div>
-
-  <!-- Modals -->
-  <div id="importGuestsModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-surface border border-borderWarm rounded-2xl w-full max-w-lg p-5 space-y-4">
-      <div class="flex justify-between items-center"><h3 class="font-serif text-2xl font-bold text-cream">Import Guests CSV</h3><button onclick="closeImportGuestsModal()" class="text-lg">✕</button></div>
-      <textarea id="csvPasteArea" rows="4" class="w-full bg-card border border-borderWarm rounded-xl p-3 text-xs font-mono text-cream">Prakash Vinaykiya,Bride,Family,Attending,3,Prakash Vinaykiya|Sudarshan Vinaykiya|Dushyant Vinaykiya,all-events
-Mahendra Bafna,Groom,Family,Attending,2,Mahendra Bafna|Kavita Bafna,2-events</textarea>
-      <div class="flex justify-end gap-2.5">
-        <button onclick="downloadSampleGuestCSV()" class="px-4 py-2 rounded-xl bg-card border border-gold/40 text-gold text-xs font-bold">⬇ Sample CSV</button>
-        <button onclick="processGuestImport()" class="btn-gold px-5 py-2 rounded-xl text-xs font-bold">Import Now</button>
-      </div>
-    </div>
-  </div>
-
-  <div id="sampleExportModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-surface border border-borderWarm rounded-2xl w-full max-w-2xl p-5 space-y-4">
-      <div class="flex justify-between items-center"><h3 class="font-serif text-2xl font-bold text-cream">Sample CSV Export Preview</h3><button onclick="closeSampleExportPreviewModal()" class="text-lg">✕</button></div>
-      <pre id="sampleExportPre" class="bg-obsidian border border-borderWarm rounded-xl p-4 text-xs font-mono text-gold overflow-x-auto"></pre>
-    </div>
-  </div>
-
-  <div id="createWeddingModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
-    <div class="bg-surface border border-borderWarm rounded-2xl w-full max-w-md p-5 space-y-4">
-      <div class="flex justify-between items-center"><h3 class="font-serif text-2xl font-bold text-cream">New Wedding Workspace</h3><button onclick="closeCreateWeddingModal()" class="text-lg">✕</button></div>
-      <input id="cwCoupleInput" type="text" placeholder="Couple Name" class="w-full bg-card border border-borderWarm rounded-xl px-4 py-2.5 text-sm text-cream" />
-      <input id="cwCityInput" type="text" placeholder="City / Venue" class="w-full bg-card border border-borderWarm rounded-xl px-4 py-2.5 text-sm text-cream" />
-      <button onclick="saveNewWedding()" class="w-full btn-gold py-2.5 rounded-xl text-sm font-bold">Create Workspace</button>
-    </div>
-  </div>
-
+  <!-- TOAST NOTIFICATION -->
   <div id="toastBox" class="fixed top-5 right-4 z-50 hidden bg-card border-2 border-gold text-cream px-5 py-3 rounded-xl shadow-2xl text-sm font-bold"></div>
 
-  <script type="module">
-    import { initWeddingsView } from './weddings.js';
-    document.addEventListener('DOMContentLoaded', () => {
-      initWeddingsView();
-    });
-  </script>
+  <!-- SCRIPT BOOT -->
+  <script type="module" src="weddings.js"></script>
 </body>
 </html>
