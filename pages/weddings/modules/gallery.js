@@ -1,11 +1,17 @@
+import { galleryPhotos } from '../data/weddings-store.js';
+
 export function renderGalleryModule(viewport, headerBanner) {
-  viewport.innerHTML = headerBanner + `
-    <div class="bento-card p-6 space-y-5">
-      <h4 class="font-serif text-2xl font-bold text-cream">Wedding Photo Gallery &amp; Cloud</h4>
-      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div class="bento-card h-48 bg-cover bg-center rounded-xl relative overflow-hidden" style="background-image:url('https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=600&q=80')"></div>
-        <div class="bento-card h-48 bg-cover bg-center rounded-xl relative overflow-hidden" style="background-image:url('https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=600&q=80')"></div>
+    viewport.innerHTML = headerBanner + `
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-5">
+        ${galleryPhotos.map(p => `
+          <div class="relative h-64 rounded-2xl overflow-hidden border border-borderWarm">
+            <img src="${p.img}" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent flex flex-col justify-end p-5">
+              <span class="text-xs font-bold text-gold uppercase">${p.event}</span>
+              <h4 class="font-serif text-2xl font-bold text-cream">${p.title}</h4>
+            </div>
+          </div>
+        `).join('')}
       </div>
-    </div>
-  `;
+    `;
 }

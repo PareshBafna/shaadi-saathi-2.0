@@ -1,6 +1,5 @@
 import { initHero } from './components/hero/hero.js';
 import { initComparison } from './components/comparison/comparison.js';
-import { initSuites } from './components/suites/suites.js';
 import { initServices } from './services/services.js';
 import { initPricing } from './components/pricing/pricing.js';
 import { initAddons } from './components/addons/addons.js';
@@ -10,7 +9,6 @@ const HOME_TEMPLATE = `
   <div class="hp w-full">
     <div id="home-hero-slot"></div>
     <div id="home-comparison-slot"></div>
-    <div id="home-suites-slot"></div>
     <div id="home-services-slot"></div>
     <div id="home-pricing-slot"></div>
     <div id="home-addons-slot"></div>
@@ -51,7 +49,6 @@ export async function initHomePage(selector = '#root-home') {
   await Promise.all([
     initHero('#home-hero-slot'),
     initComparison('#home-comparison-slot'),
-    initSuites('#home-suites-slot'),
     initServices('#home-services-slot'),
     initPricing('#home-pricing-slot'),
     initAddons('#home-addons-slot'),

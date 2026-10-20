@@ -48,7 +48,7 @@ window.openWorkspaceDirect = async function(moduleId) {
   const mod = moduleId || 'overview';
   await window.switchRootMode('creator', true);
   navigateTo('creator', { wedding: 'w1', module: mod });
-  openWeddingWorkspace('w1', mod, true);
+  openWeddingWorkspace('w1', mod);
 };
 
 window.showToast = function(msg) {

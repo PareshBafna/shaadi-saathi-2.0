@@ -1,4 +1,4 @@
-import { openSubPage, openWeddingWorkspace } from '../pages/weddings/weddings.js';
+import { openWeddingWorkspace } from '../pages/weddings/weddings.js';
 
 const SITE_ROOT = new URL('../', import.meta.url);
 
@@ -40,11 +40,8 @@ export function navigateTo(mode, extraState = {}, replace = false) {
   }
 
   if (mode === 'creator') {
-    const weddingId = extraState.wedding || 'wedding-1';
+    const weddingId = extraState.wedding || 'w1';
     const moduleId = extraState.module || 'overview';
-    if (openWeddingWorkspace) {
-      openWeddingWorkspace(weddingId);
-    }
-    openSubPage(moduleId, true);
+    openWeddingWorkspace(weddingId, moduleId);
   }
 }
