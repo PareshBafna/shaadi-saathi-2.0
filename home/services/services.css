@@ -1,0 +1,8 @@
+.hp-split {
+  display: grid;
+  gap: 24px;
+  align-items: center;
+}
+@media (min-width: 960px) {
+  .hp-split { grid-template-columns: 1fr 1.05fr; gap: 40px; }
+}

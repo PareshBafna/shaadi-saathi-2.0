@@ -1,0 +1,13 @@
+.srv-calendar-timeline {
+  position: relative;
+  padding-left: 24px;
+  border-left: 2px solid rgba(245, 196, 81, 0.5);
+  display: grid;
+  gap: 16px;
+}
+.srv-calendar-day {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #F5C451;
+  display: block;
+}

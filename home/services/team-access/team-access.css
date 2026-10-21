@@ -1,0 +1,18 @@
+.srv-user-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #0A0507;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid #3D2029;
+}
+.srv-role-pill {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  background: rgba(245, 196, 81, 0.15);
+  color: #F5C451;
+}

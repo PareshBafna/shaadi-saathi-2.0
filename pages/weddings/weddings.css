@@ -1,0 +1,108 @@
+@import "tailwindcss";
+
+:root {
+  --bg-obsidian: #0b0c10;
+  --bg-surface: #12141c;
+  --bg-card: #181b26;
+  --gold: #d4af37;
+  --cream: #f4f1ea;
+  --muted: #9ba1b0;
+  --border-warm: #2c3040;
+  --emerald-ss: #10b981;
+  --crimson-ss: #ef4444;
+  --amber-ss: #f59e0b;
+  --sky-ss: #0ea5e9;
+  --wa-green: #25d366;
+}
+
+body {
+  background-color: var(--bg-obsidian);
+  color: var(--cream);
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.bento-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: 1.25rem;
+  transition: all 0.2s ease;
+}
+.bento-card:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+}
+
+.btn-gold {
+  background: linear-gradient(135deg, #d4af37, #aa7c11);
+  color: #0b0c10;
+  font-weight: 700;
+  transition: transform 0.1s ease, filter 0.2s ease;
+}
+.btn-gold:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+}
+
+.ss-input {
+  width: 100%;
+  background-color: var(--bg-obsidian);
+  border: 1px solid var(--border-warm);
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  color: var(--cream);
+  font-size: 0.875rem;
+}
+.ss-input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+
+.ss-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+.ss-table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+.ss-table th {
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--border-warm);
+  background-color: var(--bg-obsidian);
+}
+.ss-table td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid var(--border-warm);
+  font-size: 0.875rem;
+}
+
+.app-tile {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-warm);
+  border-radius: 1rem;
+  padding: 0.875rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.app-tile:hover, .app-tile.active-tile {
+  border-color: var(--gold);
+  background-color: rgba(212, 175, 55, 0.05);
+}
+.app-tile-icon {
+  font-size: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  background-color: rgba(212, 175, 55, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

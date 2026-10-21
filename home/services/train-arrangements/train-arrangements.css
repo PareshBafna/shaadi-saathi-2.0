@@ -1,0 +1,17 @@
+.srv-train-board {
+  background: #191209;
+  border: 1px solid rgba(245, 158, 11, 0.4);
+  border-radius: 16px;
+  padding: 20px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+}
+.srv-train-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.4);
+  padding: 12px;
+  border-radius: 12px;
+  margin-top: 10px;
+}

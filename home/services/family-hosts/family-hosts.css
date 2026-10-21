@@ -1,0 +1,15 @@
+.srv-hosts-grid {
+  display: grid;
+  gap: 16px;
+}
+@media (min-width: 640px) {
+  .srv-hosts-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.srv-host-bride {
+  border-left: 4px solid #F5C451;
+}
+.srv-host-groom {
+  border-left: 4px solid #22C55E;
+}
