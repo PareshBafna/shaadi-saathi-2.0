@@ -1,4 +1,12 @@
-<div id="root-creator" class="min-h-screen bg-obsidian text-cream p-4 sm:p-8 space-y-6">
+<script>
+  // If browser hits /pages/weddings/weddings.html directly on refresh, boot root SPA shell and keep /pages/weddings/weddings.html URL
+  if (!document.getElementById('root-home')) {
+    sessionStorage.setItem('ss_boot_route', 'creator');
+    window.location.replace('../../index.html');
+  }
+</script>
+
+<div class="min-h-screen bg-obsidian text-cream p-4 sm:p-8 space-y-6">
   <!-- All Weddings View -->
   <div id="creator-all-weddings" class="space-y-6">
     <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 bento-card p-6">
@@ -16,8 +24,8 @@
     <div id="roleFilterButtons" class="flex flex-wrap items-center gap-2">
       <button onclick="filterPortfolioByRole('ALL')" data-rolebtn="ALL" class="px-4 py-2 rounded-xl text-xs font-bold bg-gold text-obsidian">ALL ROLES</button>
       <button onclick="filterPortfolioByRole('CREATOR SUPER ADMIN')" data-rolebtn="CREATOR SUPER ADMIN" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">CREATOR ADMIN</button>
-      <button onclick="filterPortfolioByRole('BRIDE')" data-rolebtn="BRIDE" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">BRIDE</button>
-      <button onclick="filterPortfolioByRole('GROOM')" data-rolebtn="GROOM" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">GROOM</button>
+      <button onclick="filterPortfolioByRole('FAMILY HOST ADMIN')" data-rolebtn="FAMILY HOST ADMIN" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">FAMILY HOST</button>
+      <button onclick="filterPortfolioByRole('LOGISTICS COORDINATOR')" data-rolebtn="LOGISTICS COORDINATOR" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">LOGISTICS</button>
       <button onclick="filterPortfolioByRole('INVITED GUEST PASS')" data-rolebtn="INVITED GUEST PASS" class="px-4 py-2 rounded-xl text-xs font-bold bg-card border border-borderWarm text-cream">GUEST PASS</button>
     </div>
 
@@ -49,10 +57,10 @@
     <!-- App Launcher Section -->
     <div id="wsAppLauncherSection" class="bento-card p-6 space-y-5">
       <div class="flex justify-between items-center">
-        <h3 class="font-serif text-xl font-bold text-cream">Shaadi Saathi OS App Launcher (15 Modules)</h3>
+        <h3 class="font-serif text-xl font-bold text-cream">Shaadi Saathi OS App Launcher (18 Modules)</h3>
         <span class="text-xs text-muted">Click any app icon to switch service workspace</span>
       </div>
-      <div id="wsAppIconGrid" class="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-8 gap-3"></div>
+      <div id="wsAppIconGrid" class="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-9 gap-3"></div>
       <div id="wsCriticalAlertsBox" class="grid grid-cols-1 md:grid-cols-4 gap-4 pt-4 border-t border-borderWarm"></div>
     </div>
 

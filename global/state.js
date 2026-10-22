@@ -29,16 +29,25 @@ window.switchRootMode = async function(mode, skipPush = false) {
   const sbSlot = document.getElementById('home-scrollbar-slot');
   if (sbSlot) sbSlot.classList.toggle('hidden', mode !== 'home');
 
+  // Temporarily set root path so any relative ./home/... fetch resolves from root
+  const prevPath = window.location.pathname;
+  const prevState = window.history.state;
+  if (prevPath !== rootUrl('')) {
+    window.history.replaceState(prevState, '', rootUrl(''));
+  }
+
   if (mode === 'home') {
     await initHomePage('#root-home');
   } else if (mode === 'creator') {
     loadCss('./pages/weddings/weddings.css');
-    initWeddingsView('#root-creator');
+    await initWeddingsView('#root-creator');
     backToAllWeddings(true);
   }
 
   if (!skipPush) {
     navigateTo(mode);
+  } else if (prevPath !== rootUrl('')) {
+    window.history.replaceState(prevState, '', prevPath);
   }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });

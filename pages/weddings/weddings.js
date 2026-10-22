@@ -19,7 +19,7 @@ import { renderShagunModule } from './modules/shagun.js';
 import { renderTasksModule } from './modules/tasks.js';
 import { renderVendorsModule } from './modules/vendors.js';
 
-import { navigateTo } from '../../global/router.js';
+import { navigateTo, rootUrl } from '../../global/router.js';
 
 export {
   openWeddingWorkspace,
@@ -110,7 +110,12 @@ export function switchWorkspaceModule(modId) {
   openSubPage(modId);
 }
 
-export function initWeddingsView(selector = '#root-creator') {
+export async function initWeddingsView(selector = '#root-creator') {
+  const container = document.querySelector(selector);
+  if (container && !document.getElementById('creatorWeddingsGrid')) {
+    const res = await fetch(rootUrl('pages/weddings/weddings.html'));
+    container.innerHTML = await res.text();
+  }
   renderCreatorWeddings();
   renderWorkspaceAppLauncher();
 }

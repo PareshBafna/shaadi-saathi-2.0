@@ -13,6 +13,11 @@ export const ROUTE_PATHS = {
 };
 
 export function getRouteMode(pathname = window.location.pathname) {
+  const savedRoute = sessionStorage.getItem('ss_boot_route');
+  if (savedRoute) {
+    sessionStorage.removeItem('ss_boot_route');
+    return savedRoute;
+  }
   if (pathname.endsWith('/pages/weddings/weddings.html') || pathname.includes('/weddings')) return 'creator';
   if (pathname.endsWith('/pages/host/host.html') || pathname.includes('/host')) return 'host';
   if (pathname.endsWith('/pages/guest/guest.html') || pathname.includes('/guest')) return 'guest';
@@ -23,7 +28,7 @@ export function navigateTo(mode, extraState = {}, replace = false) {
   const targetPath = ROUTE_PATHS[mode] || ROUTE_PATHS.home;
   const state = { mode, ...extraState };
 
-  if ( extraState.wedding ) {
+  if (extraState.wedding) {
     sessionStorage.setItem('ss_active_wedding', extraState.wedding);
     sessionStorage.setItem('ss_active_module', extraState.module || 'overview');
   } else {
@@ -33,7 +38,11 @@ export function navigateTo(mode, extraState = {}, replace = false) {
 
   if (replace) {
     window.history.replaceState(state, '', targetPath);
-  } else if (window.location.pathname !== targetPath || extraState.wedding !== window.history.state?.wedding || extraState.module !== window.history.state?.module) {
+  } else if (
+    window.location.pathname !== targetPath ||
+    extraState.wedding !== window.history.state?.wedding ||
+    extraState.module !== window.history.state?.module
+  ) {
     window.history.pushState(state, '', targetPath);
   }
 }
