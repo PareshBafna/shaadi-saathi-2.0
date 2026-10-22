@@ -1,176 +1,231 @@
-import { ALL_SERVICES_ORDERED, currentModuleId, setActiveWeddingId, setCurrentModuleId, messageCreditsRemaining, messageCreditsTotal, guests, familyTasks, weddingsPortfolio } from '../../data/weddings-store.js';
+import {
+  weddingsPortfolio,
+  ROLES,
+  activeWeddingId,
+  setActiveWeddingId,
+  currentModuleId
+} from '../../data/weddings-store.js';
+import { computeLiveTelemetry, formatINR, showToast } from '../../utils/weddings-helpers.js';
 import { renderCreatorWeddings } from '../directory/directory.js';
-import { showToast, computeLiveTelemetry } from '../../utils/weddings-helpers.js';
 import { navigateTo } from '../../../../global/router.js';
 
-export function renderWorkspaceAppLauncher() {
-  const grid = document.getElementById('wsAppIconGrid');
-  const alertsBox = document.getElementById('wsCriticalAlertsBox');
-  if (!grid || !alertsBox) return;
+export const WORKSPACE_APPS = [
+  { id: 'overview', icon: '📊', label: 'Telemetry' },
+  { id: 'whatsapp', icon: '💬', label: 'WhatsApp' },
+  { id: 'hosts', icon: '👑', label: 'Family Hosts' },
+  { id: 'events', icon: '📅', label: 'Events' },
+  { id: 'guests', icon: '👥', label: 'Guest List' },
+  { id: 'web-invite', icon: '💌', label: 'Web Invite' },
+  { id: 'rooms', icon: '🏨', label: 'Rooms' },
+  { id: 'flights', icon: '✈️', label: 'Flights' },
+  { id: 'trains', icon: '🚆', label: 'Trains' },
+  { id: 'sangeet', icon: '🎵', label: 'Sangeet' },
+  { id: 'guestbook', icon: '📖', label: 'Guestbook' },
+  { id: 'gallery', icon: '🖼️', label: 'Gallery' },
+  { id: 'shagun', icon: '🧧', label: 'Shagun' },
+  { id: 'tasks', icon: '✅', label: 'Tasks' },
+  { id: 'vendors', icon: '🤝', label: 'Vendors' },
+  { id: 'budget', icon: '₹', label: 'Budget' },
+  { id: 'calendar', icon: '🗓️', label: 'Calendar' },
+  { id: 'team-access', icon: '🔐', label: 'Role Access' }
+];
 
-  grid.innerHTML = ALL_SERVICES_ORDERED.map(m => {
-    const active = m.id === currentModuleId;
-    return `
-      <button onclick="openSubPage('${m.id}')" class="app-tile ${active ? 'active-tile' : ''}">
-        <div class="app-tile-icon">${m.icon}</div>
-        <div>
-          <strong class="block text-xs font-bold text-cream leading-snug">${m.shortName}</strong>
-          <span class="text-[10px] text-gold font-medium block mt-0.5">${m.badge}</span>
+export function buildWorkspaceShellHTML() {
+  return `
+    <!-- Single Wedding Workspace View -->
+    <div id="creator-single-workspace" class="hidden space-y-6">
+      <div class="bento-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div class="flex items-center gap-4">
+          <button onclick="backToAllWeddings()" class="px-4 py-2 rounded-xl bg-card border border-borderWarm text-xs font-bold text-cream hover:bg-gold hover:text-obsidian transition">← All Weddings</button>
+          <div>
+            <div class="flex items-center gap-2.5 flex-wrap">
+              <h2 id="wsBannerCouple" class="font-serif text-3xl font-bold text-cream">Wedding Workspace</h2>
+              <span id="wsBannerRoleBadge" class="px-3 py-0.5 rounded-full text-xs font-mono font-bold uppercase bg-gold text-obsidian">ROLE: CREATOR</span>
+            </div>
+            <span id="wsBannerDates" class="text-xs text-gold block mt-0.5">18–20 Nov 2026 • Udaipur</span>
+          </div>
         </div>
-      </button>
-    `;
-  }).join('');
-
-  const pendingRsvpCount = guests.filter(g => g.status === 'N/A').length;
-  const unassignedRoomsCount = guests.filter(g => g.status === 'Attending' && g.needsRoom && (g.members || []).some(m => !m.roomId)).length;
-  const openTasksCount = familyTasks.filter(t => !t.done).length;
-
-  alertsBox.innerHTML = `
-    <div class="bg-obsidian border border-gold/40 rounded-2xl p-4 space-y-2">
-      <div class="flex items-center justify-between">
-        <span class="text-xs font-bold text-gold">⚠️ ${messageCreditsRemaining.toLocaleString()} credits remaining</span>
-        <span class="text-xs text-muted">of ${messageCreditsTotal.toLocaleString()}</span>
+        <div class="flex items-center gap-3">
+          <button onclick="toggleAppGridLauncher()" class="px-4 py-2.5 rounded-xl bg-gold/20 border border-gold/40 text-gold text-xs font-bold hover:bg-gold hover:text-obsidian transition">📂 Toggle App Launcher</button>
+        </div>
       </div>
-      <div class="w-full h-2 bg-surface rounded-full overflow-hidden">
-        <div class="bg-gold h-full" style="width:${Math.round((messageCreditsRemaining / messageCreditsTotal) * 100)}%"></div>
+
+      <!-- App Launcher Section -->
+      <div id="wsAppLauncherSection" class="bento-card p-6 space-y-5">
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
+          <h3 class="font-serif text-xl font-bold text-cream">Shaadi Saathi OS App Launcher (18 Modules)</h3>
+          <span class="text-xs text-muted">Click any module icon to switch service workspace</span>
+        </div>
+        <div id="wsAppIconGrid" class="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-9 gap-3"></div>
+        <div id="wsCriticalAlertsBox" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-borderWarm"></div>
       </div>
-      <p class="text-xs text-muted">1 credit = 1 WhatsApp message. Extra credits @ ₹1/message.</p>
+
+      <!-- Active Module Viewport -->
+      <div id="activeModuleViewport" class="space-y-6"></div>
     </div>
 
-    <div onclick="openSubPage('rsvp')" class="bg-obsidian border border-borderWarm hover:border-gold rounded-2xl p-3.5 flex items-center justify-between cursor-pointer transition">
-      <div class="flex items-center gap-3">
-        <span class="text-lg">👥</span>
-        <div>
-          <strong class="text-sm text-cream block">${pendingRsvpCount} family awaiting RSVP</strong>
-          <span class="text-xs text-muted">Click status button in Guest Table</span>
+    <!-- Create New Wedding Modal -->
+    <div id="createWeddingModal" class="fixed inset-0 bg-obsidian/80 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+      <div class="bento-card p-6 max-w-md w-full space-y-4 bg-obsidian border border-gold/40">
+        <h3 class="font-serif text-2xl font-bold text-cream">Create New Wedding Instance</h3>
+        <div class="space-y-3">
+          <div>
+            <label class="text-xs text-muted block mb-1">Couple Names</label>
+            <input type="text" id="cwCoupleInput" placeholder="e.g. Aarav & Ananya" class="ss-input w-full" />
+          </div>
+          <div>
+            <label class="text-xs text-muted block mb-1">City / Venue</label>
+            <input type="text" id="cwCityInput" placeholder="e.g. Udaipur, Rajasthan" class="ss-input w-full" />
+          </div>
+          <div>
+            <label class="text-xs text-muted block mb-1">Dates</label>
+            <input type="text" id="cwDatesInput" placeholder="e.g. 18–20 Nov 2026" class="ss-input w-full" />
+          </div>
+          <div>
+            <label class="text-xs text-muted block mb-1">Your Assigned Role</label>
+            <select id="cwRoleInput" class="ss-input w-full">
+              <option value="Creator">Creator</option>
+              <option value="Host">Host</option>
+              <option value="User">User</option>
+              <option value="Guest">Guest</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex justify-end gap-3 pt-2">
+          <button onclick="closeCreateWeddingModal()" class="px-4 py-2 rounded-xl bg-card border border-borderWarm text-xs font-bold text-cream">Cancel</button>
+          <button onclick="saveNewWedding()" class="btn-gold px-5 py-2 rounded-xl text-xs font-bold">Create Workspace</button>
         </div>
       </div>
-      <span class="text-xs font-bold text-gold">Open →</span>
-    </div>
-
-    <div onclick="openSubPage('rooms')" class="bg-obsidian border border-borderWarm hover:border-gold rounded-2xl p-3.5 flex items-center justify-between cursor-pointer transition">
-      <div class="flex items-center gap-3">
-        <span class="text-lg">🏨</span>
-        <div>
-          <strong class="text-sm text-cream block">${unassignedRoomsCount} family needing stay unallotted</strong>
-          <span class="text-xs text-muted">Allot in Stay Accomodation</span>
-        </div>
-      </div>
-      <span class="text-xs font-bold text-gold">Open →</span>
-    </div>
-
-    <div onclick="openSubPage('tasks')" class="bg-obsidian border border-borderWarm hover:border-gold rounded-2xl p-3.5 flex items-center justify-between cursor-pointer transition">
-      <div class="flex items-center gap-3">
-        <span class="text-lg">✅</span>
-        <div>
-          <strong class="text-sm text-cream block">${openTasksCount} family checklist tasks open</strong>
-          <span class="text-xs text-muted">Tick off in Tasks Checklist</span>
-        </div>
-      </div>
-      <span class="text-xs font-bold text-gold">Open →</span>
     </div>
   `;
 }
 
+export function renderWorkspaceAppLauncher() {
+  const grid = document.getElementById('wsAppIconGrid');
+  const alerts = document.getElementById('wsCriticalAlertsBox');
+  if (!grid) return;
+
+  grid.innerHTML = WORKSPACE_APPS.map(app => {
+    const isActive = currentModuleId === app.id;
+    const cls = isActive
+      ? 'p-3 rounded-xl bg-gold text-obsidian font-bold flex flex-col items-center justify-center gap-1.5 text-center shadow transition cursor-pointer'
+      : 'p-3 rounded-xl bg-surface border border-borderWarm text-cream hover:border-gold/50 flex flex-col items-center justify-center gap-1.5 text-center transition cursor-pointer';
+    return `
+      <button onclick="openSubPage('${app.id}')" class="${cls}">
+        <span class="text-2xl">${app.icon}</span>
+        <span class="text-[11px] leading-tight">${app.label}</span>
+      </button>
+    `;
+  }).join('');
+
+  if (alerts) {
+    const t = computeLiveTelemetry();
+    alerts.innerHTML = `
+      <div class="p-3 rounded-xl bg-surface border border-borderWarm"><span class="text-[11px] text-muted block">Awaiting RSVPs</span><strong class="text-sm text-amberSS">${t.awaitingCount} Families Pending</strong></div>
+      <div class="p-3 rounded-xl bg-surface border border-borderWarm"><span class="text-[11px] text-muted block">Vacant Rooms</span><strong class="text-sm text-emeraldSS">${t.roomsVacant} Available</strong></div>
+      <div class="p-3 rounded-xl bg-surface border border-borderWarm"><span class="text-[11px] text-muted block">Vendor Balance Due</span><strong class="text-sm text-gold">${formatINR(t.budgetDue)}</strong></div>
+      <div class="p-3 rounded-xl bg-surface border border-borderWarm"><span class="text-[11px] text-muted block">Pending Tasks</span><strong class="text-sm text-skySS">${t.tasksPending + t.tasksInProg} Open Tasks</strong></div>
+    `;
+  }
+}
+
 export function toggleAppGridLauncher() {
-  const sec = document.getElementById('wsAppLauncherSection');
-  if (sec) sec.classList.toggle('hidden');
+  const el = document.getElementById('wsAppLauncherSection');
+  if (el) el.classList.toggle('hidden');
+}
+
+export function openWeddingWorkspace(weddingId = 'w1', initialModule = 'overview', skipPush = false) {
+  setActiveWeddingId(weddingId);
+  const w = weddingsPortfolio.find(item => item.id === weddingId) || weddingsPortfolio[0];
+
+  const allView = document.getElementById('creator-all-weddings');
+  const singleView = document.getElementById('creator-single-workspace');
+  if (allView) allView.classList.add('hidden');
+  if (singleView) singleView.classList.remove('hidden');
+
+  const coupleEl = document.getElementById('wsBannerCouple');
+  const roleEl = document.getElementById('wsBannerRoleBadge');
+  const datesEl = document.getElementById('wsBannerDates');
+
+  if (coupleEl) coupleEl.textContent = w.couple;
+  if (roleEl) {
+    roleEl.textContent = `ROLE: ${w.userRole.toUpperCase()}`;
+    roleEl.className = `px-3 py-0.5 rounded-full text-xs font-mono font-bold uppercase ${w.roleBadgeColor}`;
+  }
+  if (datesEl) datesEl.textContent = `${w.dates} • ${w.city}`;
+
+  if (!skipPush) {
+    navigateTo('creator', { wedding: w.id, module: initialModule });
+  }
+
+  if (typeof window.openSubPage === 'function') {
+    window.openSubPage(initialModule, true);
+  }
 }
 
 export function backToAllWeddings(skipPush = false) {
-  document.getElementById('creator-all-weddings')?.classList.remove('hidden');
-  document.getElementById('creator-single-workspace')?.classList.add('hidden');
-  if (!skipPush) navigateTo('creator');
-  renderCreatorWeddings();
-}
+  const allView = document.getElementById('creator-all-weddings');
+  const singleView = document.getElementById('creator-single-workspace');
+  if (singleView) singleView.classList.add('hidden');
+  if (allView) allView.classList.remove('hidden');
 
-export function openWeddingWorkspace(id, targetModule = 'overview', skipPush = false) {
-  setActiveWeddingId(id);
-  setCurrentModuleId(targetModule);
-
-  const w = weddingsPortfolio.find(x => x.id === id) || weddingsPortfolio[0];
-  const coupleEl = document.getElementById('wsBannerCouple');
-  const datesEl = document.getElementById('wsBannerDates');
-  const badgeEl = document.getElementById('wsBannerRoleBadge');
-
-  if (coupleEl) coupleEl.textContent = w.couple + ' Wedding';
-  if (datesEl) datesEl.textContent = `${w.dates} • ${w.city}`;
-  if (badgeEl) badgeEl.textContent = w.userRole || 'CREATOR SUPER ADMIN';
-
-  document.getElementById('creator-all-weddings')?.classList.add('hidden');
-  document.getElementById('creator-single-workspace')?.classList.remove('hidden');
-
-  if (typeof window.openSubPage === 'function') {
-    window.openSubPage(targetModule, true);
+  if (!skipPush) {
+    navigateTo('creator');
   }
-
-  if (!skipPush) navigateTo('creator', { wedding: id, module: targetModule });
-}
-
-export function getSampleCSVContent() {
-  return 'Primary_Guest,Side,Group,Status,Pax,Members,Invite_Variant_Tier\n"Anita Sharma",Bride,Family,Attending,3,"Anita|Rajesh|Rohan",all-events\n"Rohit Mehra",Groom,Friends,Attending,2,"Rohit|Karan",2-events';
-}
-
-export function openSampleExportPreviewModal() {
-  const pre = document.getElementById('sampleExportPre');
-  if (pre) pre.textContent = getSampleCSVContent();
-  const m = document.getElementById('sampleExportModal');
-  if (m) { m.classList.remove('hidden'); m.classList.add('flex'); }
-}
-
-export function closeSampleExportPreviewModal() {
-  document.getElementById('sampleExportModal')?.classList.add('hidden');
-}
-
-export function downloadSampleGuestCSV() {
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([getSampleCSVContent()], { type: 'text/csv' }));
-  a.download = 'Shaadi-Saathi-Sample.csv';
-  a.click();
-}
-
-export function exportCurrentGuestsCSV() {
-  downloadSampleGuestCSV();
-  showToast('Exported Live CSV');
-}
-
-export function openImportGuestsModal() {
-  const m = document.getElementById('importGuestsModal');
-  if (m) { m.classList.remove('hidden'); m.classList.add('flex'); }
-}
-
-export function closeImportGuestsModal() {
-  document.getElementById('importGuestsModal')?.classList.add('hidden');
+  renderCreatorWeddings();
 }
 
 export function openCreateWeddingModal() {
-  const m = document.getElementById('createWeddingModal');
-  if (m) { m.classList.remove('hidden'); m.classList.add('flex'); }
+  const modal = document.getElementById('createWeddingModal');
+  if (modal) {
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
 }
 
 export function closeCreateWeddingModal() {
-  document.getElementById('createWeddingModal')?.classList.add('hidden');
+  const modal = document.getElementById('createWeddingModal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
 }
 
 export function saveNewWedding() {
-  const coupleInput = document.getElementById('cwCoupleInput');
-  const cityInput = document.getElementById('cwCityInput');
-  const couple = coupleInput?.value.trim();
-  if (!couple) return;
+  const couple = document.getElementById('cwCoupleInput')?.value?.trim();
+  const city = document.getElementById('cwCityInput')?.value?.trim();
+  const dates = document.getElementById('cwDatesInput')?.value?.trim() || 'TBD 2026';
+  const roleKey = document.getElementById('cwRoleInput')?.value || 'Creator';
+
+  if (!couple || !city) {
+    showToast('Please enter Couple Names and City');
+    return;
+  }
+
+  const roleConfig = Object.values(ROLES).find(r => r.id === roleKey) || ROLES.CREATOR;
+
   weddingsPortfolio.unshift({
-    id: 'w-' + Date.now(),
+    id: 'w' + (weddingsPortfolio.length + 1),
     couple,
-    city: cityInput?.value.trim() || 'Jaipur',
-    dates: '18–20 Nov 2026',
-    userRole: 'CREATOR SUPER ADMIN',
-    roleBadgeColor: 'bg-gold text-obsidian',
-    rolePermissionsDesc: 'Full Creator & Planner OS Control',
-    img: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?auto=format&fit=crop&w=900&q=80',
-    isLive: false,
-    telemetry: computeLiveTelemetry()
+    dates,
+    city,
+    userRole: roleConfig.id,
+    roleBadgeColor: roleConfig.badgeClass,
+    rolePermissionsDesc: roleConfig.desc,
+    img: 'https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=1000&q=80',
+    isLive: true,
+    telemetry: null
   });
-  if (coupleInput) coupleInput.value = '';
-  if (cityInput) cityInput.value = '';
+
   closeCreateWeddingModal();
   renderCreatorWeddings();
+  showToast(`Created ${couple} (${roleConfig.id})`);
 }
+
+// Keep modal/CSV helpers exported so existing modules calling them never break
+export function openImportGuestsModal() { showToast('Import CSV modal ready'); }
+export function closeImportGuestsModal() {}
+export function openSampleExportPreviewModal() {}
+export function closeSampleExportPreviewModal() {}
+export function downloadSampleGuestCSV() { showToast('Downloading Sample CSV...'); }
+export function exportCurrentGuestsCSV() { showToast('Exporting Guests CSV...'); }

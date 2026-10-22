@@ -1,135 +1,155 @@
-import { guests, roomInventory, vendors, familyTasks, weddingEvents } from '../data/weddings-store.js';
+import { weddingEvents, guests, roomInventory, vendors, familyTasks } from '../data/weddings-store.js';
 
-export function formatINR(n) {
-  return '₹' + Number(n || 0).toLocaleString('en-IN');
+export function formatINR(amount = 0) {
+  return '₹' + Number(amount || 0).toLocaleString('en-IN');
 }
 
 export function showToast(msg) {
-  let toast = document.getElementById('ssToast');
-  if (!toast) {
-    toast = document.createElement('div');
-    toast.id = 'ssToast';
-    toast.className = 'fixed bottom-6 right-6 z-50 px-5 py-3 rounded-xl bg-gold text-obsidian text-xs font-extrabold shadow-2xl transition-opacity duration-300 pointer-events-none';
-    document.body.appendChild(toast);
+  if (typeof window.showToast === 'function') {
+    window.showToast(msg);
   }
-  toast.textContent = msg;
-  toast.style.opacity = '1';
-  clearTimeout(window.__ssToastTimer);
-  window.__ssToastTimer = setTimeout(() => {
-    toast.style.opacity = '0';
-  }, 2600);
 }
 
 export function getStayLocationsList() {
-  return [...new Set(roomInventory.map(r => r.location))];
+  return [...new Set(roomInventory.map(r => r.wing))];
 }
 
 export function getTierLabel(tier) {
-  if (tier === '1-event') return 'Variant A: 1 Event (Reception)';
-  if (tier === '2-events') return 'Variant B: 2 Events (Sangeet+Shaadi)';
-  return 'Variant C: All Events VIP';
+  return tier || 'Guest';
 }
 
-export function getRoomOccupants(roomId) {
-  const list = [];
-  guests.forEach(g => {
-    if (g.status === 'Declined' || !g.needsRoom) return;
-    (g.members || []).forEach((m, idx) => {
-      if (m.roomId === roomId) list.push({ guestId: g.id, primaryName: g.name, memberIndex: idx, memberName: m.name });
-    });
-  });
-  return list;
+export function getRoomOccupants(roomNumber) {
+  return guests.filter(g => g.room === roomNumber && g.status === 'Attending');
 }
 
 export function computeLiveTelemetry() {
-  const att = guests.filter(g => g.status === 'Attending');
-  const dec = guests.filter(g => g.status === 'Declined');
-  const na = guests.filter(g => g.status === 'N/A');
-  const pax = att.reduce((s, g) => s + Number(g.pax || 0), 0);
+  const guestsTotal = guests.length;
+  const attendingList = guests.filter(g => g.status === 'Attending');
+  const declinedList = guests.filter(g => g.status === 'Declined');
+  const awaitingList = guests.filter(g => g.status === 'Awaiting');
 
-  let rFull = 0, rPart = 0, rVac = 0;
+  const attendingPax = attendingList.reduce((acc, g) => acc + (Number(g.pax) || 0), 0);
+  const confirmedPct = guestsTotal ? Math.round((attendingList.length / guestsTotal) * 100) : 0;
+
+  let roomsFull = 0;
+  let roomsPartial = 0;
+  let roomsVacant = 0;
+
   roomInventory.forEach(r => {
-    const c = getRoomOccupants(r.id).length;
-    if (c === 0) rVac++;
-    else if (c >= r.maxPax) rFull++;
-    else rPart++;
+    const occ = getRoomOccupants(r.number).reduce((s, g) => s + (Number(g.pax) || 0), 0);
+    if (occ === 0) roomsVacant++;
+    else if (occ >= r.capacity) roomsFull++;
+    else roomsPartial++;
   });
 
-  let fPax = 0, tPax = 0;
-  guests.forEach(g => {
-    if (g.status === 'Declined') return;
-    if (g.travel?.mode === 'Flight' && g.travel?.number) fPax += Number(g.pax || 1);
-    if (g.travel?.mode === 'Train' && g.travel?.number) tPax += Number(g.pax || 1);
-  });
+  const flightPax = attendingList.filter(g => g.travelMode === 'Flight').reduce((s, g) => s + (Number(g.pax) || 0), 0);
+  const trainPax = attendingList.filter(g => g.travelMode === 'Train').reduce((s, g) => s + (Number(g.pax) || 0), 0);
 
-  const bTot = vendors.reduce((s, v) => s + v.total, 0);
-  const bPaid = vendors.reduce((s, v) => s + v.paid, 0);
+  const budgetTotal = vendors.reduce((s, v) => s + (Number(v.total) || 0), 0);
+  const budgetPaid = vendors.reduce((s, v) => s + (Number(v.paid) || 0), 0);
+  const budgetDue = Math.max(0, budgetTotal - budgetPaid);
+  const budgetPaidPct = budgetTotal ? Math.round((budgetPaid / budgetTotal) * 100) : 0;
+
+  const tasksTotal = familyTasks.length;
+  const tasksDone = familyTasks.filter(t => t.status === 'Done').length;
+  const tasksInProg = familyTasks.filter(t => t.status === 'In Progress').length;
+  const tasksPending = familyTasks.filter(t => t.status === 'Pending').length;
 
   return {
-    guestsTotal: guests.length, attending: att.length, declined: dec.length, na: na.length, attendingPax: pax,
+    guestsTotal,
+    attendingPax,
+    confirmedPct,
+    attendingCount: attendingList.length,
+    declinedCount: declinedList.length,
+    awaitingCount: awaitingList.length,
+    roomsTotal: roomInventory.length,
+    roomsFull,
+    roomsPartial,
+    roomsVacant,
     eventsCount: weddingEvents.length,
-    roomsTotal: roomInventory.length, roomsFull: rFull, roomsPartial: rPart, roomsVacant: rVac,
-    flightPax: fPax, trainPax: tPax,
-    budgetTotal: bTot, budgetPaid: bPaid,
-    tasksTotal: familyTasks.length,
-    tasksCompleted: familyTasks.filter(t => t.done || t.status === 'Completed').length,
-    tasksInProgress: familyTasks.filter(t => !t.done && t.status === 'In Progress').length,
-    tasksPending: familyTasks.filter(t => !t.done && t.status === 'Pending').length,
-    tasksNotStarted: familyTasks.filter(t => !t.done && t.status === 'Not Started').length
+    flightPax,
+    trainPax,
+    budgetTotal,
+    budgetPaid,
+    budgetDue,
+    budgetPaidPct,
+    tasksTotal,
+    tasksDone,
+    tasksInProg,
+    tasksPending
   };
 }
 
 export function buildTelemetryCardHTML(t) {
-  const attPct = t.guestsTotal ? Math.round((t.attending / t.guestsTotal) * 100) : 0;
-  const decPct = t.guestsTotal ? Math.round((t.declined / t.guestsTotal) * 100) : 0;
-  const naPct = Math.max(0, 100 - attPct - decPct);
-  const bPct = t.budgetTotal ? Math.round((t.budgetPaid / t.budgetTotal) * 100) : 0;
+  const attPct = t.guestsTotal ? Math.round((t.attendingCount / t.guestsTotal) * 100) : 0;
+  const decPct = t.guestsTotal ? Math.round((t.declinedCount / t.guestsTotal) * 100) : 0;
+  const awtPct = Math.max(0, 100 - attPct - decPct);
 
   return `
-    <div class="space-y-4 text-sm">
-      <div class="bg-obsidian/90 p-5 rounded-2xl border border-borderWarm space-y-2.5">
-        <div class="flex justify-between font-bold text-base"><span>👥 Guests (${t.guestsTotal} Families • ${t.attendingPax} Attending Pax)</span><span class="text-gold">${attPct}% Confirmed</span></div>
-        <div class="w-full h-3 bg-surface rounded-full overflow-hidden flex">
-          <div class="bg-emeraldSS h-full" style="width:${attPct}%"></div>
-          <div class="bg-crimsonSS h-full" style="width:${decPct}%"></div>
-          <div class="bg-amberSS h-full" style="width:${naPct}%"></div>
+    <div class="space-y-4">
+      <!-- Guest RSVP Bar -->
+      <div class="p-4 rounded-xl bg-obsidian/70 border border-borderWarm space-y-3">
+        <div class="flex justify-between items-center text-xs font-bold">
+          <span class="text-cream">👥 Guests (${t.guestsTotal} Families • ${t.attendingPax} Attending Pax)</span>
+          <span class="text-gold">${t.confirmedPct}% Confirmed</span>
         </div>
-        <div class="grid grid-cols-3 gap-2.5 text-center pt-1">
-          <div class="bg-card py-2 rounded-xl">Attending: <strong class="text-emeraldSS text-base">${t.attending}</strong></div>
-          <div class="bg-card py-2 rounded-xl">Declined: <strong class="text-crimsonSS text-base">${t.declined}</strong></div>
-          <div class="bg-card py-2 rounded-xl">Awaiting: <strong class="text-amberSS text-base">${t.na}</strong></div>
+        <div class="w-full h-2.5 rounded-full overflow-hidden flex bg-surface">
+          <div style="width:${attPct}%" class="bg-emeraldSS"></div>
+          <div style="width:${decPct}%" class="bg-crimsonSS"></div>
+          <div style="width:${awtPct}%" class="bg-amberSS"></div>
         </div>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-obsidian/90 p-5 rounded-2xl border border-borderWarm space-y-2">
-          <div class="flex justify-between font-bold text-gold text-base"><span>🏨 Room Allotments (${t.roomsTotal})</span><span>📅 ${t.eventsCount} Events</span></div>
-          <div class="grid grid-cols-3 gap-2 text-center">
-            <div class="bg-card py-2 rounded-xl">Full: <strong class="text-emeraldSS">${t.roomsFull}</strong></div>
-            <div class="bg-card py-2 rounded-xl">Partial: <strong class="text-amberSS">${t.roomsPartial}</strong></div>
-            <div class="bg-card py-2 rounded-xl">Vacant: <strong class="text-muted">${t.roomsVacant}</strong></div>
-          </div>
-        </div>
-        <div class="bg-obsidian/90 p-5 rounded-2xl border border-borderWarm space-y-2">
-          <div class="font-bold text-skySS text-base">✈️🚆 Flight &amp; Train Arrangements</div>
-          <div class="grid grid-cols-2 gap-2 text-center">
-            <div class="bg-card py-2 rounded-xl">✈️ Flight Pax: <strong class="text-cream text-base">${t.flightPax}</strong></div>
-            <div class="bg-card py-2 rounded-xl">🚆 Train Pax: <strong class="text-gold text-base">${t.trainPax}</strong></div>
-          </div>
+        <div class="grid grid-cols-3 gap-2 text-center text-xs">
+          <div class="py-1.5 rounded-lg bg-surface border border-borderWarm text-muted">Attending: <strong class="text-emeraldSS">${t.attendingCount}</strong></div>
+          <div class="py-1.5 rounded-lg bg-surface border border-borderWarm text-muted">Declined: <strong class="text-crimsonSS">${t.declinedCount}</strong></div>
+          <div class="py-1.5 rounded-lg bg-surface border border-borderWarm text-muted">Awaiting: <strong class="text-amberSS">${t.awaitingCount}</strong></div>
         </div>
       </div>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-obsidian/90 p-5 rounded-2xl border border-borderWarm space-y-2">
-          <div class="flex justify-between font-bold text-base"><span class="text-gold">₹ Budget Planner</span><span class="text-emeraldSS">${bPct}% Paid</span></div>
-          <div class="flex justify-between text-sm"><span>Total: <strong>${formatINR(t.budgetTotal)}</strong></span><span class="text-amberSS font-bold">Balance Due: ${formatINR(t.budgetTotal - t.budgetPaid)}</span></div>
+      <!-- Rooms & Travel Row -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="p-3.5 rounded-xl bg-obsidian/70 border border-borderWarm space-y-2.5">
+          <div class="flex justify-between items-center text-xs font-bold">
+            <span class="text-cream">🏨 Room Allotments (${t.roomsTotal})</span>
+            <span class="text-gold">📅 ${t.eventsCount} Events</span>
+          </div>
+          <div class="grid grid-cols-3 gap-1.5 text-center text-[11px]">
+            <div class="py-1 rounded bg-surface border border-borderWarm text-muted">Full: <strong class="text-emeraldSS">${t.roomsFull}</strong></div>
+            <div class="py-1 rounded bg-surface border border-borderWarm text-muted">Partial: <strong class="text-amberSS">${t.roomsPartial}</strong></div>
+            <div class="py-1 rounded bg-surface border border-borderWarm text-muted">Vacant: <strong class="text-cream">${t.roomsVacant}</strong></div>
+          </div>
         </div>
-        <div class="bg-obsidian/90 p-5 rounded-2xl border border-borderWarm space-y-2">
-          <div class="flex justify-between font-bold text-emeraldSS text-base"><span>✅ Tasks Checklist (${t.tasksTotal})</span><span>Completed: ${t.tasksCompleted}</span></div>
-          <div class="grid grid-cols-3 gap-2 text-center text-xs">
-            <div class="bg-card py-1.5 rounded-xl">Pending: <strong class="text-amberSS">${t.tasksPending}</strong></div>
-            <div class="bg-card py-1.5 rounded-xl">In Prog: <strong class="text-skySS">${t.tasksInProgress}</strong></div>
-            <div class="bg-card py-1.5 rounded-xl">Done: <strong class="text-emeraldSS">${t.tasksCompleted}</strong></div>
+
+        <div class="p-3.5 rounded-xl bg-obsidian/70 border border-borderWarm space-y-2.5">
+          <div class="text-xs font-bold text-skySS">✈️ 🚆 Flight & Train Arrangements</div>
+          <div class="grid grid-cols-2 gap-2 text-center text-xs">
+            <div class="py-1.5 rounded bg-surface border border-borderWarm text-muted">✈️ Flight Pax: <strong class="text-cream">${t.flightPax}</strong></div>
+            <div class="py-1.5 rounded bg-surface border border-borderWarm text-muted">🚆 Train Pax: <strong class="text-gold">${t.trainPax}</strong></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Budget & Tasks Row -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <div class="p-3.5 rounded-xl bg-obsidian/70 border border-borderWarm space-y-2">
+          <div class="flex justify-between items-center text-xs font-bold">
+            <span class="text-gold">₹ Budget Planner</span>
+            <span class="text-emeraldSS">${t.budgetPaidPct}% Paid</span>
+          </div>
+          <div class="flex justify-between items-center text-xs pt-1">
+            <div><span class="text-muted block text-[11px]">Total:</span><strong class="text-cream">${formatINR(t.budgetTotal)}</strong></div>
+            <div class="text-right"><span class="text-muted block text-[11px]">Balance Due:</span><strong class="text-amberSS">${formatINR(t.budgetDue)}</strong></div>
+          </div>
+        </div>
+
+        <div class="p-3.5 rounded-xl bg-obsidian/70 border border-borderWarm space-y-2.5">
+          <div class="flex justify-between items-center text-xs font-bold">
+            <span class="text-emeraldSS">✅ Tasks Checklist (${t.tasksTotal})</span>
+            <span class="text-emeraldSS">Done: ${t.tasksDone}</span>
+          </div>
+          <div class="grid grid-cols-3 gap-1.5 text-center text-[11px]">
+            <div class="py-1 rounded bg-surface border border-borderWarm text-muted">Pending: <strong class="text-amberSS">${t.tasksPending}</strong></div>
+            <div class="py-1 rounded bg-surface border border-borderWarm text-muted">In Prog: <strong class="text-skySS">${t.tasksInProg}</strong></div>
+            <div class="py-1 rounded bg-surface border border-borderWarm text-muted">Done: <strong class="text-emeraldSS">${t.tasksDone}</strong></div>
           </div>
         </div>
       </div>
