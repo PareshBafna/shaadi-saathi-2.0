@@ -32,7 +32,7 @@ window.switchRootMode = async function(mode, skipPush = false) {
   if (mode === 'home') {
     await initHomePage('#root-home');
   } else if (mode === 'creator') {
-    loadCss('./pages/weddings/weddings.css');
+    loadCss('pages/weddings/weddings.css');
     await initWeddingsView('#root-creator');
     if (!skipPush) {
       backToAllWeddings(true);
@@ -83,23 +83,23 @@ export async function initAllModules() {
 
   const { mode } = parseHashRoute();
 
-  loadCss('./global/components/header/header.css');
-  loadCss('./global/components/footer/footer.css');
-  loadCss('./global/components/navigation/navigation.css');
+  loadCss('global/components/header/header.css');
+  loadCss('global/components/footer/footer.css');
+  loadCss('global/components/navigation/navigation.css');
 
   const navSlot = document.getElementById('home-navigation-slot');
   if (navSlot) navSlot.innerHTML = await (await fetch(rootUrl('global/components/navigation/navigation.html'))).text();
 
   if (mode === 'home') {
-    loadCss('./home/home.css');
-    loadCss('./home/components/scrollbar/scrollbar.css');
-    loadCss('./home/components/hero/hero.css');
-    loadCss('./home/components/comparison/comparison.css');
-    loadCss('./home/components/suites/suites.css');
-    loadCss('./home/services/services.css');
-    loadCss('./home/components/pricing/pricing.css');
-    loadCss('./home/components/addons/addons.css');
-    loadCss('./home/components/faq/faq.css');
+    loadCss('home/home.css');
+    loadCss('home/components/scrollbar/scrollbar.css');
+    loadCss('home/components/hero/hero.css');
+    loadCss('home/components/comparison/comparison.css');
+    loadCss('home/components/suites/suites.css');
+    loadCss('home/services/services.css');
+    loadCss('home/components/pricing/pricing.css');
+    loadCss('home/components/addons/addons.css');
+    loadCss('home/components/faq/faq.css');
 
     const headerSlot = document.getElementById('home-header-slot');
     if (headerSlot) headerSlot.innerHTML = await (await fetch(rootUrl('global/components/header/header.html'))).text();
