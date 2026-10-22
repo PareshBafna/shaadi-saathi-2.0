@@ -1,7 +1,7 @@
 import { initHomePage } from '../home/home.js';
 import { initScrollbar } from '../home/components/scrollbar/scrollbar.js';
 import { initWeddingsView, openWeddingWorkspace, backToAllWeddings } from '../pages/weddings/weddings.js';
-import { rootUrl, getRouteMode, navigateTo } from './router.js';
+import { rootUrl, parseHashRoute, navigateTo } from './router.js';
 
 export function loadCss(href) {
   const resolved = href.startsWith('./') || href.startsWith('../')
@@ -29,25 +29,18 @@ window.switchRootMode = async function(mode, skipPush = false) {
   const sbSlot = document.getElementById('home-scrollbar-slot');
   if (sbSlot) sbSlot.classList.toggle('hidden', mode !== 'home');
 
-  // Temporarily set root path so any relative ./home/... fetch resolves from root
-  const prevPath = window.location.pathname;
-  const prevState = window.history.state;
-  if (prevPath !== rootUrl('')) {
-    window.history.replaceState(prevState, '', rootUrl(''));
-  }
-
   if (mode === 'home') {
     await initHomePage('#root-home');
   } else if (mode === 'creator') {
     loadCss('./pages/weddings/weddings.css');
     await initWeddingsView('#root-creator');
-    backToAllWeddings(true);
+    if (!skipPush) {
+      backToAllWeddings(true);
+    }
   }
 
   if (!skipPush) {
     navigateTo(mode);
-  } else if (prevPath !== rootUrl('')) {
-    window.history.replaceState(prevState, '', prevPath);
   }
 
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -69,18 +62,14 @@ window.showToast = function(msg) {
   window._t = setTimeout(() => box.classList.add('hidden'), 2800);
 };
 
-async function handleRouting(event) {
-  const st = event?.state || window.history.state || {};
-  const mode = st.mode || getRouteMode(window.location.pathname);
-  const wedding = st.wedding || sessionStorage.getItem('ss_active_wedding');
-  const mod = st.module || sessionStorage.getItem('ss_active_module') || 'overview';
+async function handleRouting() {
+  const { mode, wedding, module } = parseHashRoute();
 
   await window.switchRootMode(mode, true);
-  navigateTo(mode, wedding ? { wedding, module: mod } : {}, true);
 
   if (mode === 'creator') {
     if (wedding) {
-      openWeddingWorkspace(wedding, mod, true);
+      openWeddingWorkspace(wedding, module, true);
     } else {
       backToAllWeddings(true);
     }
@@ -88,12 +77,9 @@ async function handleRouting(event) {
 }
 
 export async function initAllModules() {
-  const initialPathname = window.location.pathname;
-  const initialState = window.history.state;
-  const detectedMode = getRouteMode(initialPathname);
-
-  if (initialPathname !== rootUrl('')) {
-    window.history.replaceState(initialState, '', rootUrl(''));
+  // If user opened /pages/weddings/weddings.html old URL, normalize to /#weddings in-place
+  if (window.location.pathname.includes('/weddings')) {
+    window.history.replaceState(null, '', rootUrl('') + (window.location.hash || '#weddings'));
   }
 
   loadCss('./home/home.css');
@@ -121,6 +107,7 @@ export async function initAllModules() {
   const footerSlot = document.getElementById('home-footer-slot');
   if (footerSlot) footerSlot.innerHTML = await (await fetch(rootUrl('global/components/footer/footer.html'))).text();
 
-  await handleRouting({ state: { ...initialState, mode: detectedMode } });
+  await handleRouting();
+  window.addEventListener('hashchange', handleRouting);
   window.addEventListener('popstate', handleRouting);
 }

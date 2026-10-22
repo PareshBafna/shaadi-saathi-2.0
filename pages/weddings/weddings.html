@@ -1,11 +1,3 @@
-<script>
-  // If browser hits /pages/weddings/weddings.html directly on refresh, boot root SPA shell and keep /pages/weddings/weddings.html URL
-  if (!document.getElementById('root-home')) {
-    sessionStorage.setItem('ss_boot_route', 'creator');
-    window.location.replace('../../index.html');
-  }
-</script>
-
 <div class="min-h-screen bg-obsidian text-cream p-4 sm:p-8 space-y-6">
   <!-- All Weddings View -->
   <div id="creator-all-weddings" class="space-y-6">

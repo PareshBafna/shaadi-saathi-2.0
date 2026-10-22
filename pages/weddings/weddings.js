@@ -113,8 +113,10 @@ export function switchWorkspaceModule(modId) {
 export async function initWeddingsView(selector = '#root-creator') {
   const container = document.querySelector(selector);
   if (container && !document.getElementById('creatorWeddingsGrid')) {
-    const res = await fetch(rootUrl('pages/weddings/weddings.html'));
-    container.innerHTML = await res.text();
+    const htmlText = await (await fetch(rootUrl('pages/weddings/weddings.html'))).text();
+    const doc = new DOMParser().parseFromString(htmlText, 'text/html');
+    const inner = doc.getElementById('weddings-view-content');
+    container.innerHTML = inner ? inner.innerHTML : htmlText;
   }
   renderCreatorWeddings();
   renderWorkspaceAppLauncher();

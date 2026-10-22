@@ -5,44 +5,57 @@ export function rootUrl(relPath = '') {
   return new URL(clean, SITE_ROOT).pathname;
 }
 
-export const ROUTE_PATHS = {
-  home: rootUrl(''),
-  creator: rootUrl('pages/weddings/weddings.html'),
-  host: rootUrl('pages/host/host.html'),
-  guest: rootUrl('pages/guest/guest.html')
+export const ROUTE_HASHES = {
+  home: '#home',
+  creator: '#weddings',
+  host: '#hosts',
+  guest: '#guest'
 };
 
-export function getRouteMode(pathname = window.location.pathname) {
-  const savedRoute = sessionStorage.getItem('ss_boot_route');
-  if (savedRoute) {
-    sessionStorage.removeItem('ss_boot_route');
-    return savedRoute;
+export function parseHashRoute() {
+  const rawHash = window.location.hash || '';
+  const [route, queryString] = rawHash.split('?');
+  const params = new URLSearchParams(queryString || '');
+
+  let mode = 'home';
+  if (route === '#weddings' || route === '#wedding-details' || route === '#creator') {
+    mode = 'creator';
+  } else if (route === '#hosts' || route === '#host') {
+    mode = 'host';
+  } else if (route === '#guest' || route === '#calendar') {
+    mode = 'guest';
   }
-  if (pathname.endsWith('/pages/weddings/weddings.html') || pathname.includes('/weddings')) return 'creator';
-  if (pathname.endsWith('/pages/host/host.html') || pathname.includes('/host')) return 'host';
-  if (pathname.endsWith('/pages/guest/guest.html') || pathname.includes('/guest')) return 'guest';
-  return 'home';
+
+  return {
+    route: route || '#home',
+    mode,
+    wedding: params.get('id') || params.get('wedding') || null,
+    module: params.get('module') || 'overview'
+  };
+}
+
+export function getRouteMode() {
+  return parseHashRoute().mode;
 }
 
 export function navigateTo(mode, extraState = {}, replace = false) {
-  const targetPath = ROUTE_PATHS[mode] || ROUTE_PATHS.home;
-  const state = { mode, ...extraState };
+  let targetHash = ROUTE_HASHES[mode] || '#home';
 
-  if (extraState.wedding) {
+  if (mode === 'creator' && extraState.wedding) {
+    const mod = extraState.module || 'overview';
+    targetHash = `#wedding-details?id=${encodeURIComponent(extraState.wedding)}&module=${encodeURIComponent(mod)}`;
     sessionStorage.setItem('ss_active_wedding', extraState.wedding);
-    sessionStorage.setItem('ss_active_module', extraState.module || 'overview');
+    sessionStorage.setItem('ss_active_module', mod);
   } else {
     sessionStorage.removeItem('ss_active_wedding');
     sessionStorage.removeItem('ss_active_module');
   }
 
+  if (window.location.hash === targetHash) return;
+
   if (replace) {
-    window.history.replaceState(state, '', targetPath);
-  } else if (
-    window.location.pathname !== targetPath ||
-    extraState.wedding !== window.history.state?.wedding ||
-    extraState.module !== window.history.state?.module
-  ) {
-    window.history.pushState(state, '', targetPath);
+    window.history.replaceState(null, '', rootUrl('') + targetHash);
+  } else {
+    window.history.pushState(null, '', rootUrl('') + targetHash);
   }
 }
