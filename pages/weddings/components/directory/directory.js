@@ -32,9 +32,10 @@ export function renderCreatorWeddings() {
     ? weddingsPortfolio
     : weddingsPortfolio.filter(w => w.userRole === activeRoleFilter);
 
+  grid.className = 'grid grid-cols-1 lg:grid-cols-2 gap-6';
   grid.innerHTML = filtered.map(w => {
     const t = w.isLive ? tLive : w.telemetry;
-    const actionBtn = w.userRole === 'INVITED GUEST PASS'
+    const actionBtn = w.userRole === 'GUEST'
       ? `<button onclick="typeof switchRootMode === 'function' ? switchRootMode('guest') : openWeddingWorkspace('${w.id}')" class="w-full py-3 rounded-xl bg-emeraldSS/20 border border-emeraldSS/40 text-emeraldSS text-sm font-bold">Open Private Guest Pass for ${w.couple} →</button>`
       : `<button onclick="openWeddingWorkspace('${w.id}')" class="w-full btn-gold py-3 rounded-xl text-sm font-bold">Open ${w.couple} Workspace as ${w.userRole} →</button>`;
 

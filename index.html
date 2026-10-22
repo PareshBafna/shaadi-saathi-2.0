@@ -8,22 +8,7 @@
   <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
   <link rel="manifest" href="/manifest.webmanifest" />
   <meta name="theme-color" content="#0A0507" />
-  <meta name="description" content="" />
-  <meta property="og:type" content="website" />
-  <meta property="og:site_name" content="Shaadi Saathi - The Modern Wedding Operating System" />
-  <meta property="og:title" content="Shaadi Saathi - The Modern Wedding Operating System" />
-  <meta property="og:description" content="Centralized guest management, interactive digital web invites, one-tap .ics ceremony calendar sync, and automated WhatsApp campaigns." />
-  <meta property="og:url" content="https://shaadi-saathi-2-0.pages.dev/" />
-  <meta property="og:image" content="https://shaadi-saathi-2-0.pages.dev/icons/og-share.jpg" />
-  <meta property="og:image:type" content="image/jpeg" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="1200" />
-  <meta property="og:image:alt" content="Shaadi Saathi logo" />
-  <meta name="twitter:card" content="summary" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-title" content="Shaadi Saathi - The Modern Wedding Operating System" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="description" content="Centralized guest management, interactive digital web invites, one-tap .ics ceremony calendar sync, and automated WhatsApp campaigns." />
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,24 +35,26 @@
     }
   </script>
 </head>
-<body class="selection:bg-gold selection:text-obsidian">
+<body class="selection:bg-gold selection:text-obsidian bg-obsidian text-cream font-sans antialiased">
   <div id="home-header-slot"></div>
   <div id="home-scrollbar-slot"></div>
 
-  <div id="root-home" class="hp w-full">
-    <div id="home-hero-slot"></div>
-    <div id="home-comparison-slot"></div>
-    <div id="home-suites-slot"></div>
-    <div id="home-services-slot"></div>
-    <div id="home-pricing-slot"></div>
-    <div id="home-addons-slot"></div>
-    <div id="home-faq-slot"></div>
-    <div id="home-footer-slot"></div>
-  </div>
+  <main>
+    <div id="root-home" class="hp w-full">
+      <div id="home-hero-slot"></div>
+      <div id="home-comparison-slot"></div>
+      <div id="home-suites-slot"></div>
+      <div id="home-services-slot"></div>
+      <div id="home-pricing-slot"></div>
+      <div id="home-addons-slot"></div>
+      <div id="home-faq-slot"></div>
+      <div id="home-footer-slot"></div>
+    </div>
 
-  <div id="root-creator" class="w-full px-4 sm:px-8 lg:px-12 pt-6 space-y-6 hidden"></div>
-  <div id="root-host" class="w-full px-4 sm:px-8 lg:px-12 pt-6 space-y-6 hidden"></div>
-  <div id="root-guest" class="w-full px-4 sm:px-8 lg:px-12 pt-6 space-y-6 hidden"></div>
+    <div id="root-creator" class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6 hidden"></div>
+    <div id="root-host" class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6 hidden"></div>
+    <div id="root-guest" class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6 hidden"></div>
+  </main>
 
   <div id="home-navigation-slot"></div>
   <div id="toastBox" class="fixed top-5 right-4 z-50 hidden bg-card border-2 border-gold text-cream px-5 py-3 rounded-xl shadow-2xl text-sm font-bold"></div>

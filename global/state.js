@@ -77,35 +77,37 @@ async function handleRouting() {
 }
 
 export async function initAllModules() {
-  // If user opened /pages/weddings/weddings.html old URL, normalize to /#weddings in-place
   if (window.location.pathname.includes('/weddings')) {
     window.history.replaceState(null, '', rootUrl('') + (window.location.hash || '#weddings'));
   }
 
-  loadCss('./home/home.css');
+  const { mode } = parseHashRoute();
+
   loadCss('./global/components/header/header.css');
   loadCss('./global/components/footer/footer.css');
   loadCss('./global/components/navigation/navigation.css');
-  loadCss('./home/components/scrollbar/scrollbar.css');
-  loadCss('./home/components/hero/hero.css');
-  loadCss('./home/components/comparison/comparison.css');
-  loadCss('./home/components/suites/suites.css');
-  loadCss('./home/services/services.css');
-  loadCss('./home/components/pricing/pricing.css');
-  loadCss('./home/components/addons/addons.css');
-  loadCss('./home/components/faq/faq.css');
-
-  const headerSlot = document.getElementById('home-header-slot');
-  if (headerSlot) headerSlot.innerHTML = await (await fetch(rootUrl('global/components/header/header.html'))).text();
 
   const navSlot = document.getElementById('home-navigation-slot');
   if (navSlot) navSlot.innerHTML = await (await fetch(rootUrl('global/components/navigation/navigation.html'))).text();
 
-  await initHomePage('#root-home');
-  await initScrollbar('#home-scrollbar-slot');
+  if (mode === 'home') {
+    loadCss('./home/home.css');
+    loadCss('./home/components/scrollbar/scrollbar.css');
+    loadCss('./home/components/hero/hero.css');
+    loadCss('./home/components/comparison/comparison.css');
+    loadCss('./home/components/suites/suites.css');
+    loadCss('./home/services/services.css');
+    loadCss('./home/components/pricing/pricing.css');
+    loadCss('./home/components/addons/addons.css');
+    loadCss('./home/components/faq/faq.css');
 
-  const footerSlot = document.getElementById('home-footer-slot');
-  if (footerSlot) footerSlot.innerHTML = await (await fetch(rootUrl('global/components/footer/footer.html'))).text();
+    const headerSlot = document.getElementById('home-header-slot');
+    if (headerSlot) headerSlot.innerHTML = await (await fetch(rootUrl('global/components/header/header.html'))).text();
+    await initScrollbar('#home-scrollbar-slot');
+
+    const footerSlot = document.getElementById('home-footer-slot');
+    if (footerSlot) footerSlot.innerHTML = await (await fetch(rootUrl('global/components/footer/footer.html'))).text();
+  }
 
   await handleRouting();
   window.addEventListener('hashchange', handleRouting);
