@@ -4,61 +4,39 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
   <title>Shaadi Saathi - The Modern Wedding Operating System</title>
-  <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png" />
-  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
-  <link rel="manifest" href="/manifest.webmanifest" />
-  <meta name="theme-color" content="#0A0507" />
   <meta name="description" content="Centralized guest management, interactive digital web invites, one-tap .ics ceremony calendar sync, and automated WhatsApp campaigns." />
-  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="theme-color" content="#0A0507" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/icons/favicon-32.png" />
+  <link rel="apple-touch-icon" href="/assets/icons/apple-touch-icon.png" />
+  <link rel="manifest" href="/manifest.webmanifest" />
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="./index.css">
-  <script>
-    tailwind.config = {
-      darkMode: 'class',
-      theme: {
-        extend: {
-          colors: {
-            obsidian: '#0A0507', surface: '#140A0D', card: '#1D0F14', cardHover: '#28151C',
-            borderWarm: '#3D2029', gold: '#F5C451', goldBright: '#FFE082', emeraldSS: '#22C55E',
-            crimsonSS: '#EF4444', amberSS: '#F59E0B', skySS: '#38BDF8', waGreen: '#25D366',
-            cream: '#FFFDF9', ink: '#F5ECEE', muted: '#C8B0B6'
-          },
-          fontFamily: {
-            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
-            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
-            mono: ['"JetBrains Mono"', 'monospace']
-          }
-        }
-      }
-    }
-  </script>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="./src/tailwind-config.js"></script>
+
+  <link rel="stylesheet" href="./src/styles/base.css">
+  <link rel="stylesheet" href="./src/styles/shell.css">
+  <link rel="stylesheet" href="./src/styles/home.css">
+  <link rel="stylesheet" href="./src/styles/home-sections.css">
+  <link rel="stylesheet" href="./src/styles/rail.css">
 </head>
 <body class="selection:bg-gold selection:text-obsidian bg-obsidian text-cream font-sans antialiased">
-  <div id="home-header-slot"></div>
-  <div id="home-scrollbar-slot"></div>
+  <div id="app-header"></div>
+  <div id="rail"></div>
 
   <main>
-    <div id="root-home" class="hp w-full">
-      <div id="home-hero-slot"></div>
-      <div id="home-comparison-slot"></div>
-      <div id="home-suites-slot"></div>
-      <div id="home-services-slot"></div>
-      <div id="home-pricing-slot"></div>
-      <div id="home-addons-slot"></div>
-      <div id="home-faq-slot"></div>
-      <div id="home-footer-slot"></div>
-    </div>
-
+    <div id="root-home" class="hp w-full"></div>
     <div id="root-creator" class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6 hidden"></div>
     <div id="root-host" class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6 hidden"></div>
     <div id="root-guest" class="w-full max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6 hidden"></div>
   </main>
 
-  <div id="home-navigation-slot"></div>
-  <div id="toastBox" class="fixed top-5 right-4 z-50 hidden bg-card border-2 border-gold text-cream px-5 py-3 rounded-xl shadow-2xl text-sm font-bold"></div>
+  <div id="app-nav"></div>
+  <div id="toastBox" role="status" aria-live="polite" class="fixed top-5 right-4 z-50 hidden bg-card border-2 border-gold text-cream px-5 py-3 rounded-xl shadow-2xl text-sm font-bold"></div>
 
-  <script type="module" src="./index.js"></script>
+  <script type="module" src="./src/main.js"></script>
 </body>
 </html>
