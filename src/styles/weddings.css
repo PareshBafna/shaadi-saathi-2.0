@@ -1,0 +1,38 @@
+/* Weddings screens. Colors match the rest of the app (see tailwind-config.js). */
+.ss-input {
+  width: 100%;
+  background-color: #0A0507;
+  border: 1px solid #3D2029;
+  border-radius: 0.75rem;
+  padding: 0.5rem 0.75rem;
+  color: #FFFDF9;
+  font-size: 0.875rem;
+}
+.ss-input:focus {
+  outline: none;
+  border-color: #F5C451;
+}
+
+.ss-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+}
+.ss-table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+}
+.ss-table th {
+  padding: 0.75rem 1rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #C8B0B6;
+  border-bottom: 1px solid #3D2029;
+  background-color: #0A0507;
+}
+.ss-table td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid #3D2029;
+  font-size: 0.875rem;
+}

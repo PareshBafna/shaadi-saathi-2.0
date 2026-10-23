@@ -63,7 +63,7 @@ export const finance = {
       `
     },
     {
-      module: "users", icon: "🔐", name: "Team Access", badge: "Role Permissions",
+      module: "team-access", icon: "🔐", name: "Team Access", badge: "Role Permissions",
       desc: "Control access across Creator, Family Host, Logistics Lead & Hospitality Desk",
       kicker: "TEAM ACCESS",
       title: "Granular role permissions for planners, hosts &amp; desk staff",

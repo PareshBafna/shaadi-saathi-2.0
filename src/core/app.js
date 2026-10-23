@@ -93,11 +93,6 @@ export function initApp() {
   updateRail = bindRail(document.getElementById('rail'));
   bindActions();
 
-  // Bridge for weddings code that is not moved yet. Remove after step 2.
-  window.switchRootMode = switchRootMode;
-  window.openWorkspaceDirect = openWorkspaceDirect;
-  window.showToast = showToast;
-
   window.addEventListener('hashchange', onRoute);
   window.addEventListener('popstate', onRoute);
   onRoute();

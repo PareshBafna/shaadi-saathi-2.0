@@ -134,7 +134,7 @@ export const command = {
       `
     },
     {
-      module: "rsvp", icon: "👥", name: "Guest", badge: "Editable Table",
+      module: "guests", icon: "👥", name: "Guest", badge: "Editable Table",
       desc: "Inline editable table for RSVP status, Pax count & Variant A/B/C assignment",
       kicker: "GUEST",
       title: "Privacy-first invite tiers: control who sees which event",
@@ -180,7 +180,7 @@ export const command = {
       `
     },
     {
-      module: "webinvites", icon: "💌", name: "Web Invite", badge: "Royal Web Pass",
+      module: "web-invite", icon: "💌", name: "Web Invite", badge: "Royal Web Pass",
       desc: "Interactive 3D monogram wax seal, Shehnai audio, rose petals & Google Maps",
       kicker: "WEB INVITE",
       title: "Bespoke 3D Wax-Seal Web Invitation with Shehnai chime",
