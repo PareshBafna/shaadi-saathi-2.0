@@ -1,6 +1,6 @@
-import { initHomePage } from '../home/home.js';
-import { initScrollbar } from '../home/components/scrollbar/scrollbar.js';
-import { initWeddingsView, openWeddingWorkspace, backToAllWeddings } from '../pages/weddings/weddings.js';
+import { initHomePage } from '../../home/home.js';
+import { initScrollbar } from '../../home/components/scrollbar/scrollbar.js';
+import { initWeddingsView, openWeddingWorkspace, backToAllWeddings } from '../../pages/weddings/weddings.js';
 import { rootUrl, parseHashRoute, navigateTo } from './router.js';
 
 export function loadCss(href) {
