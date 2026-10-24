@@ -1,8 +1,10 @@
+import { rootUrl } from '../../../../global/core/router.js';
+
 export async function initFaq(slotSelector) {
   const slot = document.querySelector(slotSelector);
   if (!slot) return;
 
-  const res = await fetch('./home/components/faq/faq.html');
+  const res = await fetch(rootUrl('src/home/components/faq/faq.html'));
   slot.innerHTML = await res.text();
 
   const allDetails = slot.querySelectorAll('#faqAccordionGroup details');

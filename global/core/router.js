@@ -1,8 +1,8 @@
-const SITE_ROOT = new URL('../', import.meta.url);
+const SITE_ROOT = window.location.origin + window.location.pathname.replace(/\/[^/]*$/, '/');
 
 export function rootUrl(relPath = '') {
   const clean = relPath.replace(/^\.?\//, '');
-  return new URL(clean, SITE_ROOT).pathname;
+  return new URL(clean, SITE_ROOT).href;
 }
 
 export const ROUTE_HASHES = {

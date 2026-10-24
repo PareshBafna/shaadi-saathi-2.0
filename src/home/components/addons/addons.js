@@ -1,3 +1,5 @@
+import { rootUrl } from '../../../../global/core/router.js';
+
 let standaloneAddons = [
   { id: 'ad1', title: 'WhatsApp Guest Broadcast & RSVP Pack', forPlan: 'Standalone or Any Plan', desc: 'Send official green-tick WhatsApp invites, collect RSVPs & dispatch itinerary updates (Includes 1,000 Credits).', price: 2999, selected: false },
   { id: 'ad2', title: '3D Interactive Wax-Seal Web Invite', forPlan: 'Standalone or Silver Plan', desc: 'Custom-coded 3D monogram wax seal web invitation with Shehnai audio, falling petals & Google Maps routing.', price: 3999, selected: false },
@@ -15,7 +17,7 @@ export async function initAddons(slotSelector) {
   const slot = document.querySelector(slotSelector);
   if (!slot) return;
 
-  const res = await fetch('./home/components/addons/addons.html');
+  const res = await fetch(rootUrl('src/home/components/addons/addons.html'));
   slot.innerHTML = await res.text();
 
   renderAddonsGrid();

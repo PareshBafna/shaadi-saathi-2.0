@@ -32,7 +32,7 @@ window.switchRootMode = async function(mode, skipPush = false) {
   if (mode === 'home') {
     await initHomePage('#root-home');
   } else if (mode === 'creator') {
-    loadCss('pages/weddings/weddings.css');
+    loadCss('src/pages/weddings/weddings.css');
     await initWeddingsView('#root-creator');
     if (!skipPush) {
       backToAllWeddings(true);
@@ -91,18 +91,18 @@ export async function initAllModules() {
   if (navSlot) navSlot.innerHTML = await (await fetch(rootUrl('global/components/navigation/navigation.html'))).text();
 
   if (mode === 'home') {
-    loadCss('home/home.css');
-    loadCss('home/components/scrollbar/scrollbar.css');
-    loadCss('home/components/hero/hero.css');
-    loadCss('home/components/comparison/comparison.css');
-    loadCss('home/components/suites/suites.css');
-    loadCss('home/features/features.css');
-    loadCss('home/components/pricing/pricing.css');
-    loadCss('home/components/addons/addons.css');
-    loadCss('home/components/faq/faq.css');
+    loadCss('src/home/home.css');
+    loadCss('src/home/components/scrollbar/scrollbar.css');
+    loadCss('src/home/components/hero/hero.css');
+    loadCss('src/home/components/comparison/comparison.css');
+    loadCss('src/home/components/suites/suites.css');
+    loadCss('src/home/features/features.css');
+    loadCss('src/home/components/pricing/pricing.css');
+    loadCss('src/home/components/addons/addons.css');
+    loadCss('src/home/components/faq/faq.css');
 
     const headerSlot = document.getElementById('home-header-slot');
-    if (headerSlot) headerSlot.innerHTML = await (await fetch(rootUrl('components/header/header.html'))).text();
+    if (headerSlot) headerSlot.innerHTML = await (await fetch(rootUrl('global/components/header/header.html'))).text();
     await initScrollbar('#home-scrollbar-slot');
 
     const footerSlot = document.getElementById('home-footer-slot');

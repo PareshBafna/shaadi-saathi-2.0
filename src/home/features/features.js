@@ -1,20 +1,22 @@
+import { rootUrl } from '../../../../global/core/router.js';
+
 export const HOME_SERVICE_SLUGS = [
   'telemetry',
-  'whatsapp-deck',
-  'family-hosts',
+  'whatsapp',
+  'hosts',
   'events',
-  'guest',
+  'guests',
   'web-invite',
-  'stay-accomodation',
-  'flight-arrangements',
-  'train-arrangements',
-  'sangeeth-lineup',
+  'rooms',
+  'flights',
+  'trains',
+  'sangeet',
   'guestbook',
   'gallery',
-  'shagun-gifts',
-  'tasks-checklist',
-  'event-vendors',
-  'budget-planner',
+  'shagun',
+  'tasks',
+  'vendors',
+  'budget',
   'team-access',
   'calendar'
 ];
@@ -31,16 +33,16 @@ export async function initServices(slotSelector) {
   const slot = document.querySelector(slotSelector);
   if (!slot) return;
 
-  loadCss('./home/features/features.css');
-  const res = await fetch('./src/home/features/features.html');
+  loadCss(rootUrl('src/home/features/features.css'));
+  const res = await fetch(rootUrl('src/home/features/features.html'));
   slot.innerHTML = await res.text();
 
   const container = document.getElementById('servicesDeepDivesContainer');
   if (!container) return;
 
   for (const slug of HOME_SERVICE_SLUGS) {
-    loadCss(`./home/features/${slug}/${slug}.css`);
-    const sRes = await fetch(`./home/features/${slug}/${slug}.html`);
+    loadCss(rootUrl(`src/home/features/${slug}/${slug}.css`));
+    const sRes = await fetch(rootUrl(`src/home/features/${slug}/${slug}.html`));
     const wrap = document.createElement('div');
     wrap.innerHTML = await sRes.text();
     container.appendChild(wrap);
