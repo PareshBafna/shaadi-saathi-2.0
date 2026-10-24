@@ -2,7 +2,7 @@ export async function initHero(slotSelector) {
   const slot = document.querySelector(slotSelector);
   if (!slot) return;
 
-  const res = await fetch('./home/components/hero/hero.html');
+  const res = await fetch('./src/home/components/hero/hero.html');
   slot.innerHTML = await res.text();
 
   const NAMES = ['Attending', 'Pending', 'Declined'];

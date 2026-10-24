@@ -17,7 +17,7 @@ import {
   saveNewWedding
 } from './components/workspace-shell/workspace-shell.js';
 import { buildModuleHeaderHTML } from './components/module-header/module-header.js';
-import { navigateTo } from '../../global/router.js';
+import { navigateTo } from '../../global/core/router.js';
 
 export {
   openWeddingWorkspace,

@@ -1,8 +1,8 @@
-import { loadCssOnce } from '../services.js';
+import { loadCssOnce } from '../features.js';
 
 export async function initService(mountEl) {
-  loadCssOnce('./home/services/calendar/calendar.css');
-  const res = await fetch('./home/services/calendar/calendar.html');
+  loadCssOnce('./home/features/calendar/calendar.css');
+  const res = await fetch('./home/features/calendar/calendar.html');
   mountEl.innerHTML = await res.text();
 
   const btn = mountEl.querySelector('.hp-link');

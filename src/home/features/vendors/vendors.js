@@ -1,8 +1,8 @@
-import { loadCssOnce } from '../services.js';
+import { loadCssOnce } from '../features.js';
 
 export async function initService(mountEl) {
-  loadCssOnce('./home/services/event-vendors/event-vendors.css');
-  const res = await fetch('./home/services/event-vendors/event-vendors.html');
+  loadCssOnce('./home/features/event-vendors/event-vendors.css');
+  const res = await fetch('./home/features/event-vendors/event-vendors.html');
   mountEl.innerHTML = await res.text();
 
   const btn = mountEl.querySelector('.hp-link');

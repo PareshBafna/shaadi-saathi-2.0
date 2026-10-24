@@ -1,8 +1,8 @@
-import { loadCssOnce } from '../services.js';
+import { loadCssOnce } from '../features.js';
 
 export async function initService(mountEl) {
-  loadCssOnce('.//home/services/flight-arrangements/flight-arrangements.css');
-  const res = await fetch('.//home/services/flight-arrangements/flight-arrangements.html');
+  loadCssOnce('.//home/features/flight-arrangements/flight-arrangements.css');
+  const res = await fetch('.//home/features/flight-arrangements/flight-arrangements.html');
   mountEl.innerHTML = await res.text();
 
   const btn = mountEl.querySelector('.hp-link');

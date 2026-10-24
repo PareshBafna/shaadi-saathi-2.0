@@ -44,7 +44,7 @@ foreach ($old in $homeMap.Keys) {
     }
 }
 
-$filesToPatch = @("src/home/home.html", "src/home/features/services.js", "index.html")
+$filesToPatch = @("src/home/home.html", "src/home/features/features.js", "index.html")
 foreach ($file in $filesToPatch) {
     if (Test-Path $file) {
         $content = Get-Content $file -Raw

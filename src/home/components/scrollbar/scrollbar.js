@@ -2,7 +2,7 @@ export async function initScrollbar(slotSelector) {
   const slot = document.querySelector(slotSelector);
   if (!slot) return;
 
-  const res = await fetch('./home/components/scrollbar/scrollbar.html');
+  const res = await fetch('./src/home/components/scrollbar/scrollbar.html');
   slot.innerHTML = await res.text();
 
   const track = slot.querySelector('#ssRailTrack');

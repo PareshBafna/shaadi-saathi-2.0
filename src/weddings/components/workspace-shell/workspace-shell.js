@@ -7,7 +7,7 @@ import {
 } from '../../data/weddings-store.js';
 import { computeLiveTelemetry, formatINR, showToast } from '../../utils/weddings-helpers.js';
 import { renderCreatorWeddings } from '../directory/directory.js';
-import { navigateTo } from '../../../../global/router.js';
+import { navigateTo } from '../../../../global/core/router.js';
 
 export const WORKSPACE_APPS = [
   { id: 'overview', icon: '📊', label: 'Telemetry' },

@@ -49,7 +49,7 @@ export async function initSuites(slotSelector) {
   const slot = document.querySelector(slotSelector);
   if (!slot) return;
 
-  const res = await fetch('./home/components/suites/suites.html');
+  const res = await fetch('./src/home/components/suites/suites.html');
   slot.innerHTML = await res.text();
 
   window.selectSuiteTab = function(suiteId) {

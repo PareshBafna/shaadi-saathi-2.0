@@ -1,8 +1,8 @@
-import { loadCssOnce } from '../services.js';
+import { loadCssOnce } from '../features.js';
 
 export async function initService(mountEl) {
-  loadCssOnce('.//home/services/tasks-checklist/tasks-checklist.css');
-  const res = await fetch('.//home/services/tasks-checklist/tasks-checklist.html');
+  loadCssOnce('.//home/features/tasks-checklist/tasks-checklist.css');
+  const res = await fetch('.//home/features/tasks-checklist/tasks-checklist.html');
   mountEl.innerHTML = await res.text();
 
   const btn = mountEl.querySelector('.hp-link');

@@ -1,8 +1,9 @@
-import { loadCssOnce } from '../services.js';
+import { loadCssOnce } from '../features.js';
+import { rootUrl } from '../../../../global/core/router.js';
 
 export async function initService(mountEl) {
-  loadCssOnce('.//home/services/telemetry/telemetry.css');
-  const res = await fetch('./home/services/telemetry/telemetry.html');
+  loadCssOnce(rootUrl('home/features/telemetry/telemetry.css'));
+  const res = await fetch(rootUrl('home/features/telemetry/telemetry.html'));
   mountEl.innerHTML = await res.text();
 
   const btn = mountEl.querySelector('.hp-link');

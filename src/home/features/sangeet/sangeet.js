@@ -1,8 +1,8 @@
-import { loadCssOnce } from '../services.js';
+import { loadCssOnce } from '../features.js';
 
 export async function initService(mountEl) {
-  loadCssOnce('.//home/services/sangeeth-lineup/sangeeth-lineup.css');
-  const res = await fetch('.//home/services/sangeeth-lineup/sangeeth-lineup.html');
+  loadCssOnce('.//home/features/sangeeth-lineup/sangeeth-lineup.css');
+  const res = await fetch('.//home/features/sangeeth-lineup/sangeeth-lineup.html');
   mountEl.innerHTML = await res.text();
 
   const btn = mountEl.querySelector('.hp-link');
