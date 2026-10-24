@@ -1,7 +1,7 @@
 import { loadCssOnce } from '../features.js';
 
 export async function initService(mountEl) {
-  loadCssOnce('./home/features/budget/budget.css');
+  loadCssOnce('./src/home/features/budget-planner/budget-planner.css');
   mountEl.innerHTML = `
     <div class="hp-split pt-14 border-t border-borderWarm">
       <div>
