@@ -1,5 +1,3 @@
-import { rootUrl } from '../../../../global/core/router.js';
-
 let standaloneAddons = [
   { id: 'ad1', title: 'WhatsApp Guest Broadcast & RSVP Pack', forPlan: 'Standalone or Any Plan', desc: 'Send official green-tick WhatsApp invites, collect RSVPs & dispatch itinerary updates (Includes 1,000 Credits).', price: 2999, selected: false },
   { id: 'ad2', title: '3D Interactive Wax-Seal Web Invite', forPlan: 'Standalone or Silver Plan', desc: 'Custom-coded 3D monogram wax seal web invitation with Shehnai audio, falling petals & Google Maps routing.', price: 3999, selected: false },
@@ -17,8 +15,26 @@ export async function initAddons(slotSelector) {
   const slot = document.querySelector(slotSelector);
   if (!slot) return;
 
-  const res = await fetch(rootUrl('src/home/components/addons/addons.html'));
-  slot.innerHTML = await res.text();
+  slot.innerHTML = `
+    <section class="addons-band" id="addons-section">
+      <div class="hp-wrap">
+        <div class="bento-card p-5 sm:p-8 space-y-6 border-gold/40">
+          <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+            <div>
+              <span class="hp-kicker !mb-2">Optional Add-Ons</span>
+              <h3 class="text-2xl sm:text-3xl font-serif font-bold text-cream">Need a specific service not in your plan? Add it separately.</h3>
+              <p class="text-sm text-muted mt-1">Customize any wedding plan with standalone add-ons. Tap any add-on to test adding it to your estimate.</p>
+            </div>
+            <div class="bg-obsidian border border-gold/50 rounded-2xl px-5 py-3 text-right shrink-0">
+              <span class="text-xs text-muted block">Selected Add-Ons Total</span>
+              <strong id="addonTotalDisplay" class="font-serif text-2xl font-bold text-gold">₹0</strong>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4" id="addonsGrid"></div>
+        </div>
+      </div>
+    </section>
+  `;
 
   renderAddonsGrid();
   window.toggleAddon = toggleAddon;
