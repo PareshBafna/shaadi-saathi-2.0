@@ -1,4 +1,4 @@
-import { guests } from '../data/weddings-store.js';
+import { guests } from '../../data/weddings-store.js';
 
 export function renderTrainsModule(viewport, headerBanner) {
   var trainGuests = guests.filter(function(g) {

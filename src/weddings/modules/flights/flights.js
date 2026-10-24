@@ -1,4 +1,4 @@
-import { guests } from '../data/weddings-store.js';
+import { guests } from '../../data/weddings-store.js';
 
 export function renderFlightsModule(viewport, headerBanner) {
   const flightGuests = guests.filter(function(g) {

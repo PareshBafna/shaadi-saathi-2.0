@@ -1,4 +1,4 @@
-import { familyTasks } from '../data/weddings-store.js';
+import { familyTasks } from '../../data/weddings-store.js';
 
 export function renderTasksModule(viewport, headerBanner) {
   var completedCount = familyTasks.filter(function(t) { return t.done; }).length;

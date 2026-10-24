@@ -1,5 +1,5 @@
-import { guests } from '../data/weddings-store.js';
-import { computeLiveTelemetry } from '../utils/weddings-helpers.js';
+import { guests } from '../../data/weddings-store.js';
+import { computeLiveTelemetry } from '../../utils/weddings-helpers.js';
 
 export function renderGuestsModule(viewport, headerBanner) {
   const t = computeLiveTelemetry();

@@ -1,4 +1,4 @@
-import { weddingEvents, guests } from '../data/weddings-store.js';
+import { weddingEvents, guests } from '../../data/weddings-store.js';
 
 export function renderEventsModule(viewport, headerBanner) {
   viewport.innerHTML = headerBanner + `

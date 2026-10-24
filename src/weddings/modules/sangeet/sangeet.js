@@ -1,4 +1,4 @@
-import { sangeetLineup } from '../data/weddings-store.js';
+import { sangeetLineup } from '../../data/weddings-store.js';
 
 export function renderSangeetModule(viewport, headerBanner) {
   var tableRows = sangeetLineup.map(function(s) {

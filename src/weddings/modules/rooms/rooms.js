@@ -1,5 +1,5 @@
-import { guests, roomInventory } from '../data/weddings-store.js';
-import { getStayLocationsList, getRoomOccupants } from '../utils/weddings-helpers.js';
+import { guests, roomInventory } from '../../data/weddings-store.js';
+import { getStayLocationsList, getRoomOccupants } from '../../utils/weddings-helpers.js';
 
 export function renderRoomsModule(viewport, headerBanner) {
   const locations = getStayLocationsList();

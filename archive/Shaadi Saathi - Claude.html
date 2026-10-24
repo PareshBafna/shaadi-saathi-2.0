@@ -1,0 +1,2443 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover" />
+  <title>Shaadi Saathi — Official WhatsApp Wedding Copilot & Hospitality OS</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,600;0,700;1,600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            obsidian: '#0B0507',
+            surface: '#160B0F',
+            card: '#211016',
+            cardHover: '#2B151D',
+            borderWarm: '#46232D',
+            gold: '#F5C451',
+            goldBright: '#FFE494',
+            emeraldSS: '#22C55E',
+            crimsonSS: '#F87171',
+            amberSS: '#FBBF24',
+            skySS: '#38BDF8',
+            waGreen: '#25D366',
+            waDark: '#0B1A13',
+            cream: '#F7EFEF',
+            muted: '#C8B0B6'
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    :root {
+      color-scheme: dark;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    *, *::before, *::after {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      max-width: 100vw;
+      overflow-x: hidden;
+      background-color: #0B0507;
+      background-image:
+        radial-gradient(circle at 15% 0%, rgba(245, 196, 81, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 85% 15%, rgba(37, 211, 102, 0.05) 0%, transparent 40%);
+      color: #F7EFEF;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    @media (min-width: 1024px) {
+      html, body {
+        font-size: 15px;
+      }
+    }
+    body {
+      padding-bottom: calc(86px + var(--safe-bottom));
+    }
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+    .bento-card {
+      background: linear-gradient(180deg, #180C10 0%, #13090C 100%);
+      border: 1px solid #46232D;
+      border-radius: 16px;
+      width: 100%;
+      min-width: 0;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    .bento-card:hover {
+      border-color: rgba(245, 196, 81, 0.5);
+    }
+    .gold-text {
+      background: linear-gradient(135deg, #FFF7DB 0%, #F5C451 55%, #D99722 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .btn-gold {
+      background: linear-gradient(135deg, #F5C451 0%, #DF9F28 100%);
+      color: #14070A;
+      font-weight: 700;
+    }
+    .btn-gold:hover {
+      filter: brightness(1.06);
+    }
+    .btn-gold:active {
+      transform: scale(0.98);
+    }
+    /* Phone Mockup Frame */
+    .phone-frame {
+      background: #08120D;
+      border: 6px solid #2A161C;
+      border-radius: 32px;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.75), inset 0 0 0 1px rgba(245, 196, 81, 0.25);
+      overflow: hidden;
+    }
+    .wa-chat-bg {
+      background-color: #0B141A;
+      background-image: radial-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 0);
+      background-size: 18px 18px;
+    }
+    input, select, textarea, button {
+      font-size: 0.875rem;
+      max-width: 100%;
+    }
+  </style>
+<style id="revamp">
+html{scroll-behavior:smooth}
+[id^="wk-"]{scroll-margin-top:92px}
+/* header */
+.ss-header{position:sticky;top:0;z-index:40;margin-top:-14px;padding:12px 0 10px;background:rgba(15,7,9,.9);backdrop-filter:blur(14px);box-shadow:0 0 0 100vmax rgba(15,7,9,.9);clip-path:inset(0 -100vmax);border-bottom:1px solid #2c171d}
+.ss-hrow{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+.ss-brand{display:flex;align-items:center;gap:11px;cursor:pointer}
+.ss-logo{width:42px;height:42px;border-radius:13px;display:grid;place-items:center;background:linear-gradient(135deg,#F5C451,#B8761A);color:#14070A;font:700 1.15rem Georgia,serif}
+.ss-bt{display:grid;line-height:1.15}.ss-name{font:italic 700 1.45rem "Cormorant Garamond",Georgia,serif}
+.ss-badge{font-size:.72rem;color:#D0B8BE;letter-spacing:.02em}
+.ss-links{display:none;gap:4px}.ss-links a{padding:9px 14px;border-radius:10px;color:#E6D6DB;font-weight:600;font-size:.92rem;transition:color .2s,background .2s}.ss-links a:hover{color:#F5C451;background:rgba(245,196,81,.08)}
+@media(min-width:900px){.ss-links{display:flex}}
+.ss-roles{display:flex;gap:6px;overflow-x:auto;max-width:100%;scrollbar-width:none}.ss-roles button{white-space:nowrap;min-height:40px}
+.ss-desc{display:none;margin:6px 0 0;color:#D0B8BE;font-size:.82rem}@media(min-width:1100px){.ss-desc{display:block}}
+body:has(#view-home.hidden) .home-only{display:none!important}
+#view-home>div.sticky{display:none}
+/* hero */
+#view-home>*+*{margin-top:0}
+#wk-hero{background:radial-gradient(900px 420px at 88% -8%,rgba(245,196,81,.15),transparent 62%)!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:clamp(28px,5vw,60px) 0!important}
+#wk-hero h1{font-size:clamp(2.1rem,5vw,3.9rem)!important;line-height:1.08!important;letter-spacing:-.015em}
+#wk-hero>div>div>p{font-size:1.05rem!important;max-width:56ch}
+.ss-ctas{display:flex;flex-wrap:wrap;align-items:center;gap:12px}
+.ss-btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 26px;border-radius:999px;font-weight:700;font-size:1rem;text-decoration:none;transition:transform .15s,filter .2s,background .2s}
+.ss-btn:active{transform:scale(.97)}.ss-ghost{border:1.5px solid #F5C451;color:#F5C451;background:transparent}.ss-ghost:hover{background:rgba(245,196,81,.1)}
+.ss-note{color:#D0B8BE;font-size:.88rem}
+/* facts strip */
+.ss-strip{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;padding:26px 0;border-block:1px solid #2c171d}
+@media(min-width:800px){.ss-strip{grid-template-columns:repeat(4,1fr)}}
+.ss-strip b{display:block;font:700 2.6rem/1 "Cormorant Garamond",Georgia,serif;color:#F5C451}.ss-strip span{color:#D0B8BE;font-size:.92rem}
+/* sections: open bands instead of boxed cards */
+#view-home>section:not(#wk-hero):not(.ss-strip):not(.ss-cta){background:transparent!important;border:0!important;box-shadow:none!important;border-radius:0!important;padding:clamp(48px,7vw,92px) 0!important;transform:none!important}
+#wk-journey,#wk-modules,#wk-faq{background:#170B0F!important;box-shadow:0 0 0 100vmax #170B0F!important;clip-path:inset(0 -100vmax)}
+[id^="wk-"]>div:first-child{border:0!important;padding-bottom:0!important}
+[id^="wk-"] span.font-mono.uppercase,[id^="wk-"] span.tracking-wider{background:none!important;border:0!important;padding:0!important;letter-spacing:.14em!important;font-size:.78rem!important;color:#F5C451!important}
+[id^="wk-"] h2{font-size:clamp(1.8rem,4vw,2.9rem)!important;line-height:1.12!important;letter-spacing:-.01em}
+[id^="wk-"]>div:first-child p{font-size:1rem!important;max-width:62ch;line-height:1.65}
+/* closing band and footer */
+.ss-cta{text-align:center;padding:clamp(48px,7vw,88px) 20px;margin-top:8px;border-radius:28px;background:linear-gradient(135deg,#4a1424,#240a12);border:1px solid #6a2a3a}
+.ss-cta h2{font-size:clamp(1.8rem,4vw,2.8rem);color:#FFF7DB}.ss-cta p{color:#E6D6DB;margin:10px auto 22px;max-width:52ch;font-size:1.05rem}
+.ss-foot{display:grid;gap:28px;padding:44px 0 20px;margin-top:40px;border-top:1px solid #2c171d}@media(min-width:800px){.ss-foot{grid-template-columns:1.5fr 1fr 1fr}}
+.ss-foot p{color:#D0B8BE;margin-top:8px;max-width:36ch}.ss-foot h3{font-weight:700;color:#FFF7DB;margin-bottom:8px}
+.ss-foot a,.ss-foot button{display:block;color:#D0B8BE;padding:5px 0;text-align:left;min-height:0;transition:color .2s}.ss-foot a:hover,.ss-foot button:hover{color:#F5C451}
+/* motion */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.8,.2,1)}.rv.in{opacity:1;transform:none}
+button,a{transition:transform .15s,color .2s,background-color .2s,border-color .2s}button:active{transform:scale(.97)}
+:focus-visible{outline:3px solid #F5C451;outline-offset:2px;border-radius:10px}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}.rv{opacity:1;transform:none}}
+</style>
+<style id="hp-css">
+html{scroll-behavior:smooth}
+#view-home.hp{margin:0;padding:0}
+.hp{--bg:#0F0709;--panel:#180C10;--edge:#2C171D;--gold:#F5C451;--cream:#FFF7DB;--ink:#F5ECEE;--mut:#D0B8BE;--green:#25D366;color:var(--ink);margin:-14px -14px 0;padding:0}
+@media(min-width:640px){.hp{margin:-14px -24px 0}}
+@media(min-width:1024px){.hp{margin:-14px -40px 0}}
+.hp section,.hp footer{scroll-margin-top:96px}
+.hp-wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+.hp h1,.hp h2,.hp h3,.hp h4{font-family:"Cormorant Garamond",Georgia,serif;color:var(--cream);letter-spacing:-.01em;margin:0}
+.hp h1{font-size:clamp(2.3rem,5.4vw,4.1rem);line-height:1.06;font-weight:700}
+.hp h1 em{font-style:italic;color:var(--gold)}
+.hp h2{font-size:clamp(1.9rem,4vw,3rem);line-height:1.12;font-weight:700}
+.hp h3{font-size:1.32rem;line-height:1.25;font-weight:700;margin-bottom:8px}
+.hp p{color:var(--mut);line-height:1.68;margin:0}
+.hp-kicker,.hp-eyebrow{display:inline-block;font:700 .78rem/1 Inter,system-ui,sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.hp-eyebrow{padding:8px 14px;border:1px solid rgba(245,196,81,.35);border-radius:999px;background:rgba(245,196,81,.07);letter-spacing:.06em;text-transform:none;font-size:.86rem}
+.hp-lead{font-size:1.1rem;max-width:58ch;margin-top:20px}
+.hp-muted{margin-top:14px;max-width:54ch}
+.hp-fine{font-size:.9rem;margin-top:16px;color:#AE97A0}
+.hp-head{max-width:700px;margin-bottom:44px}.hp-head p{margin-top:14px;font-size:1.05rem}
+.hp-band{padding:clamp(64px,9vw,112px) 0;background:var(--bg)}
+.hp-alt{background:#140A0D;box-shadow:0 0 0 100vmax #140A0D;clip-path:inset(0 -100vmax)}
+.hp-btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 28px;border-radius:999px;font:700 1rem Inter,system-ui,sans-serif;text-decoration:none;cursor:pointer;border:1.5px solid transparent;transition:transform .15s,background .2s,color .2s,border-color .2s}
+.hp-btn:active{transform:scale(.97)}
+.hp-gold{background:linear-gradient(135deg,#F5C451,#D99722);color:#14070A;box-shadow:0 10px 26px -12px rgba(245,196,81,.6)}.hp-gold:hover{filter:brightness(1.06)}
+.hp-ghost{border-color:var(--gold);color:var(--gold);background:transparent}.hp-ghost:hover{background:rgba(245,196,81,.1)}
+.hp-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:30px}
+.hp-hero{padding:clamp(40px,7vw,88px) 0 clamp(56px,7vw,96px);background:radial-gradient(900px 480px at 85% -10%,rgba(245,196,81,.15),transparent 62%),var(--bg)}
+.hp-hero-grid{display:grid;gap:56px;align-items:center}
+@media(min-width:960px){.hp-hero-grid{grid-template-columns:1.1fr .9fr}}
+.hp-stage{display:grid;gap:18px;justify-items:center}
+.hp-inv{position:relative;width:min(340px,100%);aspect-ratio:3/4.3;border-radius:26px;padding:34px 24px;text-align:center;color:#fff;background:linear-gradient(165deg,var(--a,#6e1a30),#240810 80%);border:3px double var(--b,#c8962e);box-shadow:0 30px 60px -28px rgba(0,0,0,.9);display:grid;place-items:center;transition:background .5s,border-color .5s}
+.hp-inv[data-t=emerald]{--a:#0f5c46;--b:#e2c26a}.hp-inv[data-t=navy]{--a:#1d3557;--b:#f1d38a}.hp-inv[data-t=crimson]{--a:#6e1a30;--b:#c8962e}
+.hp-seal{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:92px;height:92px;border-radius:50%;border:0;color:#fff;font-size:1.8rem;background:radial-gradient(circle at 35% 30%,#e05a6e,#8e1f35 70%);box-shadow:0 8px 22px rgba(0,0,0,.45);cursor:pointer;animation:hpPulse 2.4s infinite;transition:transform .55s,opacity .55s}
+.hp-seal:hover{transform:translate(-50%,-50%) scale(1.06)}
+.hp-open{opacity:0;transform:translateY(12px);transition:opacity .8s ease .2s,transform .8s ease .2s}
+.hp-open h2{font-size:2.1rem;margin:8px 0 10px;color:#fff}.hp-open p{color:#F3E3E8;font-size:.95rem}
+.hp-kick{font:700 .66rem/1.3 Inter,system-ui,sans-serif!important;letter-spacing:.2em;text-transform:uppercase;color:var(--b,#f1d38a)!important}
+.hp-guest{display:block;color:var(--b,#f1d38a);font-size:1.25rem;margin:4px 0 12px}
+.hp-when{color:#F3E3E8!important;margin-top:10px}
+.hp-inv.open .hp-seal{transform:translate(-50%,-50%) scale(0);opacity:0;pointer-events:none;animation:none}
+.hp-inv.open .hp-open{opacity:1;transform:none}
+@keyframes hpPulse{50%{transform:translate(-50%,-50%) scale(1.07)}}
+.hp-themes,.hp-tabs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
+.hp-chip{min-height:44px;padding:0 18px;border-radius:999px;border:1px solid var(--edge);background:var(--panel);color:var(--ink);font:600 .92rem Inter,system-ui,sans-serif;cursor:pointer;transition:background .2s,border-color .2s,color .2s}
+.hp-chip:hover{border-color:var(--gold)}
+.hp-chip[aria-pressed=true]{background:rgba(245,196,81,.14);border-color:var(--gold);color:var(--cream)}
+.hp-cap{font-size:.9rem}
+.hp-stats{border-block:1px solid var(--edge);background:var(--bg);padding:34px 0}
+.hp-stat-row{display:grid;grid-template-columns:repeat(2,1fr);gap:26px}
+@media(min-width:820px){.hp-stat-row{grid-template-columns:repeat(4,1fr)}}
+.hp-stat-row b{display:block;font:700 2.9rem/1 "Cormorant Garamond",Georgia,serif;color:var(--gold)}
+.hp-stat-row span{color:var(--mut);font-size:.93rem}
+.hp-grid4,.hp-grid3{display:grid;gap:18px}
+@media(min-width:720px){.hp-grid3{grid-template-columns:repeat(2,1fr)}}
+@media(min-width:1000px){.hp-grid4{grid-template-columns:repeat(4,1fr)}.hp-grid3{grid-template-columns:repeat(3,1fr)}}
+.hp-card,.hp-plan{background:linear-gradient(180deg,#1B0E13,#130A0D);border:1px solid var(--edge);border-radius:20px;padding:26px;transition:transform .25s,border-color .25s,box-shadow .25s}
+.hp-card:hover,.hp-plan:hover{transform:translateY(-3px);border-color:rgba(245,196,81,.45);box-shadow:0 18px 40px -26px rgba(0,0,0,.95)}
+.hp-ico{display:inline-grid;place-items:center;width:44px;height:44px;border-radius:13px;background:rgba(245,196,81,.12);color:var(--gold);font:700 .9rem Inter,system-ui,sans-serif;margin-bottom:18px}
+.hp-steps{display:grid;gap:18px}
+@media(min-width:860px){.hp-steps{grid-template-columns:repeat(3,1fr)}}
+.hp-step{border-top:2px solid var(--gold);padding-top:22px}
+.hp-num{display:inline-grid;place-items:center;width:42px;height:42px;border-radius:50%;background:var(--gold);color:#14070A;font:700 1.1rem Georgia,serif;margin-bottom:18px}
+.hp-split{display:grid;gap:44px;align-items:center}
+@media(min-width:900px){.hp-split{grid-template-columns:1fr 1fr}}
+.hp-events{display:grid;gap:12px}
+.hp-ev{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 20px;border-radius:16px;border:1px solid var(--edge);background:var(--panel);opacity:.35;transform:translateX(0);transition:opacity .45s,border-color .45s,background .45s,transform .45s}
+.hp-ev b{font:700 1.2rem "Cormorant Garamond",Georgia,serif;color:var(--cream)}.hp-ev span{color:var(--mut);font-size:.92rem}
+.hp-ev.on{opacity:1;border-color:var(--gold);background:rgba(245,196,81,.09);transform:translateX(6px)}
+.hp-note{margin-top:8px;color:var(--gold)!important;font-weight:600}
+.hp-checks{list-style:none;padding:0;margin:22px 0 0;display:grid;gap:12px}
+.hp-checks li{position:relative;padding-left:30px;color:var(--ink)}
+.hp-checks li::before{content:"";position:absolute;left:0;top:.5em;width:14px;height:8px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg)}
+.hp-dash{background:linear-gradient(180deg,#1B0E13,#120809);border:1px solid var(--edge);border-radius:24px;padding:28px;box-shadow:0 30px 60px -36px rgba(0,0,0,.95)}
+.hp-dash-cap{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)!important;margin-bottom:18px}
+.hp-dash-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.hp-dash-stats div{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:16px}
+.hp-dash-stats b{display:block;font:700 2rem/1 "Cormorant Garamond",Georgia,serif;color:var(--cream)}
+.hp-dash-stats span{font-size:.82rem;color:var(--mut)}
+.hp-bar-row{display:grid;grid-template-columns:1fr 2fr 48px;gap:14px;align-items:center;margin-top:14px;font-size:.93rem;color:var(--mut)}
+.hp-bar-row em{font-style:normal;text-align:right;color:var(--cream);font-weight:700}
+.hp-bar{height:10px;border-radius:99px;background:#2A161C;overflow:hidden}
+.hp-bar i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#25D366,#7AE3A3);transition:width 1.1s cubic-bezier(.2,.8,.2,1)}
+.hp-plan{display:flex;flex-direction:column}
+.hp-plan h3{color:var(--cream)}
+.hp-plan ul{list-style:none;padding:0;margin:20px 0 26px;display:grid;gap:11px;flex:1}
+.hp-plan li{position:relative;padding-left:26px;color:var(--ink);font-size:.97rem}
+.hp-plan li::before{content:"";position:absolute;left:2px;top:.55em;width:9px;height:5px;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);transform:rotate(-45deg)}
+.hp-price{font:700 2.7rem/1 "Cormorant Garamond",Georgia,serif;color:var(--cream);margin-top:14px}
+.hp-price span{display:block;font:500 .9rem Inter,system-ui,sans-serif;color:var(--mut);margin-top:6px}
+.hp-pick{border-color:rgba(245,196,81,.55);background:linear-gradient(180deg,#2A1319,#150A0E)}
+.hp-go{width:100%}
+.hp-faq{max-width:820px}
+.hp-faq details{border-bottom:1px solid var(--edge);padding:20px 0}
+.hp-faq summary{cursor:pointer;font:700 1.12rem Inter,system-ui,sans-serif;color:var(--cream);list-style:none;display:flex;justify-content:space-between;gap:16px;min-height:44px;align-items:center}
+.hp-faq summary::after{content:"+";color:var(--gold);font-size:1.5rem;line-height:1;transition:transform .25s}
+.hp-faq details[open] summary::after{transform:rotate(45deg)}
+.hp-faq details p{margin-top:12px}
+.hp-cta{padding:clamp(56px,8vw,96px) 0;background:radial-gradient(700px 320px at 50% 0%,rgba(245,196,81,.14),transparent 70%)}
+.hp-cta .hp-wrap{text-align:center}
+.hp-cta h2{max-width:20ch;margin:0 auto}
+.hp-cta p{max-width:52ch;margin:16px auto 0;font-size:1.08rem}
+.hp-cta .hp-ctas{justify-content:center}
+.hp-foot{border-top:1px solid var(--edge);padding:54px 0 36px;background:var(--bg)}
+.hp-foot-grid{display:grid;gap:30px}
+@media(min-width:760px){.hp-foot-grid{grid-template-columns:1.6fr 1fr 1fr}}
+.hp-foot p{margin-top:10px;max-width:38ch}
+.hp-foot h4{font:700 1rem Inter,system-ui,sans-serif;color:var(--cream);margin-bottom:12px}
+.hp-foot a,.hp-foot button{display:block;color:var(--mut);text-decoration:none;padding:6px 0;background:none;border:0;text-align:left;font:inherit;cursor:pointer;min-height:36px}
+.hp-foot a:hover,.hp-foot button:hover{color:var(--gold)}
+.hp .ss-name{font:italic 700 1.5rem "Cormorant Garamond",Georgia,serif}
+.hp .gold-text{background:linear-gradient(135deg,#FFF7DB,#F5C451 55%,#D99722);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hp .rv{opacity:0;transform:translateY(24px);transition:opacity .75s ease,transform .75s cubic-bezier(.2,.8,.2,1)}
+.hp .rv.in{opacity:1;transform:none}
+.hp :focus-visible{outline:3px solid var(--gold);outline-offset:3px;border-radius:10px}
+@media(prefers-reduced-motion:reduce){.hp *,.hp *::before,.hp *::after{animation:none!important;transition:none!important}.hp .rv{opacity:1;transform:none}.hp-open{opacity:1;transform:none}.hp-bar i{transition:none}}
+</style><style id="hp-css3">
+.hp-grid2{display:grid;gap:18px}@media(min-width:720px){.hp-grid2{grid-template-columns:repeat(2,1fr)}}
+.hp-app{background:linear-gradient(180deg,#1B0E13,#120809);border:1px solid #2C171D;border-radius:24px;padding:24px;box-shadow:0 30px 60px -34px rgba(0,0,0,.95)}
+.hp-app-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:18px}
+.hp-app-head b{display:block;font:700 1.45rem "Cormorant Garamond",Georgia,serif;color:#FFF7DB}
+.hp-app-head span{font-size:.86rem;color:#D0B8BE}
+.hp-days{font-size:.8rem;font-weight:700;color:#F5C451;border:1px solid rgba(245,196,81,.4);border-radius:999px;padding:6px 12px;white-space:nowrap}
+.hp-app-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:18px}
+.hp-app-stats div{background:#180C10;border:1px solid #2C171D;border-radius:14px;padding:14px}
+.hp-app-stats b{display:block;font:700 1.9rem/1 "Cormorant Garamond",Georgia,serif;color:#FFF7DB}
+.hp-app-stats span{font-size:.8rem;color:#D0B8BE}
+.hp-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}
+.hp-list li{display:flex;align-items:center;gap:12px;background:#180C10;border:1px solid #2C171D;border-radius:14px;padding:10px 12px}
+.hp-list li>div{flex:1;min-width:0}
+.hp-list strong{display:block;color:#FFF7DB;font-size:.98rem}
+.hp-list small{color:#D0B8BE;font-size:.82rem}
+.hp-av{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:rgba(245,196,81,.14);color:#F5C451;font-weight:700;flex:none}
+.hp-pill{min-height:38px;padding:0 14px;border-radius:999px;border:1px solid transparent;font:700 .82rem Inter,system-ui,sans-serif;cursor:pointer;transition:transform .15s,background .2s,color .2s}
+.hp-pill:active{transform:scale(.95)}
+.hp-Attending{background:rgba(37,211,102,.14);color:#4ADE80}
+.hp-Pending{background:rgba(250,204,21,.14);color:#FACC15}
+.hp-Declined{background:rgba(248,113,113,.14);color:#F87171}
+.hp-app-foot{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:16px}
+.hp-small{min-height:44px;padding:0 18px;font-size:.92rem}
+#hpMsg{font-size:.88rem;color:#F5C451;font-weight:600}
+.hp-cap{font-size:.78rem;color:#AE97A0;margin-top:12px}
+button.hp-btn{font-family:Inter,system-ui,sans-serif}
+</style><style id="hp-css4">
+.ss-top-cta{min-height:42px;padding:0 18px;border-radius:999px;border:0;background:linear-gradient(135deg,#F5C451,#D99722);color:#14070A;font:700 .92rem Inter,system-ui,sans-serif;cursor:pointer;white-space:nowrap}
+.ss-top-cta:hover{filter:brightness(1.06)}
+.hp-tight{padding-top:24px!important}
+.hp-proof{list-style:none;display:flex;flex-wrap:wrap;gap:10px;padding:0;margin:22px 0 0}
+.hp-proof li{padding:7px 14px;border-radius:999px;border:1px solid #2C171D;background:#180C10;color:#E6D6DB;font-size:.9rem}
+.hp-proof li::before{content:"\2713  ";color:#F5C451;font-weight:700}
+.hp-feats{display:grid;gap:12px}
+.hp-feat{background:linear-gradient(180deg,#1B0E13,#130A0D);border:1px solid #2C171D;border-radius:18px;transition:border-color .25s}
+.hp-feat[open]{border-color:rgba(245,196,81,.5)}
+.hp-feat summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:16px;padding:18px 22px;min-height:64px}
+.hp-feat summary::-webkit-details-marker{display:none}
+.hp-fnum{flex:none;display:inline-grid;place-items:center;width:44px;height:44px;border-radius:12px;background:rgba(245,196,81,.12);color:#F5C451;font:700 .9rem Inter,system-ui,sans-serif}
+.hp-ftitle{flex:1;font:700 1.22rem "Cormorant Garamond",Georgia,serif;color:#FFF7DB}
+.hp-feat summary::after{content:"+";color:#F5C451;font-size:1.6rem;line-height:1;transition:transform .25s}
+.hp-feat[open] summary::after{transform:rotate(45deg)}
+.hp-fbody{padding:0 22px 22px 82px}
+@media(max-width:640px){.hp-fbody{padding:0 18px 20px}}
+.hp-fwhat{font-size:1.02rem;color:#F5ECEE;margin-bottom:16px}
+.hp-fcols{display:grid;gap:22px}
+@media(min-width:800px){.hp-fcols{grid-template-columns:1.25fr 1fr}}
+.hp-fbody h4{font:700 .78rem Inter,system-ui,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:#F5C451;margin:0 0 10px}
+.hp-fbody h4+p,.hp-fbody h4+ol{margin-top:0}
+.hp-fbody h4:not(:first-child){margin-top:18px}
+.hp-fbody ol{padding-left:20px;margin:0;color:#F5ECEE;display:grid;gap:8px;line-height:1.6}
+.hp-fbody p{color:#E6D6DB}
+.hp-link{margin-top:16px;background:none;border:0;color:#F5C451;font:700 .95rem Inter,system-ui,sans-serif;cursor:pointer;min-height:44px;padding:0;text-decoration:underline;text-underline-offset:4px}
+.hp .hp-card strong{color:#FFF7DB}
+</style><style id="hp-css5">
+.hp-tour-tabs{justify-content:flex-start;margin-bottom:26px}
+.hp-tour{background:linear-gradient(180deg,#1B0E13,#120809);border:1px solid #2C171D;border-radius:22px;padding:22px;min-height:260px}
+.hp-tour-grid{display:grid;gap:12px}
+.hp-tour-row{display:grid;grid-template-columns:1fr auto;gap:8px 16px;align-items:center;background:#180C10;border:1px solid #2C171D;border-radius:14px;padding:14px 16px}
+.hp-tour-row strong{color:#FFF7DB;font-size:1rem}
+.hp-tour-row small{color:#D0B8BE;font-size:.85rem;display:block}
+.hp-tour-row .hp-pill{pointer-events:none}
+.hp-tour-bar{grid-column:1/-1;height:8px;border-radius:99px;background:#2A161C;overflow:hidden}
+.hp-tour-bar i{display:block;height:100%;background:linear-gradient(90deg,#F5C451,#D99722);transition:width .9s cubic-bezier(.2,.8,.2,1)}
+.hp-tag{font:700 .78rem Inter,system-ui,sans-serif;color:#F5C451;white-space:nowrap}
+.hp-tour-head{font:700 1.3rem "Cormorant Garamond",Georgia,serif;color:#FFF7DB;margin:0 0 14px}
+.hp-phone-wrap{display:grid;justify-items:center}
+.hp-phone{width:min(330px,100%);background:#08120D;border:6px solid #2A161C;border-radius:34px;padding:16px 14px 20px;box-shadow:0 30px 60px -30px rgba(0,0,0,.9);background-image:radial-gradient(rgba(255,255,255,.04) 1px,transparent 0);background-size:18px 18px}
+.hp-phone-top{font:700 1rem Inter,system-ui,sans-serif;color:#E6D6DB;padding-bottom:10px;border-bottom:1px solid #1E2A24;margin-bottom:14px}
+.hp-bubble{background:#DCF7C5;color:#16261A;border-radius:14px 14px 14px 3px;padding:14px;font-size:.95rem;line-height:1.6;white-space:pre-wrap;animation:hpIn .45s ease}
+@keyframes hpIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.hp-example{font-size:.78rem;color:#AE97A0;margin-top:12px;text-align:center}
+.hp-checklist{list-style:none;padding:0;margin:0;display:grid;gap:12px;counter-reset:cl}
+.hp-checklist li label{display:flex;gap:14px;align-items:flex-start;background:#180C10;border:1px solid #2C171D;border-radius:16px;padding:18px;min-height:56px;cursor:pointer;transition:border-color .2s,background .2s}
+.hp-checklist li label:hover{border-color:rgba(245,196,81,.45)}
+.hp-checklist input{width:24px;height:24px;flex:none;margin-top:2px;accent-color:#F5C451;cursor:pointer}
+.hp-checklist span{color:#F5ECEE;line-height:1.55}
+.hp-checklist b{color:#FFF7DB}
+.hp-checklist li.done label{border-color:rgba(37,211,102,.45);background:rgba(37,211,102,.06)}
+.hp-checklist li.done span{color:#AE97A0}
+.hp-bar-wrap{margin:18px 0 10px}
+.hp-bar-wrap .hp-bar{height:10px}
+</style></head>
+<body class="min-h-screen w-full selection:bg-gold selection:text-obsidian">
+
+  <!-- ===================================================================== -->
+  <!-- FULL-WIDTH CONTAINER (100% SCREEN WIDTH UTILIZATION, ZERO TOP HEADER) -->
+  <!-- ===================================================================== -->
+  <main class="w-full px-3.5 sm:px-6 lg:px-10 xl:px-14 2xl:px-20 pt-3.5 space-y-5">
+
+    <!-- SITE HEADER (brand only) -->
+    <header id="siteHeader" class="ss-header"><div class="ss-hrow"><div class="ss-brand" onclick="switchRoleView('home')" role="link" tabindex="0" aria-label="Shaadi Saathi home"><span class="ss-logo">SS</span><div class="ss-bt"><span class="ss-name gold-text">Shaadi Saathi</span></div></div></div><span id="activeRoleBadge" hidden></span><span id="activeRoleDescription" hidden></span></header>
+
+    <!-- =================================================================== -->
+    <!-- INTERFACE 1: WEDDINGKART-STYLE VISUAL INTERACTIVE HOME PAGE         -->
+    <!-- =================================================================== -->
+    <div id="view-home" class="hp">
+
+<section class="hp-hero" id="top"><div class="hp-wrap hp-hero-grid">
+  <div class="hp-rv">
+    <span class="hp-eyebrow">For families hosting and planners running a wedding</span>
+    <h1>Invite every guest to the right events. <em>Track replies, rooms and travel in one screen.</em></h1>
+    <p class="hp-lead">Shaadi Saathi sends each guest a WhatsApp invite with only their events. You see who is coming, where they stay and when they land, without chasing anyone.</p>
+    <div class="hp-ctas"><button class="hp-btn hp-gold" data-go="creator">Start planning</button><a class="hp-btn hp-ghost" href="#features">See every feature</a></div>
+    <ul class="hp-proof"><li>Guests need no app</li><li>Pay per wedding</li><li>Verified WhatsApp sender</li></ul>
+  </div>
+
+  <div class="hp-app hp-rv" aria-label="Sample guest dashboard">
+    <div class="hp-app-head"><div><b>Aarav &amp; Riya</b><span>14 Feb 2027 &middot; Jaipur</span></div><span class="hp-days" id="hpDays"></span></div>
+    <div class="hp-app-stats">
+      <div><b data-count="412">0</b><span>people coming</span></div>
+      <div><b data-count="78" data-suffix="%">0</b><span>replied</span></div>
+      <div><b data-count="46">0</b><span>pending</span></div>
+    </div>
+    <ul class="hp-list" id="hpList">
+      <li><span class="hp-av">A</span><div><strong>Anita Sharma</strong><small>Bride side &middot; 3 people &middot; Version C</small></div><button class="hp-pill hp-Attending" data-status="0" aria-label="Anita Sharma, Attending. Tap to change">Attending</button></li>
+      <li><span class="hp-av">R</span><div><strong>Rohit Mehra</strong><small>Groom side &middot; 2 people &middot; Version B</small></div><button class="hp-pill hp-Pending" data-status="1" aria-label="Rohit Mehra, Pending. Tap to change">Pending</button></li>
+      <li><span class="hp-av">K</span><div><strong>Kavita Iyer</strong><small>Bride side &middot; 1 person &middot; Version A</small></div><button class="hp-pill hp-Declined" data-status="2" aria-label="Kavita Iyer, Declined. Tap to change">Declined</button></li>
+      <li><span class="hp-av">V</span><div><strong>Vikram Singh</strong><small>Groom side &middot; 4 people &middot; Version C</small></div><button class="hp-pill hp-Attending" data-status="0" aria-label="Vikram Singh, Attending. Tap to change">Attending</button></li>
+    </ul>
+    <div class="hp-app-foot"><button class="hp-btn hp-ghost hp-small" id="hpRemind">Remind 46 pending guests</button><span id="hpMsg" role="status" aria-live="polite"></span></div>
+    <p class="hp-cap">Sample data. Tap a status to change it.</p>
+  </div>
+</div></section>
+
+<section class="hp-band hp-tight" id="problem"><div class="hp-wrap">
+  <div class="hp-head hp-rv"><span class="hp-kicker">The problem</span><h2>Weddings break in the same three places</h2></div>
+  <div class="hp-grid3">
+    <article class="hp-card hp-rv"><span class="hp-ico">!</span><h3>Wrong invites</h3><p>Colleagues get the family Haldi invite and close cousins miss the Sangeet. <strong>Fix:</strong> invite versions send each guest only their events.</p></article>
+    <article class="hp-card hp-rv"><span class="hp-ico">?</span><h3>Unknown headcount</h3><p>Replies sit in phone chats and nobody knows the real number for food and seats. <strong>Fix:</strong> one-tap RSVP and live counts.</p></article>
+    <article class="hp-card hp-rv"><span class="hp-ico">&#10007;</span><h3>Missed arrivals</h3><p>Flights land, no car is waiting, and rooms are double-booked. <strong>Fix:</strong> travel, pickup and room board in one list.</p></article>
+  </div>
+</div></section>
+
+<section class="hp-band" id="how"><div class="hp-wrap">
+  <div class="hp-head hp-rv"><span class="hp-kicker">How it works</span><h2>Three steps from empty list to ready wedding</h2></div>
+  <div class="hp-steps">
+    <div class="hp-step hp-rv"><span class="hp-num">1</span><h3>Add the wedding and guests</h3><p>Set up the events and the guest list. Import a spreadsheet, or paste the names.</p></div>
+    <div class="hp-step hp-rv"><span class="hp-num">2</span><h3>Choose each guest's events</h3><p>Pick an invite version for each guest. Their invite will show only those events.</p></div>
+    <div class="hp-step hp-rv"><span class="hp-num">3</span><h3>Send, then track</h3><p>Invites go out on WhatsApp. Replies, rooms and travel update as guests respond.</p></div>
+  </div>
+</div></section>
+
+<section class="hp-band hp-alt" id="features"><div class="hp-wrap">
+  <div class="hp-head hp-rv"><span class="hp-kicker">Features, explained</span><h2>All 14 features, most-used first</h2><p>Each feature below says what it does, how to use it in a few taps, who it is for and why it matters. Tap any feature to open it.</p></div>
+  <div class="hp-feats"><details class="hp-feat hp-rv" open><summary><span class="hp-fnum">01</span><span class="hp-ftitle">Guest list and RSVP</span></summary>
+  <div class="hp-fbody"><p class="hp-fwhat">Every guest in one list with their side, number of people, invite version and reply status.</p>
+  <div class="hp-fcols"><div><h4>How to use it</h4><ol><li>Tap Add guest. Enter name, side, people and invite version.</li><li>Tap the status pill to switch between Attending, Pending and Declined.</li><li>Use search and the filter chips to find who has not replied.</li><li>Import a spreadsheet, or export the list as CSV at any time.</li></ol></div>
+  <div><h4>Best for</h4><p>Families and planners</p><h4>Why it matters</h4><p>You always know the exact headcount and who still needs a reminder.</p></div></div></div></details><details class="hp-feat hp-rv"><summary><span class="hp-fnum">02</span><span class="hp-ftitle">WhatsApp invites and reminders</span></summary>
+  <div class="hp-fbody"><p class="hp-fwhat">Each guest gets their invite in a WhatsApp thread. Reminders go only to guests who have not replied.</p>
+  <div class="hp-fcols"><div><h4>How to use it</h4><ol><li>Pick the guest or the whole list.</li><li>Send the invite. It opens with the guest’s own events.</li><li>Tap Remind pending guests to follow up in one step.</li></ol></div>
+  <div><h4>Best for</h4><p>Everyone</p><h4>Why it matters</h4><p>Invites arrive where guests already read messages. No app to install.</p></div></div></div></details><details class="hp-feat hp-rv"><summary><span class="hp-fnum">03</span><span class="hp-ftitle">Invite versions</span></summary>
+  <div class="hp-fbody"><p class="hp-fwhat">Choose which events each guest is invited to: Version A (Reception only), B (Sangeet and Reception) or C (all four events).</p>
+  <div class="hp-fcols"><div><h4>How to use it</h4><ol><li>Set the version when you add a guest, or change it later.</li><li>Their invite and reminders show only those events.</li><li>Check the count on the Events page to see who is invited to what.</li></ol></div>
+  <div><h4>Best for</h4><p>Families with many functions</p><h4>Why it matters</h4><p>Close family gets every event, colleagues get only the reception. No wrong invites.</p></div></div></div></details><details class="hp-feat hp-rv"><summary><span class="hp-fnum">04</span><span class="hp-ftitle">Rooms and split stays</span></summary>
+  <div class="hp-fbody"><p class="hp-fwhat">A room board with bed capacity. Assign each attending guest or family member to a room.</p>
+  <div class="hp-fcols"><div><h4>How to use it</h4><ol><li>Choose the guest and the room, then tap Assign.</li><li>A full room is blocked, so nobody is double-booked.</li><li>Tap Remove to move someone to another room.</li></ol></div>
+  <div><h4>Best for</h4><p>Families with outstation guests</p><h4>Why it matters</h4><p>One family can be split across two rooms, and every bed is accounted for.</p></div></div></div></details><details class="hp-feat hp-rv"><summary><span class="hp-fnum">05</span><span class="hp-ftitle">Travel and pickup</span></summary>
+  <div class="hp-fbody"><p class="hp-fwhat">Record each guest’s flight or train, number, PNR, arrival time and whether pickup is arranged.</p>
+  <div class="hp-fcols"><div><h4>How to use it</h4><ol><li>Add an arrival: choose the guest, flight or train, number and time.</li><li>Set pickup to Pending or Assigned.</li><li>Guests can also add their own travel details on their pass.</li></ol></div>
+  <div><h4>Best for</h4><p>Families with guests flying or taking trains</p><h4>Why it matters</h4><p>Airport and station pickups are planned from one list, not from calls.</p></div></div></div></details><details class="hp-feat hp-rv"><summary><span class="hp-fnum">06</span><span class="hp-ftitle">Budget ledger</span></summary>
+  <div class="hp-fbody"><p class="hp-fwhat">A running total of the budget, what is paid and what is still due.</p>
+  <div class="hp-fcols"><div><h4>How to use it</h4><ol><li>Each vendor or cost line shows its total and amount paid.</li><li>Tap Mark fully paid when a bill is settled.</li><li>Totals at the top update straight away.</li></ol></div>
+  <div><h4>Best for</h4><p>Families and planners</p><h4>Why it matters</h4><p>You see the balance before the next payment is due.</p></div></div></div></details><details class="hp-feat hp-rv"><summary><span class="hp-fnum">07</span><span class="hp-ftitle">Vendors</span></summary>
+  <div class="hp-fbody"><p class="hp-fwhat">A card for each service: venue, catering, decoration, DJ and sound, anchoring, photography.</p>
+  <div class="hp-fcols"><div><h4>How to use it</h4><ol><li>Tap Add vendor. Choose the category, enter the name and the total.</li><li>Track paid and due amounts on each card.</li><li>Mark a vendor paid when the final amount is cleared.</li></ol></div>
+  <div><h4>Best for</h4><p>Planners and hosts</p><h4>Why it matters</h4><p>Every vendor contract and payment is in one place.</p></div></div></div></details><details class="hp-feat hp-rv"><summary><span class="hp-fnum">08</span><span class="hp-ftitle">Family tasks</span></summary>
+  <div class="hp-fbody"><p class="hp-fwhat">A to-do board with an owner and a status for each task.</p>
+  <div class="hp-fcols"><div><h4>How to use it</h4><ol><li>Tap Add task. Write the task and who will do it.</li><li>Tap the status to move it: Not Started, In Progress, Done.</li><li>Check the board in the family group before each function.</li></ol></div>
+  <div><h4>Best for</h4><p>Families dividing the work</p><h4>Why it matters</h4><p>Nothing falls between cousins and uncles. Everyone sees who owns what.</p></div></div></div></details><details class="hp-feat hp-rv"><summary><span class="hp-fnum">09</span><span class="hp-ftitle">Wedding events schedule</span></summary>
+  <div class="hp-fbody"><p class="hp-fwhat">Each ceremony with its date, time and venue, such as Haldi, Mehendi, Sangeet and Reception.</p>
+  <div class="hp-fcols"><div><h4>How to use it</h4><ol><li>Add each event with date, time and venue.</li><li>The invite versions pick from this list.</li><li>Guests see the schedule for their own events.</li></ol></div>
+  <div><h4>Best for</h4><p>Everyone</p><h4>Why it matters</h4><p>Guests know when and where to be, for every function they are invited to.</p></div></div></div></details><details class="hp-feat hp-rv"><summary><span class="hp-fnum">10</span><span class="hp-ftitle">Guest pass</span></summary>
+  <div class="hp-fbody"><p class="hp-fwhat">A private page for each guest: their events, room, travel and reply.</p>
+  <div class="hp-fcols"><div><h4>How to use it</h4><ol><li>Guest opens their pass from the invite link.</li><li>They see their events, room and pickup time.</li><li>They can reply and add their own travel details.</li></ol></div>
+  <div><h4>Best for</h4><p>Guests</p><h4>Why it matters</h4><p>Guests find their own details without calling the family.</p></div></div></div></details><details class="hp-feat hp-rv"><summary><span class="hp-fnum">11</span><span class="hp-ftitle">Digital guestbook</span></summary>
+  <div class="hp-fbody"><p class="hp-fwhat">A wall where guests leave blessings and wishes for the couple.</p>
+  <div class="hp-fcols"><div><h4>How to use it</h4><ol><li>Guest types name and blessing, then posts.</li><li>The family reads every message on the wedding page.</li></ol></div>
+  <div><h4>Best for</h4><p>Guests and couples</p><h4>Why it matters</h4><p>A keepsake that grows through the wedding.</p></div></div></div></details><details class="hp-feat hp-rv"><summary><span class="hp-fnum">12</span><span class="hp-ftitle">Photo gallery</span></summary>
+  <div class="hp-fbody"><p class="hp-fwhat">A shared photo wall where guests and family add pictures with a caption.</p>
+  <div class="hp-fcols"><div><h4>How to use it</h4><ol><li>Tap Add photo, choose a picture, add a caption.</li><li>The photo appears on the wall for everyone to see.</li></ol></div>
+  <div><h4>Best for</h4><p>Guests and families</p><h4>Why it matters</h4><p>Every guest’s photos are gathered in one album.</p></div></div></div></details><details class="hp-feat hp-rv"><summary><span class="hp-fnum">13</span><span class="hp-ftitle">Host and creator access</span></summary>
+  <div class="hp-fbody"><p class="hp-fwhat">Families hosting see their own weddings. Planners see all weddings they run.</p>
+  <div class="hp-fcols"><div><h4>How to use it</h4><ol><li>Host: switch between the bride’s or groom’s family hosting accounts.</li><li>Creator: see every wedding, its replies and totals in one screen.</li></ol></div>
+  <div><h4>Best for</h4><p>Planners and both families</p><h4>Why it matters</h4><p>Each person sees only the weddings and details they are responsible for.</p></div></div></div></details><details class="hp-feat hp-rv"><summary><span class="hp-fnum">14</span><span class="hp-ftitle">Languages</span></summary>
+  <div class="hp-fbody"><p class="hp-fwhat">Salutations and invite text in English, Hindi, Gujarati and Marwari.</p>
+  <div class="hp-fcols"><div><h4>How to use it</h4><ol><li>Choose the invite language when you send.</li><li>Elders read the invite in the language they know best.</li></ol></div>
+  <div><h4>Best for</h4><p>Families with elder guests</p><h4>Why it matters</h4><p>Older relatives understand the invite without help.</p></div></div></div></details></div>
+</div></section>
+
+<section class="hp-band hp-alt" id="tour"><div class="hp-wrap">
+  <div class="hp-head hp-rv"><span class="hp-kicker">Product tour</span><h2>Four screens. One wedding.</h2><p>Tap a tab to see what each screen shows. The numbers are sample data.</p></div>
+  <div class="hp-tabs hp-tour-tabs" role="tablist" aria-label="Screens">
+    <button class="hp-chip" role="tab" aria-selected="true" data-tour="guests">Guests</button>
+    <button class="hp-chip" role="tab" aria-selected="false" data-tour="rooms">Rooms</button>
+    <button class="hp-chip" role="tab" aria-selected="false" data-tour="travel">Travel</button>
+    <button class="hp-chip" role="tab" aria-selected="false" data-tour="budget">Budget</button>
+  </div>
+  <div class="hp-tour hp-rv" id="tourPanel" role="tabpanel" aria-live="polite"></div>
+</div></section>
+
+<section class="hp-band" id="guest-view"><div class="hp-wrap hp-split">
+  <div class="hp-rv">
+    <span class="hp-kicker">Guest experience</span>
+    <h2>What the guest sees</h2>
+    <p class="hp-muted">Pick a guest to see the WhatsApp invite they receive. Each invite lists only their events and their room.</p>
+    <div class="hp-tabs" role="group" aria-label="Sample guest">
+      <button class="hp-chip" aria-pressed="true" data-gx="0">Anita Sharma</button>
+      <button class="hp-chip" aria-pressed="false" data-gx="1">Rohit Mehra</button>
+      <button class="hp-chip" aria-pressed="false" data-gx="2">Kavita Iyer</button>
+    </div>
+  </div>
+  <div class="hp-rv hp-phone-wrap">
+    <div class="hp-phone" aria-label="Example WhatsApp invite">
+      <div class="hp-phone-top">Aarav &amp; Riya</div>
+      <div class="hp-bubble" id="gxMsg"></div>
+      <p class="hp-example">Example layout. Guests reply in the chat.</p>
+    </div>
+  </div>
+</div></section>
+
+
+
+
+
+<section class="hp-band" id="who"><div class="hp-wrap">
+  <div class="hp-head hp-rv"><span class="hp-kicker">Who it is for</span><h2>One tool for everyone in the wedding</h2></div>
+  <div class="hp-grid3">
+    <article class="hp-card hp-rv"><h3>Families hosting</h3><p>One list of who is coming, which room they need and what time their flight lands.</p><button class="hp-link" data-go="host">Open the host view</button></article>
+    <article class="hp-card hp-rv"><h3>Planners</h3><p>Run several weddings. Send each guest only their events. Track every wedding separately.</p><button class="hp-link" data-go="creator">Open the planner view</button></article>
+    <article class="hp-card hp-rv"><h3>Guests</h3><p>Open one WhatsApp link. See your events, your room and your pickup time. No download, no password.</p><button class="hp-link" data-go="guest">Open a guest pass</button></article>
+  </div>
+</div></section>
+
+<section class="hp-band hp-alt" id="invites"><div class="hp-wrap hp-split">
+  <div class="hp-rv">
+    <span class="hp-kicker">Invite versions</span>
+    <h2>Try it: pick a version, see the events</h2>
+    <p class="hp-muted">Tap a version to see which events that guest receives.</p>
+    <div class="hp-tabs" role="group" aria-label="Invite version">
+      <button class="hp-chip" aria-pressed="false" data-ver="A">Version A &middot; Reception</button>
+      <button class="hp-chip" aria-pressed="true" data-ver="B">Version B &middot; Sangeet + Reception</button>
+      <button class="hp-chip" aria-pressed="false" data-ver="C">Version C &middot; All 4 events</button>
+    </div>
+  </div>
+  <div class="hp-events hp-rv" aria-live="polite">
+    <div class="hp-ev" data-ev="0"><b>Haldi</b><span>12 Feb &middot; Courtyard</span></div>
+    <div class="hp-ev" data-ev="1"><b>Mehendi</b><span>12 Feb &middot; Garden</span></div>
+    <div class="hp-ev" data-ev="2"><b>Sangeet</b><span>13 Feb &middot; Ballroom</span></div>
+    <div class="hp-ev" data-ev="3"><b>Reception</b><span>14 Feb &middot; Grand lawn</span></div>
+    <p class="hp-note" id="hpVerNote"></p>
+  </div>
+</div></section>
+
+<section class="hp-band" id="why"><div class="hp-wrap">
+  <div class="hp-head hp-rv"><span class="hp-kicker">Why choose us</span><h2>Built for Indian weddings</h2></div>
+  <div class="hp-grid2">
+    <article class="hp-card hp-rv"><h3>Family-first</h3><p>Multi-event invites, split-family rooms, and salutations for both the bride's and the groom's families.</p></article>
+    <article class="hp-card hp-rv"><h3>Recognisable sender</h3><p>Messages come from our verified WhatsApp Business number, so guests know the invite is real.</p></article>
+    <article class="hp-card hp-rv"><h3>Your language</h3><p>English, Hindi, Gujarati and Marwari, so every elder reads the invite easily.</p></article>
+    <article class="hp-card hp-rv"><h3>Clear pricing</h3><p>One price per wedding. You pay only for WhatsApp messages. Only WhatsApp messages are extra.</p></article>
+  </div>
+</div></section>
+
+<section class="hp-band hp-alt" id="access"><div class="hp-wrap">
+  <div class="hp-head hp-rv"><span class="hp-kicker">Access and privacy</span><h2>Each person sees only their part</h2></div>
+  <div class="hp-grid3">
+    <article class="hp-card hp-rv"><h3>One wedding, one space</h3><p>Each wedding keeps its own guests, events, rooms and budget. Nothing mixes between weddings.</p></article>
+    <article class="hp-card hp-rv"><h3>Guests see only their own</h3><p>A guest sees their own events, room, travel and reply. Other guests’ details stay hidden.</p></article>
+    <article class="hp-card hp-rv"><h3>Access by role</h3><p>Creators see every wedding they run. Hosts manage their own weddings. Guests open only their own pass.</p></article>
+  </div>
+</div></section>
+
+<section class="hp-band" id="start"><div class="hp-wrap hp-split">
+  <div class="hp-rv">
+    <span class="hp-kicker">Get started</span>
+    <h2>Four steps to your first invite</h2>
+    <p class="hp-muted">Tick each step as you go. Most families finish the first two in one sitting.</p>
+    <div class="hp-bar-wrap" aria-hidden="true"><div class="hp-bar"><i id="startBar" style="width:0%"></i></div></div>
+    <p class="hp-note" id="startMsg" role="status" aria-live="polite">0 of 4 done</p>
+    <div class="hp-ctas"><button class="hp-btn hp-gold" data-go="creator">Start planning</button></div>
+  </div>
+  <ol class="hp-checklist hp-rv">
+    <li><label><input type="checkbox"><span><b>Add the wedding and its events</b> with date, time and venue.</span></label></li>
+    <li><label><input type="checkbox"><span><b>Import or add your guests</b> from a spreadsheet or by hand.</span></label></li>
+    <li><label><input type="checkbox"><span><b>Choose an invite version</b> for each guest.</span></label></li>
+    <li><label><input type="checkbox"><span><b>Send the first invite</b> on WhatsApp.</span></label></li>
+  </ol>
+</div></section>
+
+<section class="hp-band hp-alt" id="pricing"><div class="hp-wrap">
+  <div class="hp-head hp-rv"><span class="hp-kicker">Pricing</span><h2>One wedding. One clear price.</h2><p>Every plan includes the verified WhatsApp sender and access to all role screens. Pick the plan that matches your wedding.</p></div>
+  <div class="hp-grid3">
+    <article class="hp-plan hp-rv"><h3>Silver Celebration</h3><div class="hp-price">&#8377;5,999<span>per wedding</span></div>
+      <ul><li>Verified WhatsApp sending</li><li>Up to 2 invite versions</li><li>One-tap RSVP and live counts</li><li>CSV import and export</li><li>Budget tracker and vendors</li></ul>
+      <button class="hp-btn hp-ghost hp-go" data-go="creator">Choose Silver</button></article>
+    <article class="hp-plan hp-pick hp-rv"><h3>Royal Gold Suite</h3><div class="hp-price">&#8377;9,999<span>per wedding</span></div>
+      <ul><li>Everything in Silver</li><li>Family task board</li><li>Private guest pass</li><li>Multi-hotel room blocks</li></ul>
+      <button class="hp-btn hp-gold hp-go" data-go="creator">Choose Royal Gold</button></article>
+    <article class="hp-plan hp-rv"><h3>Imperial Destination</h3><div class="hp-price">&#8377;14,999<span>per wedding</span></div>
+      <ul><li>Everything in Royal Gold Suite</li><li>Timezone-aware ceremony reminders</li><li>Multi-host salutation routing</li><li>Dedicated onboarding specialist</li></ul>
+      <button class="hp-btn hp-ghost hp-go" data-go="creator">Choose Imperial</button></article>
+  </div>
+</div></section>
+
+<section class="hp-band" id="faq"><div class="hp-wrap hp-faq">
+  <div class="hp-head hp-rv"><span class="hp-kicker">FAQ</span><h2>Common questions</h2></div>
+  <details class="hp-rv" open><summary>Which number are invitations sent from?</summary><p>From our verified WhatsApp Business number. You do not need to register a number or use your personal SIM.</p></details>
+  <details class="hp-rv"><summary>How do invite versions work?</summary><p>You choose which events each guest is invited to. That guest's invite and reminders show only those events.</p></details>
+  <details class="hp-rv"><summary>One family gets one invite, but 3 members come and need 2 rooms?</summary><p>Add each attending member and assign rooms per person. The family sees one list with their own room and travel details.</p></details>
+  <details class="hp-rv"><summary>How are Creator, Host and Guest access separated?</summary><p>Creators see all weddings. Hosts manage their own weddings. Guests see only their own pass, room and travel.</p></details>
+</div></section>
+
+<section class="hp-cta hp-rv"><div class="hp-wrap">
+  <h2>Start with one wedding today</h2>
+  <p>Add the events, import the guests and send the first invite the same day.</p>
+  <div class="hp-ctas"><button class="hp-btn hp-gold" data-go="creator">Start planning</button><a class="hp-btn hp-ghost" href="#pricing">See pricing</a></div>
+</div></section>
+
+<footer class="hp-foot"><div class="hp-wrap hp-foot-grid">
+  <div><span class="ss-name gold-text">Shaadi Saathi</span><p>Wedding invitations, rooms and travel in one WhatsApp thread per guest.</p></div>
+  <div><h4>Product</h4><a href="#features">Features</a><a href="#how">How it works</a><a href="#invites">Invite versions</a><a href="#pricing">Pricing</a></div>
+  <div><h4>Open as</h4><button data-go="creator">Creator</button><button data-go="host">Host</button><button data-go="guest">Guest</button></div>
+</div></footer>
+</div>
+
+    <!-- =================================================================== -->
+    <!-- INTERFACE 2: CREATOR VIEW (FULL-WIDTH ALL WEDDINGS TELEMETRY)       -->
+    <!-- =================================================================== -->
+    <div id="view-creator" class="space-y-5 hidden">
+      <div class="bento-card p-4 sm:p-6 space-y-4">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <span class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-gold/20 text-gold border border-gold/40">🔒 CREATOR-ONLY COMMAND CENTER • PARESH BAFNA</span>
+            <h1 class="font-serif text-2xl sm:text-3xl font-bold text-cream mt-1">All Weddings Telemetry Dashboard</h1>
+            <p class="text-xs sm:text-sm text-muted">Full-width telemetry across every wedding. Click any wedding card to open its 11 separated operational pages.</p>
+          </div>
+          <div class="flex items-center gap-2">
+            <input id="creatorSearchInput" oninput="renderCreatorDashboard()" type="text" placeholder="Search couple or city..." class="bg-obsidian border border-borderWarm rounded-xl px-3.5 py-2 text-xs sm:text-sm text-cream placeholder-muted focus:outline-none focus:border-gold sm:w-64" />
+            <button onclick="openCreateWeddingModal()" class="btn-gold px-4 py-2 rounded-xl text-xs sm:text-sm font-bold shrink-0">+ New Wedding</button>
+          </div>
+        </div>
+
+        <!-- Global Rollup Telemetry Strip -->
+        <div id="creatorGlobalStrip" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3"></div>
+      </div>
+
+      <!-- Full-Width Weddings Grid -->
+      <div id="creatorWeddingsGrid" class="grid grid-cols-1 xl:grid-cols-2 gap-5"></div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- INTERFACE 3: HOST VIEW (HOSTED WEDDINGS + INVITED WEDDINGS)         -->
+    <!-- =================================================================== -->
+    <div id="view-host" class="space-y-5 hidden">
+      <div class="bento-card p-4 sm:p-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <span class="px-2.5 py-0.5 rounded text-xs font-bold bg-emeraldSS/20 text-emeraldSS border border-emeraldSS/40">🏠 FAMILY HOST PORTAL</span>
+          <h1 class="font-serif text-2xl sm:text-3xl font-bold text-cream mt-1">My Hosted & Invited Weddings</h1>
+          <p class="text-xs sm:text-sm text-muted">Manage weddings where you are a Host, or view your private Guest Pass for weddings you are invited to.</p>
+        </div>
+        <div class="sm:w-80">
+          <label class="text-xs font-semibold text-gold block mb-1">Switch Active Host Account:</label>
+          <select id="hostPersonaSelect" onchange="renderHostPortal()" class="w-full bg-card border border-gold/50 rounded-xl px-3.5 py-2 text-xs sm:text-sm font-semibold text-cream">
+            <option value="sharma">Smt. Sunita & Shri Rajesh Sharma</option>
+            <option value="bafna">Smt. Kavita & Shri Paresh Bafna</option>
+            <option value="jawarilal">Shri Jawarilal Bafna</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="space-y-3">
+        <h2 class="font-serif text-xl sm:text-2xl font-bold text-gold">1. Weddings You Are Hosting (Full 11-Page Management Access)</h2>
+        <div id="hostManagedWeddingsGrid" class="grid grid-cols-1 xl:grid-cols-2 gap-5"></div>
+      </div>
+
+      <div class="space-y-3">
+        <h2 class="font-serif text-xl sm:text-2xl font-bold text-skySS">2. Weddings You Are Invited To (Private Guest Access Only)</h2>
+        <div id="hostInvitedWeddingsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-5"></div>
+      </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- INTERFACE 4: GUEST PORTAL VIEW (FILTERED BY ASSIGNED INVITE VARIANT)-->
+    <!-- =================================================================== -->
+    <div id="view-guest" class="space-y-5 hidden">
+      <div class="bento-card p-4 sm:p-6 bg-gradient-to-r from-surface via-card to-surface flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div>
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="px-2.5 py-0.5 rounded text-xs font-bold bg-skySS/20 text-skySS border border-skySS/40">🎟️ PRIVATE GUEST PASS</span>
+            <span id="gpVariantBadge" class="px-2.5 py-0.5 rounded text-xs font-mono font-bold bg-gold/20 text-gold border border-gold/40">Invited: All 4 Events</span>
+          </div>
+          <h1 id="guestPortalWelcome" class="font-serif text-2xl sm:text-3xl font-bold text-cream mt-1">Namaste, Anita Sharma & Family</h1>
+          <p class="text-xs sm:text-sm text-muted">Celebration: <strong class="text-gold">Aarav & Ananya (12–14 Dec 2026 • Udaipur)</strong></p>
+        </div>
+        <div class="sm:w-80">
+          <label class="text-xs font-semibold text-gold block mb-1">Switch Guest Login (See Different Invite Variants):</label>
+          <select id="guestPortalSelect" onchange="renderGuestPortal()" class="w-full bg-card border border-gold/60 rounded-xl px-3.5 py-2 text-xs sm:text-sm font-semibold text-cream"></select>
+        </div>
+      </div>
+
+      <!-- 3-Column Guest Private Cards -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-5">
+        <!-- 1. My Family RSVP & Members -->
+        <div class="bento-card p-4 sm:p-5 space-y-3">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase text-emeraldSS">1. My Family RSVP</span>
+            <span id="gpRsvpBadge" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-emeraldSS/20 text-emeraldSS border border-emeraldSS/40">Attending</span>
+          </div>
+          <h3 class="font-serif text-lg font-bold text-cream">Attending Family Members</h3>
+          <div class="grid grid-cols-2 gap-2">
+            <button onclick="updateGuestOwnRsvp('Attending')" class="py-2 px-3 rounded-lg bg-emeraldSS/20 border border-emeraldSS/50 text-emeraldSS font-bold text-xs">✓ Attending</button>
+            <button onclick="updateGuestOwnRsvp('Declined')" class="py-2 px-3 rounded-lg bg-card border border-borderWarm text-crimsonSS font-bold text-xs">✕ Unable to Attend</button>
+          </div>
+          <div id="gpMembersList" class="space-y-1.5 pt-1"></div>
+        </div>
+
+        <!-- 2. My Allocated Split Hotel Rooms -->
+        <div class="bento-card p-4 sm:p-5 space-y-3">
+          <span class="text-xs font-bold uppercase text-gold">2. My Hotel Stay & Room Keys</span>
+          <h3 class="font-serif text-lg font-bold text-cream">Allocated Rooms</h3>
+          <div id="gpRoomsList" class="space-y-2"></div>
+          <div class="bg-obsidian p-3 rounded-xl border border-borderWarm text-xs text-muted">
+            📍 <strong class="text-cream">Hospitality Desk:</strong> Present this pass at hotel lobby for instant key handover.
+          </div>
+        </div>
+
+        <!-- 3. My Flight / Train & Pickup -->
+        <div class="bento-card p-4 sm:p-5 space-y-3">
+          <span class="text-xs font-bold uppercase text-skySS">3. My Travel & Pickup</span>
+          <h3 class="font-serif text-lg font-bold text-cream">Flight / Train Details</h3>
+          <div id="gpTravelSummary" class="space-y-2"></div>
+          <div class="bg-obsidian p-3 rounded-xl border border-borderWarm space-y-2">
+            <span class="text-xs font-bold text-gold block">Update My Arrival PNR:</span>
+            <div class="grid grid-cols-2 gap-2">
+              <select id="gpTravelMode" class="bg-card border border-borderWarm rounded-lg px-2.5 py-1.5 text-xs text-cream">
+                <option value="Flight">✈️ Flight</option>
+                <option value="Train">🚆 Train</option>
+              </select>
+              <input id="gpTravelNo" type="text" placeholder="Flight/Train No." class="bg-card border border-borderWarm rounded-lg px-2.5 py-1.5 text-xs text-cream" />
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <input id="gpTravelPnr" type="text" placeholder="PNR" class="bg-card border border-borderWarm rounded-lg px-2.5 py-1.5 text-xs text-cream font-mono" />
+              <input id="gpTravelTime" type="text" placeholder="Arrival Time" class="bg-card border border-borderWarm rounded-lg px-2.5 py-1.5 text-xs text-cream" />
+            </div>
+            <button onclick="saveGuestOwnTravel()" class="w-full btn-gold py-2 rounded-lg font-bold text-xs">Save My Travel Info</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Guest itinerary + guestbook -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+        
+
+        <div class="lg:col-span-12 space-y-4">
+          <div class="bento-card p-4 sm:p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <div>
+                <span class="text-xs font-bold uppercase text-gold">Your Personalised Itinerary</span>
+                <h3 class="font-serif text-lg sm:text-xl font-bold text-cream">Ceremonies You Are Invited To</h3>
+              </div>
+              <span id="gpEventsCountLabel" class="text-xs font-mono text-emeraldSS font-bold">Showing Invited Events Only</span>
+            </div>
+            <div id="gpEventsSchedule" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+          </div>
+
+          <div class="bento-card p-4 sm:p-5 space-y-3">
+            <span class="text-xs font-bold uppercase text-emeraldSS">Digital Guestbook & Blessings</span>
+            <div class="flex gap-2">
+              <input id="gpWishInput" type="text" placeholder="Write blessing for Aarav & Ananya..." class="flex-1 bg-card border border-borderWarm rounded-xl px-3.5 py-2 text-xs text-cream" />
+              <button onclick="postGuestPortalWish()" class="btn-gold px-4 py-2 rounded-xl font-bold text-xs shrink-0">Post Blessing</button>
+            </div>
+            <div id="gpGuestbookWall" class="grid grid-cols-1 sm:grid-cols-2 gap-2.5"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =================================================================== -->
+    <!-- SINGLE WEDDING WORKSPACE (11 SEPARATED FULL-WIDTH PAGES)            -->
+    <!-- =================================================================== -->
+    <div id="view-workspace" class="space-y-5 hidden">
+      <!-- Active Wedding Banner -->
+      <div class="bento-card p-4 sm:p-5 bg-gradient-to-r from-surface via-card to-surface space-y-3.5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <button onclick="goBackFromWorkspace()" class="px-3 py-1 rounded-lg bg-obsidian border border-gold text-gold font-bold text-xs hover:bg-gold hover:text-obsidian transition">
+                ← Back to Weddings
+              </button>
+              <span id="wsBannerTag" class="px-2.5 py-0.5 rounded text-xs font-bold uppercase bg-gold/20 text-gold">Royal Destination</span>
+              <span id="wsBannerDates" class="text-xs text-muted">12–14 Dec 2026 • Udaipur</span>
+            </div>
+            <h1 id="wsBannerCouple" class="font-serif text-2xl sm:text-3xl font-bold text-cream mt-1">Aarav & Ananya Wedding</h1>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="openImportGuestsModal()" class="px-3.5 py-2 rounded-xl bg-card border border-gold/50 text-gold text-xs font-bold">📥 Import Guests</button>
+            <button onclick="openSampleExportPreviewModal()" class="px-3.5 py-2 rounded-xl bg-card border border-borderWarm text-cream text-xs font-bold">👁️ Sample Export</button>
+            <button onclick="exportCurrentGuestsCSV()" class="px-3.5 py-2 rounded-xl bg-emeraldSS/20 border border-emeraldSS/50 text-emeraldSS text-xs font-bold">⬇ Live CSV</button>
+          </div>
+        </div>
+
+        <!-- 11 Separated Page Tabs -->
+        <div class="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-3 border-t border-borderWarm">
+          <button onclick="openSubPage('overview')" id="subTab-overview" class="shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold border transition">1. Overview</button>
+          <button onclick="openSubPage('guests')" id="subTab-guests" class="shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold border transition">2. Guests & Variants</button>
+          <button onclick="openSubPage('events')" id="subTab-events" class="shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold border transition">3. Events</button>
+          <button onclick="openSubPage('rooms')" id="subTab-rooms" class="shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold border transition">4. Split Rooms</button>
+          <button onclick="openSubPage('travel')" id="subTab-travel" class="shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold border transition">5. Flights & Trains</button>
+          <button onclick="openSubPage('budget')" id="subTab-budget" class="shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold border transition">6. Budget</button>
+          <button onclick="openSubPage('vendors')" id="subTab-vendors" class="shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold border transition">7. Vendors</button>
+          <button onclick="openSubPage('tasks')" id="subTab-tasks" class="shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold border transition">8. Family Tasks</button>
+          <button onclick="openSubPage('guestbook')" id="subTab-guestbook" class="shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold border transition">10. Guestbook</button>
+          <button onclick="openSubPage('gallery')" id="subTab-gallery" class="shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold border transition">11. Gallery</button>
+        </div>
+      </div>
+
+      <!-- PAGE 1: OVERVIEW -->
+      <div id="subpage-overview" class="space-y-4">
+        <div id="singleWeddingFullTelemetry"></div>
+      </div>
+
+      <!-- PAGE 2: GUESTS, RSVP & INVITE VARIANTS (1 EVENT / 2 EVENTS / ALL 4 EVENTS) -->
+      <div id="subpage-guests" class="space-y-4 hidden">
+        <div id="guestPageTelemetry" class="bento-card p-4 sm:p-5"></div>
+
+        <div class="bento-card p-4 sm:p-5 space-y-4">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-3 pb-3 border-b border-borderWarm">
+            <div>
+              <h2 class="font-serif text-xl sm:text-2xl font-bold text-cream">Guest List, RSVP & Event Invite Variants</h2>
+              <p class="text-xs text-muted">Assign each guest to <strong class="text-skySS">1 Event (Reception)</strong>, <strong class="text-amberSS">2 Events (Sangeet+Reception)</strong>, or <strong class="text-gold">All 4 Events</strong>.</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+              <button onclick="openAddGuestModal()" class="btn-gold px-3.5 py-2 rounded-xl text-xs font-bold">+ Add Guest</button>
+              <button onclick="openImportGuestsModal()" class="px-3.5 py-2 rounded-xl bg-card border border-gold/50 text-gold text-xs font-semibold">📥 Import CSV</button>
+              <button onclick="openSampleExportPreviewModal()" class="px-3.5 py-2 rounded-xl bg-card border border-borderWarm text-cream text-xs font-semibold">📤 Sample Export</button>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="setRsvpFilter('all')" id="rsvpFilter-all" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gold text-obsidian">All Guests</button>
+              <button onclick="setRsvpFilter('Attending')" id="rsvpFilter-Attending" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-card text-cream border border-borderWarm">Attending</button>
+              <button onclick="setRsvpFilter('Declined')" id="rsvpFilter-Declined" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-card text-cream border border-borderWarm">Declined</button>
+              <button onclick="setRsvpFilter('N/A')" id="rsvpFilter-N/A" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-card text-cream border border-borderWarm">N/A</button>
+            </div>
+
+            <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+              <select id="variantFilterSelect" onchange="renderGuestsPage()" class="bg-card border border-borderWarm rounded-lg px-3 py-1.5 text-xs text-gold font-semibold">
+                <option value="all">All Invite Variants</option>
+                <option value="all_events">Variant C: All 4 Events</option>
+                <option value="2_events">Variant B: 2 Events (Sangeet+Reception)</option>
+                <option value="1_event">Variant A: 1 Event (Reception Only)</option>
+              </select>
+              <select id="sideFilterSelect" onchange="renderGuestsPage()" class="bg-card border border-borderWarm rounded-lg px-3 py-1.5 text-xs text-cream">
+                <option value="all">Both Sides</option>
+                <option value="Bride">Bride Side</option>
+                <option value="Groom">Groom Side</option>
+              </select>
+              <input id="guestSearchInput" oninput="renderGuestsPage()" type="text" placeholder="Search guest or member..." class="bg-card border border-borderWarm rounded-lg px-3 py-1.5 text-xs text-cream placeholder-muted flex-1 sm:w-56" />
+            </div>
+          </div>
+
+          <div id="guestCardsContainer" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-3.5"></div>
+        </div>
+      </div>
+
+      <!-- PAGE 3: EVENTS -->
+      <div id="subpage-events" class="space-y-4 hidden">
+        <div id="eventsPageTelemetry" class="grid grid-cols-2 sm:grid-cols-4 gap-3.5"></div>
+        <div class="bento-card p-4 sm:p-5 space-y-3.5">
+          <div class="flex items-center justify-between">
+            <h2 class="font-serif text-xl sm:text-2xl font-bold text-cream">Wedding Functions Schedule</h2>
+            <button onclick="addNewWeddingEvent()" class="btn-gold px-3.5 py-2 rounded-xl text-xs font-bold">+ Add Event</button>
+          </div>
+          <div id="eventsListGrid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-3.5"></div>
+        </div>
+      </div>
+
+      <!-- PAGE 4: ROOMS (SPLIT-ROOM ALLOCATION) -->
+      <div id="subpage-rooms" class="space-y-4 hidden">
+        <div id="roomsPageTelemetry" class="grid grid-cols-2 sm:grid-cols-4 gap-3.5"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          <div class="lg:col-span-4 bento-card p-4 sm:p-5 space-y-3">
+            <span class="text-xs font-bold uppercase text-gold">Step 1 • Hotel Inventory</span>
+            <h2 class="font-serif text-lg sm:text-xl font-bold text-cream">Add Hotel Room Block</h2>
+            <input id="invLocation" type="text" placeholder="Location (e.g., Taj Lake Palace)" class="w-full bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+            <div class="grid grid-cols-2 gap-2">
+              <input id="invRoomType" type="text" placeholder="Room Type" class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+              <input id="invRoomPrefix" type="text" value="40" placeholder="Prefix" class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <div>
+                <label class="text-xs text-muted block mb-1">No. of Rooms</label>
+                <input id="invRoomCount" type="number" value="2" class="w-full bg-card border border-borderWarm rounded-lg px-3 py-1.5 text-xs text-cream" />
+              </div>
+              <div>
+                <label class="text-xs text-muted block mb-1">Max Pax / Room</label>
+                <input id="invMaxPax" type="number" value="2" class="w-full bg-card border border-borderWarm rounded-lg px-3 py-1.5 text-xs text-cream" />
+              </div>
+            </div>
+            <button onclick="addRoomInventoryBlock()" class="w-full btn-gold py-2.5 px-3 rounded-xl font-bold text-xs">+ Add Rooms to Inventory</button>
+          </div>
+
+          <div class="lg:col-span-8 bento-card p-4 sm:p-5 space-y-3">
+            <span class="text-xs font-bold uppercase text-emeraldSS">Step 2 • Split-Family Room Assignment</span>
+            <h2 class="font-serif text-lg sm:text-xl font-bold text-cream">Assign Each Attending Family Member</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+              <select id="allocGuestSelect" onchange="loadGuestForRoomAllocation()" class="sm:col-span-2 bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream font-semibold"></select>
+              <input id="allocPaxCount" type="number" min="1" max="15" onchange="syncGuestMemberRows()" class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream font-bold" />
+            </div>
+            <div id="memberAllocationRows" class="space-y-2 max-h-[240px] overflow-y-auto"></div>
+            <div class="flex items-center justify-between gap-2 pt-1">
+              <button onclick="addExtraMemberRow()" class="px-3 py-2 rounded-lg bg-card border border-borderWarm text-xs font-semibold text-cream">+ Add Member</button>
+              <button onclick="saveGuestRoomAllocations()" class="btn-gold px-5 py-2 rounded-xl text-xs font-bold">Save Room Split</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-card p-4 sm:p-5 space-y-3.5">
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+            <h3 class="font-serif text-lg sm:text-xl font-bold text-cream">Live Room Occupancy Board</h3>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="setRoomBoardFilter('all')" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-gold text-obsidian">All</button>
+              <button onclick="setRoomBoardFilter('Full')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-card text-emeraldSS border border-borderWarm">Full</button>
+              <button onclick="setRoomBoardFilter('Partial')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-card text-amberSS border border-borderWarm">Partial</button>
+              <button onclick="setRoomBoardFilter('Vacant')" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-card text-muted border border-borderWarm">Not Allotted</button>
+            </div>
+          </div>
+          <div id="roomInventoryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5"></div>
+        </div>
+      </div>
+
+      <!-- PAGE 5: TRAVEL -->
+      <div id="subpage-travel" class="space-y-4 hidden">
+        <div id="travelPageTelemetry" class="grid grid-cols-2 sm:grid-cols-4 gap-3.5"></div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-5">
+          <div class="lg:col-span-4 bento-card p-4 sm:p-5 space-y-3">
+            <h2 class="font-serif text-lg sm:text-xl font-bold text-cream">Connect Flight / Train to Guest</h2>
+            <select id="travelGuestSelect" onchange="populateTravelGuestPreview()" class="w-full bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream font-semibold"></select>
+            <div id="travelGuestRoomHint" class="text-xs text-gold"></div>
+            <div class="grid grid-cols-2 gap-1.5 bg-obsidian p-1 rounded-lg border border-borderWarm">
+              <button type="button" id="modeFlightBtn" onclick="setTravelFormMode('Flight')" class="py-1.5 rounded-md text-xs font-bold bg-gold text-obsidian">✈️ Flight</button>
+              <button type="button" id="modeTrainBtn" onclick="setTravelFormMode('Train')" class="py-1.5 rounded-md text-xs font-bold text-cream">🚆 Train</button>
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <input id="travelNumberInput" type="text" placeholder="Flight/Train No." class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+              <input id="travelPnrInput" type="text" placeholder="PNR Ref" class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream font-mono" />
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <input id="travelStationInput" type="text" placeholder="Airport / Station" class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+              <input id="travelCoachInput" type="text" placeholder="Seat / Coach" class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+            </div>
+            <div class="grid grid-cols-2 gap-2">
+              <input id="travelTimeInput" type="text" placeholder="12 Dec • 10:30 AM" class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+              <select id="travelPickupInput" class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream">
+                <option value="Innova Crysta Assigned">Innova Assigned</option>
+                <option value="Tempo Traveller">Tempo Traveller</option>
+                <option value="Pickup Pending">Pickup Pending</option>
+              </select>
+            </div>
+            <button onclick="saveGuestTravelRecord()" class="w-full btn-gold py-2.5 px-3 rounded-xl font-bold text-xs">Save Connected Travel</button>
+          </div>
+
+          <div class="lg:col-span-8 bento-card p-4 sm:p-5 space-y-3">
+            <div class="flex items-center justify-between">
+              <h3 class="font-serif text-lg sm:text-xl font-bold text-cream">Arrival Manifest</h3>
+              <div class="flex gap-1.5">
+                <button onclick="setTravelFilter('all')" class="px-3 py-1 rounded-lg text-xs font-bold bg-gold text-obsidian">All</button>
+                <button onclick="setTravelFilter('Flight')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-card text-cream border border-borderWarm">✈️ Flights</button>
+                <button onclick="setTravelFilter('Train')" class="px-3 py-1 rounded-lg text-xs font-semibold bg-card text-cream border border-borderWarm">🚆 Trains</button>
+              </div>
+            </div>
+            <div id="travelManifestList" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- PAGE 6: BUDGET TRACKER -->
+      <div id="subpage-budget" class="space-y-4 hidden">
+        <div id="budgetPageTelemetry" class="grid grid-cols-2 sm:grid-cols-4 gap-3.5"></div>
+        <div class="bento-card p-4 sm:p-5 space-y-3">
+          <h2 class="font-serif text-xl sm:text-2xl font-bold text-cream">Wedding Budget Ledger</h2>
+          <div id="budgetBreakdownTable" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+        </div>
+      </div>
+
+      <!-- PAGE 7: EVENT VENDORS -->
+      <div id="subpage-vendors" class="space-y-4 hidden">
+        <div id="vendorsPageTelemetry" class="grid grid-cols-2 sm:grid-cols-4 gap-3.5"></div>
+        <div class="bento-card p-4 sm:p-5 space-y-3.5">
+          <div class="flex items-center justify-between">
+            <h2 class="font-serif text-xl sm:text-2xl font-bold text-cream">Decoration, Catering, DJ & Anchoring</h2>
+            <button onclick="toggleVendorForm()" class="btn-gold px-3.5 py-2 rounded-xl text-xs font-bold">+ Add Agency</button>
+          </div>
+          <div id="addVendorForm" class="hidden bg-obsidian p-3.5 rounded-xl border border-borderWarm space-y-2.5">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <select id="newVendorCategory" class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream">
+                <option value="Decoration">Decoration</option>
+                <option value="Catering">Catering</option>
+                <option value="DJ & Sound">DJ & Sound</option>
+                <option value="Anchoring">Anchoring</option>
+                <option value="Photography">Photography</option>
+              </select>
+              <input id="newVendorName" type="text" placeholder="Agency Name" class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+              <input id="newVendorEvent" type="text" placeholder="Function" class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+              <input id="newVendorTotal" type="number" placeholder="Total Cost (₹)" class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+              <input id="newVendorPaid" type="number" placeholder="Advance Paid (₹)" class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+              <button onclick="addVendorItem()" class="col-span-2 sm:col-span-1 btn-gold rounded-lg py-2 font-bold text-xs">Save Agency</button>
+            </div>
+          </div>
+          <div id="vendorCardsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5"></div>
+        </div>
+      </div>
+
+      <!-- PAGE 8: FAMILY TASKS -->
+      <div id="subpage-tasks" class="space-y-4 hidden">
+        <div id="tasksPageTelemetry" class="grid grid-cols-2 sm:grid-cols-5 gap-3"></div>
+        <div class="bento-card p-4 sm:p-5 space-y-3.5">
+          <h2 class="font-serif text-xl sm:text-2xl font-bold text-cream">Family Tasks Board</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 bg-obsidian p-3 rounded-xl border border-borderWarm">
+            <input id="newTaskTitle" type="text" placeholder="Task description..." class="sm:col-span-6 bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+            <input id="newTaskOwner" type="text" placeholder="Owner" class="sm:col-span-3 bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+            <select id="newTaskStatus" class="sm:col-span-2 bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream">
+              <option value="Not Started">Not Started</option>
+              <option value="In Progress">In Progress</option>
+              <option value="Pending">Pending</option>
+            </select>
+            <button onclick="addFamilyTask()" class="sm:col-span-1 btn-gold rounded-lg py-2 font-bold text-xs">Add</button>
+          </div>
+          <div id="familyTasksList" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+        </div>
+      </div>
+
+      <!-- PAGE 9: INVITE VARIANTS STUDIO (CONNECTED TO 1 EVENT / 2 EVENTS / ALL 4 EVENTS) -->
+      
+
+      <!-- PAGE 10: GUESTBOOK -->
+      <div id="subpage-guestbook" class="space-y-4 hidden">
+        <div class="bento-card p-4 sm:p-5 space-y-3.5">
+          <h2 class="font-serif text-xl sm:text-2xl font-bold text-cream">Digital Guestbook</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 bg-obsidian p-3 rounded-xl border border-borderWarm">
+            <input id="gbAuthorInput" type="text" placeholder="Your Name" class="sm:col-span-4 bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+            <input id="gbMessageInput" type="text" placeholder="Blessing message..." class="sm:col-span-6 bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+            <button onclick="addGuestbookEntry()" class="sm:col-span-2 btn-gold rounded-lg py-2 font-bold text-xs">Post Wish</button>
+          </div>
+          <div id="guestbookList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5"></div>
+        </div>
+      </div>
+
+      <!-- PAGE 11: GALLERY -->
+      <div id="subpage-gallery" class="space-y-4 hidden">
+        <div class="bento-card p-4 sm:p-5 space-y-3.5">
+          <div class="flex items-center justify-between">
+            <h2 class="font-serif text-xl sm:text-2xl font-bold text-cream">Wedding Photo Gallery</h2>
+            <button onclick="openAddPhotoModal()" class="btn-gold px-3.5 py-2 rounded-xl text-xs font-bold">+ Add Photo</button>
+          </div>
+          <div id="photoGalleryGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ===================================================================== -->
+  <!-- COMPACT FIXED BOTTOM NAVIGATION DOCK                                  -->
+  <!-- ===================================================================== -->
+  <nav class="fixed bottom-0 inset-x-0 z-40 bg-obsidian/95 backdrop-blur-xl border-t border-borderWarm px-3 py-1.5" style="padding-bottom: calc(6px + var(--safe-bottom));">
+    <div class="max-w-xl mx-auto grid grid-cols-4 gap-2">
+      <button onclick="switchRoleView('home')" id="dockBtn-home" class="flex flex-col items-center justify-center py-1.5 rounded-xl text-xs font-semibold transition">
+        <span class="text-sm">✨</span>
+        <span>Home</span>
+      </button>
+      <button onclick="switchRoleView('creator')" id="dockBtn-creator" class="flex flex-col items-center justify-center py-1.5 rounded-xl text-xs font-semibold transition">
+        <span class="text-sm">👑</span>
+        <span>Creator</span>
+      </button>
+      <button onclick="switchRoleView('host')" id="dockBtn-host" class="flex flex-col items-center justify-center py-1.5 rounded-xl text-xs font-semibold transition">
+        <span class="text-sm">🏠</span>
+        <span>Host</span>
+      </button>
+      <button onclick="switchRoleView('guest')" id="dockBtn-guest" class="flex flex-col items-center justify-center py-1.5 rounded-xl text-xs font-semibold transition">
+        <span class="text-sm">🎟️</span>
+        <span>Guest</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ===================================================================== -->
+  <!-- MODALS: IMPORT GUESTS, SAMPLE EXPORT PREVIEW, ADD GUEST, NEW WEDDING  -->
+  <!-- ===================================================================== -->
+  <div id="importGuestsModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-surface border-t sm:border border-borderWarm rounded-t-xl sm:rounded-xl w-full max-w-lg p-4 space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="font-serif text-lg sm:text-xl font-bold text-cream">Import Guests (CSV or Paste)</h3>
+        <button onclick="closeImportGuestsModal()" class="text-muted text-base font-bold px-2">✕</button>
+      </div>
+      <textarea id="csvPasteArea" rows="4" class="w-full bg-card border border-borderWarm rounded-lg p-2.5 text-xs font-mono text-cream">Prakash Vinaykiya,Bride,Family,Attending,3,Prakash Vinaykiya|Sudarshan Vinaykiya|Dushyant Vinaykiya,Flight,6E-502 IndiGo,PQ881Z,all_events
+Mahendra Bafna,Groom,Family,Attending,2,Mahendra Bafna|Kavita Bafna,Train,12951 Rajdhani,4491827361,2_events</textarea>
+      <div class="flex justify-end gap-2">
+        <button onclick="downloadSampleGuestCSV()" class="px-3 py-2 rounded-lg bg-card border border-gold/40 text-gold text-xs font-bold">⬇ Sample Template</button>
+        <button onclick="processGuestImport()" class="btn-gold px-4 py-2 rounded-lg text-xs font-bold">Import Now</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="sampleExportModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-surface border-t sm:border border-borderWarm rounded-t-xl sm:rounded-xl w-full max-w-2xl p-4 space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="font-serif text-lg sm:text-xl font-bold text-cream">Sample CSV Export Preview</h3>
+        <button onclick="closeSampleExportPreviewModal()" class="text-muted text-base font-bold px-2">✕</button>
+      </div>
+      <pre id="sampleExportPre" class="bg-obsidian border border-borderWarm rounded-lg p-3 text-xs font-mono text-gold overflow-x-auto"></pre>
+      <div class="flex justify-end gap-2">
+        <button onclick="downloadSampleGuestCSV()" class="px-3 py-2 rounded-lg bg-card border border-gold text-gold text-xs font-bold">⬇ Download Sample</button>
+        <button onclick="exportCurrentGuestsCSV()" class="btn-gold px-4 py-2 rounded-lg text-xs font-bold">⬇ Export Live CSV</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="addGuestModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-surface border-t sm:border border-borderWarm rounded-t-xl sm:rounded-xl w-full max-w-md p-4 space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="font-serif text-lg sm:text-xl font-bold text-cream">Add Guest & Select Event Variant</h3>
+        <button onclick="closeAddGuestModal()" class="text-muted text-base font-bold px-2">✕</button>
+      </div>
+      <input id="newGuestName" type="text" placeholder="Primary Guest Name" class="w-full bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+      <div class="grid grid-cols-2 gap-2">
+        <select id="newGuestSide" class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream"><option value="Bride">Bride Side</option><option value="Groom">Groom Side</option></select>
+        <select id="newGuestStatus" class="bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream"><option value="Attending">Attending</option><option value="N/A">N/A</option><option value="Declined">Declined</option></select>
+      </div>
+      <div>
+        <label class="text-xs text-gold font-semibold block mb-1">Assign Event Invite Variant:</label>
+        <select id="newGuestVariant" class="w-full bg-card border border-gold/50 rounded-lg px-3 py-2 text-xs text-cream font-bold">
+          <option value="all_events">Variant C: All 4 Events (Haldi, Mehendi, Sangeet, Reception)</option>
+          <option value="2_events">Variant B: 2 Events (Sangeet + Reception)</option>
+          <option value="1_event">Variant A: 1 Event (Reception Only)</option>
+        </select>
+      </div>
+      <input id="newGuestPax" type="number" value="2" class="w-full bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+      <input id="newGuestMembers" type="text" placeholder="Member names (comma separated)" class="w-full bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+      <button onclick="createNewGuest()" class="w-full btn-gold py-2.5 rounded-lg font-bold text-xs">Save Guest</button>
+    </div>
+  </div>
+
+  <div id="createWeddingModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-end sm:items-center justify-center p-0 sm:p-4">
+    <div class="bg-surface border-t sm:border border-borderWarm rounded-t-xl sm:rounded-xl w-full max-w-md p-4 space-y-3">
+      <div class="flex items-center justify-between">
+        <h3 class="font-serif text-lg sm:text-xl font-bold text-cream">Create Wedding Workspace</h3>
+        <button onclick="closeCreateWeddingModal()" class="text-muted text-base font-bold px-2">✕</button>
+      </div>
+      <input id="cwCoupleInput" type="text" placeholder="Couple Name (e.g., Rohan & Diya)" class="w-full bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+      <input id="cwCityInput" type="text" placeholder="City / Venue" class="w-full bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+      <input id="cwDatesInput" type="text" placeholder="Dates (e.g., 18–20 Nov 2026)" class="w-full bg-card border border-borderWarm rounded-lg px-3 py-2 text-xs text-cream" />
+      <button onclick="saveNewWedding()" class="w-full btn-gold py-2.5 rounded-lg font-bold text-xs">Create Workspace</button>
+    </div>
+  </div>
+
+  <div id="toastBox" class="fixed top-4 right-4 z-50 hidden bg-card border-2 border-gold text-cream px-4 py-2.5 rounded-xl shadow-2xl text-xs font-bold max-w-sm text-center"></div>
+
+  <!-- ===================================================================== -->
+  <!-- APPLICATION LOGIC & EVENT-TIER INVITE VARIANTS ENGINE                 -->
+  <!-- ===================================================================== -->
+  <script>
+    let currentRole = 'home';
+    let lastParentRole = 'creator';
+    let activeWeddingId = 'w1';
+    let currentSubPage = 'overview';
+    let currentRsvpFilter = 'all';
+    let currentTravelFilter = 'all';
+    let currentRoomBoardFilter = 'all';
+    let currentTravelFormMode = 'Flight';
+    let homeDemoScript = 'Smt. & Shri';
+
+    // WEDDING EVENTS SCHEDULE
+    let weddingEvents = [
+      { id: 'ev1', name: 'Welcome Lunch & Haldi Carnival', date: '12 Dec 2026', time: '12:30 PM', venue: 'Courtyard Lawns, Taj', expectedPax: 180 },
+      { id: 'ev2', name: 'Rajwada Mehendi Soirée', date: '12 Dec 2026', time: '04:30 PM', venue: 'Royal Lawns, Udaipur', expectedPax: 210 },
+      { id: 'ev3', name: 'Starlight Sangeet Gala', date: '13 Dec 2026', time: '08:00 PM', venue: 'Grand Crystal Ballroom', expectedPax: 290 },
+      { id: 'ev4', name: 'Godhuli Muhurat Pheras & Reception', date: '14 Dec 2026', time: '06:45 PM', venue: 'Jagmandir Island Mandap', expectedPax: 340 }
+    ];
+
+    // HELPER: RETURN EVENTS FOR AN INVITE VARIANT TIER
+    function getEventsForVariant(variantKey) {
+      if (variantKey === '1_event') {
+        return weddingEvents.slice(-1); // Reception Only
+      }
+      if (variantKey === '2_events') {
+        return weddingEvents.slice(-2); // Sangeet + Pheras/Reception
+      }
+      return weddingEvents; // All 4 Events
+    }
+
+    function getVariantBadgeLabel(variantKey) {
+      if (variantKey === '1_event') return 'Variant A: 1 Event (Reception)';
+      if (variantKey === '2_events') return 'Variant B: 2 Events (Sangeet+Rec)';
+      return 'Variant C: All 4 Events';
+    }
+
+    function getVariantBadgeStyle(variantKey) {
+      if (variantKey === '1_event') return 'bg-skySS/20 text-skySS border-skySS/40';
+      if (variantKey === '2_events') return 'bg-amberSS/20 text-amberSS border-amberSS/40';
+      return 'bg-gold/20 text-gold border-gold/40';
+    }
+
+    let roomInventory = [
+      { id: 'R-101', location: 'Taj Lake Palace, Udaipur', roomNumber: '101', type: 'Luxury Lake View', maxPax: 2 },
+      { id: 'R-102', location: 'Taj Lake Palace, Udaipur', roomNumber: '102', type: 'Luxury Lake View', maxPax: 2 },
+      { id: 'R-103', location: 'Taj Lake Palace, Udaipur', roomNumber: '103', type: 'Royal Family Suite', maxPax: 4 },
+      { id: 'R-201', location: 'Trident Hilton, Udaipur', roomNumber: '201', type: 'Premier Garden', maxPax: 2 },
+      { id: 'R-202', location: 'Trident Hilton, Udaipur', roomNumber: '202', type: 'Premier Garden', maxPax: 2 },
+      { id: 'R-203', location: 'Trident Hilton, Udaipur', roomNumber: '203', type: 'Family Interconnect', maxPax: 3 },
+      { id: 'R-301', location: 'Fateh Garh Heritage', roomNumber: '301', type: 'Heritage Suite', maxPax: 3 },
+      { id: 'R-302', location: 'Fateh Garh Heritage', roomNumber: '302', type: 'Heritage Suite', maxPax: 2 }
+    ];
+
+    // GUESTS STATE (Includes `inviteVariant`: 'all_events' | '2_events' | '1_event')
+    let guests = [
+      {
+        id: 'g1', name: 'Anita Sharma', side: 'Bride', group: 'Family', status: 'Attending', pax: 3, inviteVariant: 'all_events',
+        members: [{ name: 'Anita Sharma', roomId: 'R-101' }, { name: 'Rajesh Sharma', roomId: 'R-101' }, { name: 'Rohan Sharma (Son)', roomId: 'R-102' }],
+        travel: { mode: 'Flight', number: '6E-2142 IndiGo', pnr: 'VY8K2M', station: 'UDR Airport T1', coachSeat: '4A, 4B, 4C', arrivalTime: '12 Dec • 10:30 AM', pickup: 'Innova Crysta Assigned' }
+      },
+      {
+        id: 'g2', name: 'Rohit Mehra', side: 'Groom', group: 'Friends', status: 'Attending', pax: 2, inviteVariant: '2_events',
+        members: [{ name: 'Rohit Mehra', roomId: 'R-201' }, { name: 'Karan Malhotra (Friend)', roomId: 'R-202' }],
+        travel: { mode: 'Train', number: '12951 Tejas Rajdhani', pnr: '2458910342', station: 'Udaipur City Pf-1', coachSeat: 'A1 • 12, 14', arrivalTime: '13 Dec • 09:15 AM', pickup: 'Tempo Traveller' }
+      },
+      { id: 'g3', name: 'Kavita Iyer', side: 'Bride', group: 'Colleagues', status: 'Declined', pax: 0, inviteVariant: '1_event', members: [], travel: null },
+      { id: 'g4', name: 'Suresh Patel', side: 'Groom', group: 'Family', status: 'N/A', pax: 2, inviteVariant: 'all_events', members: [{ name: 'Suresh Patel', roomId: '' }, { name: 'Meena Patel', roomId: '' }], travel: null },
+      {
+        id: 'g5', name: 'Meera Nair', side: 'Bride', group: 'Friends', status: 'Attending', pax: 1, inviteVariant: '2_events',
+        members: [{ name: 'Meera Nair', roomId: 'R-102' }],
+        travel: { mode: 'Flight', number: 'UK-819 Vistara', pnr: 'TK991Q', station: 'UDR Airport T1', coachSeat: '11F', arrivalTime: '13 Dec • 01:20 PM', pickup: 'Innova Crysta Assigned' }
+      },
+      {
+        id: 'g6', name: 'Vikram Singh', side: 'Groom', group: 'Family', status: 'Attending', pax: 4, inviteVariant: '2_events',
+        members: [{ name: 'Vikram Singh', roomId: 'R-103' }, { name: 'Geeta Singh', roomId: 'R-103' }, { name: 'Aarti Singh', roomId: 'R-103' }, { name: 'Kabir Singh', roomId: 'R-203' }],
+        travel: { mode: 'Train', number: '20972 Superfast Exp', pnr: '8834120955', station: 'Udaipur City Pf-2', coachSeat: 'H1 • Cabin A', arrivalTime: '13 Dec • 07:45 AM', pickup: 'Innova Crysta Assigned' }
+      },
+      { id: 'g7', name: 'Pooja Desai', side: 'Bride', group: 'Family', status: 'N/A', pax: 2, inviteVariant: 'all_events', members: [{ name: 'Pooja Desai', roomId: '' }, { name: 'Nikhil Desai', roomId: '' }], travel: null },
+      { id: 'g8', name: 'Arjun Reddy', side: 'Groom', group: 'Colleagues', status: 'Attending', pax: 1, inviteVariant: '1_event', members: [{ name: 'Arjun Reddy', roomId: '' }], travel: null },
+      {
+        id: 'g9', name: 'Neha Kapoor', side: 'Bride', group: 'Friends', status: 'Attending', pax: 2, inviteVariant: 'all_events',
+        members: [{ name: 'Neha Kapoor', roomId: 'R-301' }, { name: 'Siddharth Kapoor', roomId: 'R-301' }],
+        travel: { mode: 'Flight', number: 'AI-471 Air India', pnr: 'MN442P', station: 'UDR Airport T1', coachSeat: '8A, 8B', arrivalTime: '12 Dec • 03:10 PM', pickup: 'Pickup Pending' }
+      },
+      { id: 'g10', name: 'Farhan Qureshi', side: 'Groom', group: 'Friends', status: 'N/A', pax: 1, inviteVariant: '1_event', members: [{ name: 'Farhan Qureshi', roomId: '' }], travel: null }
+    ];
+
+    let vendors = [
+      { id: 'v1', category: 'Decoration', vendor: 'Ferns & Petals Royal Mandap', event: 'Shaadi & Reception', total: 1650000, paid: 1000000, status: 'Confirmed' },
+      { id: 'v2', category: 'Catering', vendor: 'Foodlink Royal Banquet', event: 'All 4 Functions', total: 1800000, paid: 1200000, status: 'Confirmed' },
+      { id: 'v3', category: 'DJ & Sound', vendor: 'DJ Chetas & Line Array', event: 'Sangeet', total: 450000, paid: 250000, status: 'Confirmed' },
+      { id: 'v4', category: 'Anchoring', vendor: 'Anchor Gunjan Utreja', event: 'Mehendi & Sangeet', total: 250000, paid: 150000, status: 'Confirmed' }
+    ];
+
+    let familyTasks = [
+      { id: 't1', title: 'Confirm 85 Royal Bandhani Safas delivery at Taj lobby', owner: 'Karanji', status: 'Completed' },
+      { id: 't2', title: 'Coordinate Panditji puja samagri thali for Godhuli Pheras', owner: 'Sonal', status: 'In Progress' },
+      { id: 't3', title: 'Handover Sangeet family performance USB tracks to DJ console', owner: 'Lachi', status: 'Pending' },
+      { id: 't4', title: 'Collect physical Kankotri return gifts from jeweller', owner: 'Paresh', status: 'Not Started' }
+    ];
+
+    let guestbookEntries = [
+      { author: 'Anita & Rajesh Sharma', time: '2h ago', text: 'Heartiest congratulations to Aarav and Ananya!' },
+      { author: 'Vikram & Geeta Singh', time: 'Yesterday', text: 'Wishing both families a blessed and joyous union.' }
+    ];
+
+    let galleryPhotos = [
+      { id: 'p1', event: 'Mehendi', title: 'Royal Lawns Mehendi Welcome', credit: 'Clickbox Team', gradient: 'from-amber-700/60 via-rose-900/70 to-obsidian' },
+      { id: 'p2', event: 'Sangeet', title: 'Couple Starlight Sangeet Entry', credit: 'Guest Upload', gradient: 'from-purple-900/60 via-amber-700/50 to-obsidian' },
+      { id: 'p3', event: 'Shaadi', title: 'Jagmandir Island Mandap Setup', credit: 'Decor Team', gradient: 'from-red-900/70 via-amber-600/50 to-obsidian' }
+    ];
+
+    let weddingsPortfolio = [
+      { id: 'w1', couple: 'Aarav & Ananya', tag: 'Royal Destination', city: 'Udaipur, Rajasthan', dates: '12–14 Dec 2026', isLiveConnected: true, hosts: ['sharma', 'bafna'] },
+      {
+        id: 'w2', couple: 'Lachi & Karanji', tag: 'Grand Celebration', city: 'Chennai, Tamil Nadu', dates: '19–20 Feb 2026', isLiveConnected: false, hosts: ['bafna', 'jawarilal'],
+        telemetry: { guestsTotal: 210, attending: 165, declined: 20, na: 25, attendingPax: 460, eventsCount: 5, roomsTotal: 55, roomsFull: 42, roomsPartial: 8, roomsVacant: 5, flightPax: 180, trainPax: 145, budgetTotal: 4200000, budgetPaid: 3600000, tasksTotal: 18, tasksCompleted: 14, tasksInProgress: 2, tasksPending: 1, tasksNotStarted: 1 }
+      },
+      {
+        id: 'w3', couple: 'Kabir & Meera', tag: 'Palace Heritage', city: 'Jaipur, Rajasthan', dates: '22–24 Jan 2027', isLiveConnected: false, hosts: ['jawarilal'],
+        telemetry: { guestsTotal: 140, attending: 88, declined: 12, na: 40, attendingPax: 245, eventsCount: 4, roomsTotal: 40, roomsFull: 19, roomsPartial: 11, roomsVacant: 10, flightPax: 110, trainPax: 95, budgetTotal: 3500000, budgetPaid: 1900000, tasksTotal: 15, tasksCompleted: 5, tasksInProgress: 4, tasksPending: 3, tasksNotStarted: 3 }
+      },
+      {
+        id: 'w4', couple: 'Dev & Tara', tag: 'Beach Resort', city: 'Mahabalipuram, ECR', dates: '05–06 May 2026', isLiveConnected: false, hosts: ['sharma'],
+        telemetry: { guestsTotal: 90, attending: 64, declined: 10, na: 16, attendingPax: 155, eventsCount: 3, roomsTotal: 25, roomsFull: 16, roomsPartial: 5, roomsVacant: 4, flightPax: 52, trainPax: 48, budgetTotal: 1950000, budgetPaid: 1450000, tasksTotal: 12, tasksCompleted: 8, tasksInProgress: 2, tasksPending: 1, tasksNotStarted: 1 }
+      }
+    ];
+
+    function showToast(msg) {
+      const box = document.getElementById('toastBox');
+      box.textContent = msg;
+      box.classList.remove('hidden');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => box.classList.add('hidden'), 2800);
+    }
+
+    function formatINR(num) {
+      return '₹' + Number(num || 0).toLocaleString('en-IN');
+    }
+
+    // =====================================================================
+    // HOME PAGE INTERACTIVE CONTROLLERS (HERO PHONE + VARIANT DEMO + THREAD)
+    // =====================================================================
+
+    const threadStagesData = [
+      {
+        sub: 'Milestone 01 • Day -90 Save the Date',
+        badge: 'Personalised Save The Date Card',
+        title: 'For: Smt. & Shri Anita Sharma & Family',
+        body: '॥ श्री गणेशाय नमः ॥\nPranam Smt. & Shri Anita Sharma Ji 🙏\n\nDispatched from our Official Verified Shaadi Saathi Desk on behalf of Smt. Sunita & Shri Rajesh Sharma. Please save 12–14 Dec 2026 for Aarav & Ananya’s wedding in Udaipur.',
+        buttons: ['✓ Save to Calendar', '💌 View Wedding Countdown']
+      },
+      {
+        sub: 'Milestone 02 • Day -45 Event-Variant Kankotri',
+        badge: 'Event-Filtered Kankotri Card',
+        title: 'Variant C: Invited to All 4 Functions',
+        body: 'Namaste Anita Ji 🙏\nHere is your family’s personalised invitation card listing the ceremonies you are invited to (Haldi, Mehendi, Sangeet & Pheras).',
+        buttons: ['📥 Download My Card', '🎟️ Open Guest Pass']
+      },
+      {
+        sub: 'Milestone 03 • Day -30 1-Tap WhatsApp RSVP',
+        badge: 'Interactive WhatsApp RSVP',
+        title: 'Confirm Attendance (3 Guests)',
+        body: 'Hi Anita Ji, tap below to confirm your family’s attendance right inside WhatsApp — no external Google Forms needed:',
+        buttons: ['✓ Attending (3 Pax)', '✎ Update Member Names']
+      },
+      {
+        sub: 'Milestone 04 • Day -10 Flight & Train PNR Sync',
+        badge: 'Airport & Station Logistics',
+        title: 'Connected Flight 6E-2142 (PNR: VY8K2M)',
+        body: 'Thank you for confirming Anita, Rajesh & Rohan! Share your arrival Flight or Train PNR so our Udaipur hospitality desk can assign your Innova pickup.',
+        buttons: ['✈️ Flight 6E-2142 Linked', '🚆 Switch to Train PNR']
+      },
+      {
+        sub: 'Milestone 05 • Day -1 Split-Room Keys & Driver',
+        badge: 'Split-Family Room Key Pass',
+        title: 'Taj Lake Palace: Rm 101 & Rm 102',
+        body: 'Welcome to Udaipur! 🏨\n• Room 101: Anita Sharma, Rajesh Sharma\n• Room 102: Rohan Sharma\n🚗 Airport Pickup: Innova Crysta waiting at UDR Terminal 1.',
+        buttons: ['🔑 Show Room QR Pass', '📞 Call Chauffeur']
+      },
+      {
+        sub: 'Milestone 06 • Wedding Day Live Venue Nudge',
+        badge: 'Live Broadcast • 04:15 PM',
+        title: 'Royal Baraat Leaving in 20 Mins!',
+        body: '🎺 Dhols are rolling! Safa tying has started at Courtyard Lawns. Baraat departs for Jagmandir Island Mandap at 4:35 PM sharp.',
+        buttons: ['📍 Open Mandap Map', '📸 View Live Photo Gallery']
+      }
+    ];
+
+    // =====================================================================
+    // ROLE SWITCHER (HOME | CREATOR | HOST | GUEST)
+    // =====================================================================
+    function switchRoleView(role) {
+      currentRole = role;
+      if (role === 'creator' || role === 'host') lastParentRole = role;
+
+      ['home', 'creator', 'host', 'guest', 'workspace'].forEach(v => {
+        const el = document.getElementById('view-' + v);
+        if (el) el.classList.add('hidden');
+      });
+
+      const target = document.getElementById('view-' + role);
+      if (target) target.classList.remove('hidden');
+
+      ['home', 'creator', 'host', 'guest'].forEach(r => {
+        const topB = document.getElementById('roleBtn-' + r);
+        const dockB = document.getElementById('dockBtn-' + r);
+        if (r === role) {
+          if (topB) topB.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-bold border transition text-center bg-gold text-obsidian border-gold shadow';
+          if (dockB) dockB.className = 'flex flex-col items-center justify-center py-1.5 rounded-xl text-xs font-bold transition bg-gold text-obsidian shadow';
+        } else {
+          if (topB) topB.className = 'px-3.5 py-2 rounded-xl text-xs sm:text-sm font-semibold border transition text-center bg-card text-cream border-borderWarm hover:border-gold';
+          if (dockB) dockB.className = 'flex flex-col items-center justify-center py-1.5 rounded-xl text-xs font-semibold transition text-cream hover:text-gold';
+        }
+      });
+
+      const badge = document.getElementById('activeRoleBadge');
+      const desc = document.getElementById('activeRoleDescription');
+      if (role === 'creator') {
+        badge.textContent = '👑 Creator Admin';
+        desc.textContent = 'Paresh Bafna (Super Admin) — Seeing ALL weddings and full telemetry across the platform.';
+        renderCreatorDashboard();
+      } else if (role === 'host') {
+        badge.textContent = '🏠 Family Host';
+        desc.textContent = 'Sees weddings you are hosting (full management) + weddings you are invited to as a guest.';
+        renderHostPortal();
+      } else if (role === 'guest') {
+        badge.textContent = '🎟️ Guest Pass';
+        desc.textContent = 'Private Guest View — Shows ONLY your invited event variant, allocated rooms, and travel pickup.';
+        populateGuestPortalDropdown();
+        renderGuestPortal();
+      } else {
+        badge.textContent = '✨ Product Showcase';
+        desc.textContent = 'One verified WhatsApp thread per guest — Event-Tier Invite Variants, Split-Family Rooms & Flight/Train Logistics.';
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =====================================================================
+    // TELEMETRY ENGINE
+    // =====================================================================
+    function getRoomOccupants(roomId) {
+      const list = [];
+      guests.forEach(g => {
+        if (g.status === 'Declined') return;
+        (g.members || []).forEach((m, idx) => {
+          if (m.roomId === roomId) list.push({ guestId: g.id, primaryName: g.name, memberIndex: idx, memberName: m.name });
+        });
+      });
+      return list;
+    }
+
+    function getRoomLabelById(roomId) {
+      const r = roomInventory.find(x => x.id === roomId);
+      return r ? `Rm ${r.roomNumber} (${r.location.split(',')[0]})` : null;
+    }
+
+    function computeLiveWeddingTelemetry() {
+      const guestsTotal = guests.length;
+      const attendingList = guests.filter(g => g.status === 'Attending');
+      const declinedList = guests.filter(g => g.status === 'Declined');
+      const naList = guests.filter(g => g.status === 'N/A');
+      const attendingPax = attendingList.reduce((s, g) => s + Number(g.pax || 0), 0);
+
+      const varAllCount = guests.filter(g => g.inviteVariant === 'all_events').length;
+      const var2Count = guests.filter(g => g.inviteVariant === '2_events').length;
+      const var1Count = guests.filter(g => g.inviteVariant === '1_event').length;
+
+      let roomsFull = 0, roomsPartial = 0, roomsVacant = 0;
+      roomInventory.forEach(r => {
+        const occ = getRoomOccupants(r.id).length;
+        if (occ === 0) roomsVacant++;
+        else if (occ >= r.maxPax) roomsFull++;
+        else roomsPartial++;
+      });
+
+      let flightPax = 0, trainPax = 0;
+      attendingList.forEach(g => {
+        if (g.travel && g.travel.number) {
+          if (g.travel.mode === 'Flight') flightPax += Number(g.pax || 1);
+          if (g.travel.mode === 'Train') trainPax += Number(g.pax || 1);
+        }
+      });
+
+      const budgetTotal = vendors.reduce((s, v) => s + Number(v.total || 0), 0);
+      const budgetPaid = vendors.reduce((s, v) => s + Number(v.paid || 0), 0);
+
+      return {
+        guestsTotal,
+        attending: attendingList.length,
+        declined: declinedList.length,
+        na: naList.length,
+        attendingPax,
+        varAllCount,
+        var2Count,
+        var1Count,
+        eventsCount: weddingEvents.length,
+        roomsTotal: roomInventory.length,
+        roomsFull,
+        roomsPartial,
+        roomsVacant,
+        flightPax,
+        trainPax,
+        budgetTotal,
+        budgetPaid,
+        tasksTotal: familyTasks.length,
+        tasksCompleted: familyTasks.filter(t => t.status === 'Completed').length,
+        tasksInProgress: familyTasks.filter(t => t.status === 'In Progress').length,
+        tasksPending: familyTasks.filter(t => t.status === 'Pending').length,
+        tasksNotStarted: familyTasks.filter(t => t.status === 'Not Started').length
+      };
+    }
+
+    function buildWeddingTelemetryBlocksHTML(t) {
+      const attPct = t.guestsTotal ? Math.round((t.attending / t.guestsTotal) * 100) : 0;
+      const decPct = t.guestsTotal ? Math.round((t.declined / t.guestsTotal) * 100) : 0;
+      const naPct = Math.max(0, 100 - attPct - decPct);
+      const budgetBalance = Math.max(0, t.budgetTotal - t.budgetPaid);
+      const budgetPct = t.budgetTotal ? Math.min(100, Math.round((t.budgetPaid / t.budgetTotal) * 100)) : 0;
+
+      return `
+        <div class="space-y-3">
+          <!-- 1. Guests & 3-Color Progress Bar -->
+          <div class="bg-obsidian/90 border border-borderWarm rounded-xl p-3.5 space-y-2">
+            <div class="flex items-center justify-between text-xs">
+              <span class="font-bold text-cream">👥 Guests (${t.guestsTotal} Families • ${t.attendingPax} Pax)</span>
+              <span class="font-mono font-semibold text-gold">${attPct}% Attending</span>
+            </div>
+            <div class="w-full h-2.5 bg-surface rounded-full overflow-hidden flex">
+              <div class="bg-emeraldSS h-full" style="width:${attPct}%"></div>
+              <div class="bg-crimsonSS h-full" style="width:${decPct}%"></div>
+              <div class="bg-amberSS h-full" style="width:${naPct}%"></div>
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-center">
+              <div class="bg-card py-1.5 px-2 rounded-lg">
+                <span class="text-xs text-muted block">Attending</span>
+                <strong class="text-base sm:text-lg font-bold text-emeraldSS">${t.attending}</strong>
+              </div>
+              <div class="bg-card py-1.5 px-2 rounded-lg">
+                <span class="text-xs text-muted block">Declined</span>
+                <strong class="text-base sm:text-lg font-bold text-crimsonSS">${t.declined}</strong>
+              </div>
+              <div class="bg-card py-1.5 px-2 rounded-lg">
+                <span class="text-xs text-muted block">N/A</span>
+                <strong class="text-base sm:text-lg font-bold text-amberSS">${t.na}</strong>
+              </div>
+            </div>
+          </div>
+
+          <!-- 2. Rooms & Travel Pax -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div class="bg-obsidian/90 border border-borderWarm rounded-xl p-3 space-y-1.5">
+              <div class="flex items-center justify-between text-xs">
+                <span class="font-bold text-gold">🏨 Rooms (${t.roomsTotal})</span>
+                <span class="font-semibold text-cream">📅 ${t.eventsCount} Events</span>
+              </div>
+              <div class="grid grid-cols-3 gap-1.5 text-center">
+                <div class="bg-card py-1 px-1 rounded-lg">
+                  <span class="text-[11px] text-muted block">Full</span>
+                  <strong class="text-sm sm:text-base font-bold text-emeraldSS">${t.roomsFull}</strong>
+                </div>
+                <div class="bg-card py-1 px-1 rounded-lg">
+                  <span class="text-[11px] text-muted block">Partial</span>
+                  <strong class="text-sm sm:text-base font-bold text-amberSS">${t.roomsPartial}</strong>
+                </div>
+                <div class="bg-card py-1 px-1 rounded-lg">
+                  <span class="text-[11px] text-muted block">Not Allotted</span>
+                  <strong class="text-sm sm:text-base font-bold text-muted">${t.roomsVacant}</strong>
+                </div>
+              </div>
+            </div>
+
+            <div class="bg-obsidian/90 border border-borderWarm rounded-xl p-3 space-y-1.5">
+              <span class="text-xs font-bold text-skySS block">✈️🚆 Travel Pax</span>
+              <div class="grid grid-cols-2 gap-2 pt-0.5">
+                <div class="bg-card p-2 rounded-lg flex items-center justify-between">
+                  <span class="text-xs text-muted">✈️ Flight</span>
+                  <strong class="text-base sm:text-lg font-bold text-cream">${t.flightPax}</strong>
+                </div>
+                <div class="bg-card p-2 rounded-lg flex items-center justify-between">
+                  <span class="text-xs text-muted">🚆 Train</span>
+                  <strong class="text-base sm:text-lg font-bold text-gold">${t.trainPax}</strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 3. Budget & Tasks -->
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div class="bg-obsidian/90 border border-borderWarm rounded-xl p-3 space-y-1.5">
+              <div class="flex justify-between items-center text-xs">
+                <span class="font-bold text-gold">₹ Budget</span>
+                <span class="font-bold text-emeraldSS">${budgetPct}% Paid</span>
+              </div>
+              <div class="flex justify-between text-xs">
+                <span>Total: <strong class="text-cream">${formatINR(t.budgetTotal)}</strong></span>
+                <span class="text-amberSS font-semibold">Due: ${formatINR(budgetBalance)}</span>
+              </div>
+              <div class="w-full h-1.5 bg-surface rounded-full overflow-hidden">
+                <div class="bg-gold h-full" style="width:${budgetPct}%"></div>
+              </div>
+            </div>
+
+            <div class="bg-obsidian/90 border border-borderWarm rounded-xl p-3 space-y-1.5">
+              <div class="flex justify-between items-center text-xs">
+                <span class="font-bold text-emeraldSS">✅ Tasks (${t.tasksTotal})</span>
+                <span class="text-cream">Done: <strong class="text-emeraldSS">${t.tasksCompleted}</strong></span>
+              </div>
+              <div class="grid grid-cols-3 gap-1.5 text-center">
+                <div class="bg-card py-1 rounded-lg"><span class="text-[11px] text-muted block">Pending</span><strong class="text-xs sm:text-sm font-bold text-amberSS">${t.tasksPending}</strong></div>
+                <div class="bg-card py-1 rounded-lg"><span class="text-[11px] text-muted block">In Prog</span><strong class="text-xs sm:text-sm font-bold text-skySS">${t.tasksInProgress}</strong></div>
+                <div class="bg-card py-1 rounded-lg"><span class="text-[11px] text-muted block">Not Start</span><strong class="text-xs sm:text-sm font-bold text-crimsonSS">${t.tasksNotStarted}</strong></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // =====================================================================
+    // RENDER CREATOR VIEW
+    // =====================================================================
+    function renderCreatorDashboard() {
+      const q = (document.getElementById('creatorSearchInput')?.value || '').toLowerCase();
+      const filtered = weddingsPortfolio.filter(w => w.couple.toLowerCase().includes(q) || w.city.toLowerCase().includes(q));
+
+      let totGuests = 0, totEvents = 0, totRooms = 0, totFlight = 0, totTrain = 0, totBudget = 0;
+      weddingsPortfolio.forEach(w => {
+        const t = w.isLiveConnected ? computeLiveWeddingTelemetry() : w.telemetry;
+        totGuests += t.guestsTotal;
+        totEvents += t.eventsCount;
+        totRooms += t.roomsTotal;
+        totFlight += t.flightPax;
+        totTrain += t.trainPax;
+        totBudget += t.budgetTotal;
+      });
+
+      document.getElementById('creatorGlobalStrip').innerHTML = `
+        <div class="bg-obsidian border border-borderWarm rounded-xl p-3.5"><span class="text-xs text-muted block">All Weddings</span><strong class="text-lg sm:text-xl font-bold text-cream">${weddingsPortfolio.length}</strong></div>
+        <div class="bg-obsidian border border-borderWarm rounded-xl p-3.5"><span class="text-xs text-muted block">Total Families</span><strong class="text-lg sm:text-xl font-bold text-emeraldSS">${totGuests}</strong></div>
+        <div class="bg-obsidian border border-borderWarm rounded-xl p-3.5"><span class="text-xs text-muted block">Total Events</span><strong class="text-lg sm:text-xl font-bold text-gold">${totEvents}</strong></div>
+        <div class="bg-obsidian border border-borderWarm rounded-xl p-3.5"><span class="text-xs text-muted block">Total Rooms</span><strong class="text-lg sm:text-xl font-bold text-cream">${totRooms}</strong></div>
+        <div class="bg-obsidian border border-borderWarm rounded-xl p-3.5"><span class="text-xs text-muted block">Flight / Train</span><strong class="text-base sm:text-lg font-bold text-skySS">✈️${totFlight} 🚆${totTrain}</strong></div>
+        <div class="bg-obsidian border border-borderWarm rounded-xl p-3.5"><span class="text-xs text-muted block">Total Budget</span><strong class="text-base sm:text-lg font-bold text-gold">${formatINR(totBudget)}</strong></div>
+      `;
+
+      document.getElementById('creatorWeddingsGrid').innerHTML = filtered.map(w => {
+        const t = w.isLiveConnected ? computeLiveWeddingTelemetry() : w.telemetry;
+        return `
+          <div class="bento-card p-4 sm:p-5 space-y-3.5 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <span class="px-2 py-0.5 rounded text-[11px] font-semibold bg-gold/15 text-gold border border-gold/30">${w.tag}</span>
+                  <h3 class="font-serif text-xl sm:text-2xl font-bold text-cream mt-1">${w.couple}</h3>
+                  <p class="text-xs text-muted">${w.dates} • ${w.city}</p>
+                </div>
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold bg-emeraldSS/15 text-emeraldSS">📅 ${t.eventsCount} Events</span>
+              </div>
+              ${buildWeddingTelemetryBlocksHTML(t)}
+            </div>
+            <button onclick="openWeddingWorkspace('${w.id}')" class="w-full btn-gold py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold shadow">
+              Open ${w.couple} Workspace (11 Separate Pages) →
+            </button>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // =====================================================================
+    // RENDER HOST PORTAL
+    // =====================================================================
+    function renderHostPortal() {
+      const hostKey = document.getElementById('hostPersonaSelect')?.value || 'sharma';
+      const hosted = weddingsPortfolio.filter(w => (w.hosts || []).includes(hostKey));
+      const invited = weddingsPortfolio.filter(w => !(w.hosts || []).includes(hostKey));
+
+      document.getElementById('hostManagedWeddingsGrid').innerHTML = hosted.map(w => {
+        const t = w.isLiveConnected ? computeLiveWeddingTelemetry() : w.telemetry;
+        return `
+          <div class="bento-card p-4 sm:p-5 space-y-3.5 flex flex-col justify-between">
+            <div class="space-y-3">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <span class="px-2 py-0.5 rounded text-xs font-bold bg-emeraldSS/20 text-emeraldSS border border-emeraldSS/40">🏠 Hosting</span>
+                  <h3 class="font-serif text-xl sm:text-2xl font-bold text-cream mt-1">${w.couple}</h3>
+                  <p class="text-xs text-muted">${w.dates} • ${w.city}</p>
+                </div>
+              </div>
+              ${buildWeddingTelemetryBlocksHTML(t)}
+            </div>
+            <button onclick="openWeddingWorkspace('${w.id}')" class="w-full btn-gold py-2.5 px-4 rounded-xl text-xs sm:text-sm font-bold shadow">
+              Manage ${w.couple} Wedding →
+            </button>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('hostInvitedWeddingsGrid').innerHTML = invited.map(w => `
+        <div class="bento-card p-4 sm:p-5 space-y-3 flex flex-col justify-between">
+          <div>
+            <span class="px-2 py-0.5 rounded text-xs font-bold bg-skySS/20 text-skySS border border-skySS/40">🎟️ Invited as Guest</span>
+            <h3 class="font-serif text-xl sm:text-2xl font-bold text-cream mt-1">${w.couple}</h3>
+            <p class="text-xs text-muted">${w.dates} • ${w.city}</p>
+            <p class="text-xs text-cream mt-2.5 bg-obsidian p-3 rounded-xl border border-borderWarm">
+              🔒 Budget, vendor contracts, and other guests' rooms are hidden because you are an invited guest for this wedding.
+            </p>
+          </div>
+          <button onclick="switchRoleView('guest')" class="w-full py-2.5 px-4 rounded-xl bg-skySS/20 border border-skySS/50 text-skySS font-bold text-xs sm:text-sm hover:bg-skySS/30">
+            Open My Personal Guest Pass →
+          </button>
+        </div>
+      `).join('');
+    }
+
+    // =====================================================================
+    // RENDER GUEST PORTAL (SHOWS ONLY ASSIGNED INVITE VARIANT EVENTS)
+    // =====================================================================
+    function populateGuestPortalDropdown() {
+      const sel = document.getElementById('guestPortalSelect');
+      if (!sel) return;
+      const cur = sel.value;
+      sel.innerHTML = guests.map(g =>
+        `<option value="${g.id}">${g.name} — ${getVariantBadgeLabel(g.inviteVariant)}</option>`
+      ).join('');
+      if (cur && guests.some(g => g.id === cur)) sel.value = cur;
+    }
+
+    function renderGuestPortal() {
+      const gId = document.getElementById('guestPortalSelect')?.value || guests[0].id;
+      const g = guests.find(x => x.id === gId) || guests[0];
+
+      document.getElementById('guestPortalWelcome').textContent = `Namaste, ${g.name} & Family`;
+      document.getElementById('gpVariantBadge').textContent = getVariantBadgeLabel(g.inviteVariant);
+
+      const badge = document.getElementById('gpRsvpBadge');
+      badge.textContent = g.status;
+      badge.className = g.status === 'Attending'
+        ? 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-emeraldSS/20 text-emeraldSS border border-emeraldSS/40'
+        : 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-amberSS/20 text-amberSS border border-amberSS/40';
+
+      const members = g.members || [];
+      document.getElementById('gpMembersList').innerHTML = members.length === 0
+        ? `<p class="text-xs text-muted italic">No attending members listed.</p>`
+        : members.map((m, idx) => `
+          <div class="bg-obsidian p-2.5 rounded-lg border border-borderWarm flex items-center justify-between text-xs">
+            <span class="font-semibold text-cream">${idx + 1}. ${m.name}</span>
+            <span class="font-bold text-gold">${getRoomLabelById(m.roomId) || 'Room Pending'}</span>
+          </div>
+        `).join('');
+
+      const assignedMembers = members.filter(m => m.roomId);
+      if (assignedMembers.length === 0) {
+        document.getElementById('gpRoomsList').innerHTML = `
+          <div class="bg-obsidian p-3 rounded-lg border border-amberSS/40 text-amberSS text-xs">
+            ${g.inviteVariant === '1_event' ? 'Local / Evening Reception Invite — Hotel room not required.' : 'Your room allocation is being finalized by the hospitality desk.'}
+          </div>
+        `;
+      } else {
+        const grouped = {};
+        assignedMembers.forEach(m => {
+          const rObj = roomInventory.find(r => r.id === m.roomId);
+          const key = rObj ? `Room ${rObj.roomNumber} • ${rObj.type} (${rObj.location})` : m.roomId;
+          if (!grouped[key]) grouped[key] = [];
+          grouped[key].push(m.name);
+        });
+        document.getElementById('gpRoomsList').innerHTML = Object.entries(grouped).map(([rmTitle, pNames]) => `
+          <div class="bg-obsidian p-3 rounded-lg border border-gold/50 space-y-0.5">
+            <div class="text-xs sm:text-sm font-bold text-gold">🏨 ${rmTitle}</div>
+            <div class="text-xs text-cream">Occupants: <strong>${pNames.join(', ')}</strong></div>
+          </div>
+        `).join('');
+      }
+
+      if (g.travel && g.travel.number) {
+        document.getElementById('gpTravelSummary').innerHTML = `
+          <div class="bg-obsidian p-3 rounded-lg border border-skySS/40 space-y-1 text-xs">
+            <div class="flex items-center justify-between">
+              <strong class="text-skySS">${g.travel.mode === 'Flight' ? '✈️ Flight' : '🚆 Train'}: ${g.travel.number}</strong>
+              <span class="font-mono px-2 py-0.5 rounded bg-card text-gold">PNR: ${g.travel.pnr}</span>
+            </div>
+            <div class="text-cream">📍 ${g.travel.station} • ${g.travel.arrivalTime}</div>
+            <div class="font-bold text-emeraldSS">🚗 Pickup: ${g.travel.pickup}</div>
+          </div>
+        `;
+        document.getElementById('gpTravelMode').value = g.travel.mode;
+        document.getElementById('gpTravelNo').value = g.travel.number;
+        document.getElementById('gpTravelPnr').value = g.travel.pnr;
+        document.getElementById('gpTravelTime').value = g.travel.arrivalTime;
+      } else {
+        document.getElementById('gpTravelSummary').innerHTML = `
+          <div class="bg-obsidian p-3 rounded-lg border border-borderWarm text-muted text-xs">
+            No flight or train linked yet. Enter your PNR below for airport/station pickup.
+          </div>
+        `;
+      }
+
+      // Show only the ceremonies included in this guest's Invite Variant
+      const invitedEvents = getEventsForVariant(g.inviteVariant || 'all_events');
+      document.getElementById('gpEventsCountLabel').textContent = `${invitedEvents.length} of ${weddingEvents.length} Ceremonies Included in Your Invite`;
+      document.getElementById('gpEventsSchedule').innerHTML = invitedEvents.map(ev => `
+        <div class="bg-obsidian p-3.5 rounded-xl border border-gold/40 space-y-1">
+          <span class="text-xs font-bold text-gold">${ev.date} • ${ev.time}</span>
+          <h4 class="font-serif text-lg font-bold text-cream">${ev.name}</h4>
+          <p class="text-xs text-muted">📍 ${ev.venue}</p>
+        </div>
+      `).join('');
+
+      document.getElementById('gpGuestbookWall').innerHTML = guestbookEntries.map(e => `
+        <div class="bg-obsidian p-3 rounded-xl border border-borderWarm text-xs">
+          <strong class="text-gold">${e.author}</strong>
+          <p class="text-cream mt-0.5">"${e.text}"</p>
+        </div>
+      `).join('');
+    }
+
+    function updateGuestOwnRsvp(newStatus) {
+      const gId = document.getElementById('guestPortalSelect').value;
+      const g = guests.find(x => x.id === gId);
+      if (!g) return;
+      g.status = newStatus;
+      renderGuestPortal();
+      showToast(`Your RSVP is now marked as ${newStatus}`);
+    }
+
+    function saveGuestOwnTravel() {
+      const gId = document.getElementById('guestPortalSelect').value;
+      const g = guests.find(x => x.id === gId);
+      if (!g) return;
+      const number = document.getElementById('gpTravelNo').value.trim();
+      if (!number) return showToast('Enter Flight or Train number');
+      g.travel = {
+        mode: document.getElementById('gpTravelMode').value,
+        number,
+        pnr: document.getElementById('gpTravelPnr').value.trim() || 'PNR-UPD',
+        station: 'Udaipur Arrival',
+        coachSeat: 'Confirmed',
+        arrivalTime: document.getElementById('gpTravelTime').value.trim() || '12 Dec',
+        pickup: 'Innova Crysta Assigned'
+      };
+      renderGuestPortal();
+      showToast('Travel & pickup updated!');
+    }
+
+    function postGuestPortalWish() {
+      const gId = document.getElementById('guestPortalSelect').value;
+      const g = guests.find(x => x.id === gId) || guests[0];
+      const text = document.getElementById('gpWishInput').value.trim();
+      if (!text) return;
+      guestbookEntries.unshift({ author: `${g.name} & Family`, time: 'Just now', text });
+      document.getElementById('gpWishInput').value = '';
+      renderGuestPortal();
+      showToast('Blessing posted!');
+    }
+
+    // =====================================================================
+    // WORKSPACE & 11 SEPARATED PAGES CONTROLLERS
+    // =====================================================================
+    function openWeddingWorkspace(id) {
+      activeWeddingId = id;
+      const w = weddingsPortfolio.find(x => x.id === id) || weddingsPortfolio[0];
+      document.getElementById('wsBannerCouple').textContent = `${w.couple} Wedding`;
+      document.getElementById('wsBannerTag').textContent = w.tag;
+      document.getElementById('wsBannerDates').textContent = `${w.dates} • ${w.city}`;
+
+      ['home', 'creator', 'host', 'guest'].forEach(v => document.getElementById('view-' + v).classList.add('hidden'));
+      document.getElementById('view-workspace').classList.remove('hidden');
+      openSubPage('overview');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function goBackFromWorkspace() {
+      switchRoleView(lastParentRole || 'creator');
+    }
+
+    function openSubPage(page) {
+      currentSubPage = page;
+      const pages = ['overview', 'guests', 'events', 'rooms', 'travel', 'budget', 'vendors', 'tasks', 'guestbook', 'gallery'];
+      pages.forEach(p => {
+        const el = document.getElementById('subpage-' + p);
+        const tab = document.getElementById('subTab-' + p);
+        if (p === page) {
+          el.classList.remove('hidden');
+          if (tab) tab.className = 'shrink-0 px-3.5 py-2 rounded-xl text-xs font-bold border transition bg-gold text-obsidian border-gold shadow';
+        } else {
+          el.classList.add('hidden');
+          if (tab) tab.className = 'shrink-0 px-3.5 py-2 rounded-xl text-xs font-semibold border transition bg-card text-cream border-borderWarm hover:border-gold';
+        }
+      });
+
+      const t = computeLiveWeddingTelemetry();
+      if (page === 'overview') {
+        document.getElementById('singleWeddingFullTelemetry').innerHTML = `
+          <div class="bento-card p-4 sm:p-5 space-y-3">
+            <h2 class="font-serif text-xl sm:text-2xl font-bold text-cream">Complete Wedding Telemetry</h2>
+            ${buildWeddingTelemetryBlocksHTML(t)}
+          </div>
+        `;
+      } else if (page === 'guests') renderGuestsPage();
+      else if (page === 'events') renderEventsPage();
+      else if (page === 'rooms') { populateRoomGuestDropdown(); renderRoomsPage(); }
+      else if (page === 'travel') { populateTravelGuestDropdown(); renderTravelPage(); }
+      else if (page === 'budget') renderBudgetPage();
+      else if (page === 'vendors') renderVendorsPage();
+      else if (page === 'tasks') renderTasksPage();
+      else if (page === 'guestbook') renderGuestbookPage();
+      else if (page === 'gallery') renderGalleryPage();
+    }
+
+    function renderGuestsPage() {
+      const t = computeLiveWeddingTelemetry();
+      const attPct = t.guestsTotal ? Math.round((t.attending / t.guestsTotal) * 100) : 0;
+      const decPct = t.guestsTotal ? Math.round((t.declined / t.guestsTotal) * 100) : 0;
+      const naPct = Math.max(0, 100 - attPct - decPct);
+
+      document.getElementById('guestPageTelemetry').innerHTML = `
+        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 mb-3">
+          <div class="bg-obsidian p-3 rounded-xl border border-borderWarm"><span class="text-xs text-muted block">Total Families</span><strong class="text-lg font-bold text-cream">${t.guestsTotal} (${t.attendingPax} Pax)</strong></div>
+          <div class="bg-obsidian p-3 rounded-xl border border-borderWarm"><span class="text-xs text-muted block">Attending</span><strong class="text-lg font-bold text-emeraldSS">${t.attending}</strong></div>
+          <div class="bg-obsidian p-3 rounded-xl border border-borderWarm"><span class="text-xs text-muted block">Declined / N/A</span><strong class="text-lg font-bold text-amberSS">${t.declined} / ${t.na}</strong></div>
+          <div class="bg-obsidian p-3 rounded-xl border border-gold/40"><span class="text-xs text-gold block">Variant C (All 4 Events)</span><strong class="text-lg font-bold text-gold">${t.varAllCount} Families</strong></div>
+          <div class="bg-obsidian p-3 rounded-xl border border-amberSS/40"><span class="text-xs text-amberSS block">Variant B (2 Events)</span><strong class="text-lg font-bold text-amberSS">${t.var2Count} Families</strong></div>
+          <div class="bg-obsidian p-3 rounded-xl border border-skySS/40"><span class="text-xs text-skySS block">Variant A (1 Event)</span><strong class="text-lg font-bold text-skySS">${t.var1Count} Families</strong></div>
+        </div>
+        <div class="w-full h-2.5 bg-obsidian rounded-full overflow-hidden flex"><div class="bg-emeraldSS h-full" style="width:${attPct}%"></div><div class="bg-crimsonSS h-full" style="width:${decPct}%"></div><div class="bg-amberSS h-full" style="width:${naPct}%"></div></div>
+      `;
+
+      const sideFilter = document.getElementById('sideFilterSelect').value;
+      const varFilter = document.getElementById('variantFilterSelect').value;
+      const q = (document.getElementById('guestSearchInput').value || '').toLowerCase();
+      const filtered = guests.filter(g => {
+        if (currentRsvpFilter !== 'all' && g.status !== currentRsvpFilter) return false;
+        if (sideFilter !== 'all' && g.side !== sideFilter) return false;
+        if (varFilter !== 'all' && g.inviteVariant !== varFilter) return false;
+        return g.name.toLowerCase().includes(q);
+      });
+
+      document.getElementById('guestCardsContainer').innerHTML = filtered.map(g => {
+        const rooms = (g.members || []).filter(m => m.roomId).map(m => `${getRoomLabelById(m.roomId)}: ${m.name.split(' ')[0]}`).join(', ') || 'Not Allotted';
+        const travel = g.travel?.number ? `${g.travel.mode === 'Flight' ? '✈️' : '🚆'} ${g.travel.number} (${g.travel.pnr})` : 'Not Linked';
+        return `
+          <div class="bg-card border border-borderWarm rounded-xl p-4 space-y-2.5 flex flex-col justify-between">
+            <div class="space-y-2">
+              <div class="flex items-start justify-between gap-2">
+                <div>
+                  <h4 class="font-bold text-base text-cream">${g.name}</h4>
+                  <span class="text-xs text-muted">${g.side} Side • ${g.group} • ${g.pax} Pax</span>
+                </div>
+                <button onclick="cycleGuestStatus('${g.id}')" class="px-2.5 py-1 rounded-full text-xs font-bold bg-obsidian border border-borderWarm text-gold">${g.status} ↻</button>
+              </div>
+
+              <!-- 1-Click Event Invite Variant Switcher per Guest -->
+              <div class="flex items-center justify-between bg-obsidian p-2 rounded-lg border border-borderWarm">
+                <span class="text-[11px] text-muted">Invite Variant:</span>
+                <button onclick="cycleGuestInviteVariant('${g.id}')" class="px-2 py-0.5 rounded text-xs font-bold border ${getVariantBadgeStyle(g.inviteVariant)}">
+                  ${getVariantBadgeLabel(g.inviteVariant)} ↻
+                </button>
+              </div>
+
+              <div class="text-xs text-muted">🏨 Rooms: <strong class="text-gold">${rooms}</strong></div>
+              <div class="text-xs text-muted">✈️ Travel: <strong class="text-emeraldSS">${travel}</strong></div>
+            </div>
+
+            <div class="grid grid-cols-3 gap-1.5 pt-2 border-t border-borderWarm/50">
+              <button onclick="openSubPage('rooms'); document.getElementById('allocGuestSelect').value='${g.id}'; loadGuestForRoomAllocation();" class="py-1.5 rounded-lg bg-surface border border-borderWarm text-xs font-semibold text-gold">Rooms</button>
+              
+              <button onclick="switchRoleView('guest'); document.getElementById('guestPortalSelect').value='${g.id}'; renderGuestPortal();" class="py-1.5 rounded-lg bg-surface border border-borderWarm text-xs font-semibold text-emeraldSS">Guest View</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function setRsvpFilter(st) { currentRsvpFilter = st; renderGuestsPage(); }
+
+    function cycleGuestStatus(id) {
+      const g = guests.find(x => x.id === id);
+      if (!g) return;
+      const order = ['Attending', 'Declined', 'N/A'];
+      g.status = order[(order.indexOf(g.status) + 1) % order.length];
+      renderGuestsPage();
+    }
+
+    function cycleGuestInviteVariant(id) {
+      const g = guests.find(x => x.id === id);
+      if (!g) return;
+      const order = ['all_events', '2_events', '1_event'];
+      g.inviteVariant = order[(order.indexOf(g.inviteVariant || 'all_events') + 1) % order.length];
+      renderGuestsPage();
+      showToast(`${g.name} updated to ${getVariantBadgeLabel(g.inviteVariant)}`);
+    }
+
+    function renderEventsPage() {
+      const t = computeLiveWeddingTelemetry();
+      document.getElementById('eventsPageTelemetry').innerHTML = `
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">Total Events</span><strong class="text-lg sm:text-xl font-bold text-gold">${t.eventsCount}</strong></div>
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">All 4 Events Guests</span><strong class="text-lg sm:text-xl font-bold text-emeraldSS">${t.varAllCount} Families</strong></div>
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">2-Event Guests</span><strong class="text-lg sm:text-xl font-bold text-amberSS">${t.var2Count} Families</strong></div>
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">Reception-Only Guests</span><strong class="text-lg sm:text-xl font-bold text-skySS">${t.var1Count} Families</strong></div>
+      `;
+      document.getElementById('eventsListGrid').innerHTML = weddingEvents.map(ev => `
+        <div class="bg-card border border-borderWarm rounded-xl p-4 space-y-1.5">
+          <span class="text-xs font-bold text-gold">${ev.date} • ${ev.time}</span>
+          <h4 class="font-serif text-lg font-bold text-cream">${ev.name}</h4>
+          <p class="text-xs text-muted">📍 ${ev.venue}</p>
+          <p class="text-xs text-emeraldSS font-bold pt-1">Expected: ${ev.expectedPax} Guests</p>
+        </div>
+      `).join('');
+    }
+
+    function addNewWeddingEvent() {
+      const name = prompt('Function Name:', 'Royal Afterparty');
+      if (!name) return;
+      weddingEvents.push({ id: 'ev-' + Date.now(), name, date: '14 Dec 2026', time: '11:00 PM', venue: 'Palace Courtyard', expectedPax: 200 });
+      renderEventsPage();
+    }
+
+    // ROOMS & TRAVEL CONTROLLERS
+    function populateRoomGuestDropdown() {
+      const sel = document.getElementById('allocGuestSelect');
+      sel.innerHTML = guests.filter(g => g.status !== 'Declined').map(g => `<option value="${g.id}">${g.name} (${g.pax} Pax • ${getVariantBadgeLabel(g.inviteVariant)})</option>`).join('');
+      loadGuestForRoomAllocation();
+    }
+
+    function loadGuestForRoomAllocation() {
+      const g = guests.find(x => x.id === document.getElementById('allocGuestSelect').value);
+      if (!g) return;
+      document.getElementById('allocPaxCount').value = g.pax || 1;
+      if (!g.members || !g.members.length) g.members = [{ name: g.name, roomId: '' }];
+      renderMemberAllocationInputs(g);
+    }
+
+    function syncGuestMemberRows() {
+      const g = guests.find(x => x.id === document.getElementById('allocGuestSelect').value);
+      if (!g) return;
+      const count = Math.max(1, parseInt(document.getElementById('allocPaxCount').value, 10) || 1);
+      g.pax = count;
+      while (g.members.length < count) g.members.push({ name: `${g.name} Member ${g.members.length + 1}`, roomId: '' });
+      if (g.members.length > count) g.members = g.members.slice(0, count);
+      renderMemberAllocationInputs(g);
+    }
+
+    function addExtraMemberRow() {
+      const inp = document.getElementById('allocPaxCount');
+      inp.value = (parseInt(inp.value, 10) || 1) + 1;
+      syncGuestMemberRows();
+    }
+
+    function renderMemberAllocationInputs(guest) {
+      document.getElementById('memberAllocationRows').innerHTML = guest.members.map((m, idx) => `
+        <div class="grid grid-cols-1 sm:grid-cols-12 gap-2 bg-obsidian p-2.5 rounded-lg border border-borderWarm">
+          <input type="text" data-member-name="${idx}" value="${m.name}" class="sm:col-span-5 bg-card border border-borderWarm rounded-lg px-2.5 py-1.5 text-xs text-cream" />
+          <select data-member-room="${idx}" class="sm:col-span-7 bg-card border border-borderWarm rounded-lg px-2.5 py-1.5 text-xs text-cream">
+            <option value="">-- Not Allotted --</option>
+            ${roomInventory.map(r => `<option value="${r.id}" ${m.roomId === r.id ? 'selected' : ''}>Rm ${r.roomNumber} • ${r.location.split(',')[0]} (${getRoomOccupants(r.id).length}/${r.maxPax})</option>`).join('')}
+          </select>
+        </div>
+      `).join('');
+    }
+
+    function saveGuestRoomAllocations() {
+      const g = guests.find(x => x.id === document.getElementById('allocGuestSelect').value);
+      if (!g) return;
+      const names = document.querySelectorAll('[data-member-name]');
+      const rooms = document.querySelectorAll('[data-member-room]');
+      const updated = [];
+      for (let i = 0; i < names.length; i++) updated.push({ name: names[i].value.trim() || `${g.name} ${i + 1}`, roomId: rooms[i].value });
+      g.members = updated;
+      g.pax = updated.length;
+      g.status = 'Attending';
+      renderRoomsPage();
+      showToast(`Saved room split for ${g.name}`);
+    }
+
+    function addRoomInventoryBlock() {
+      const location = document.getElementById('invLocation').value.trim() || 'Taj Lake Palace';
+      const type = document.getElementById('invRoomType').value.trim() || 'Deluxe Suite';
+      const prefix = document.getElementById('invRoomPrefix').value.trim() || '40';
+      const count = Math.max(1, parseInt(document.getElementById('invRoomCount').value, 10) || 1);
+      const maxPax = Math.max(1, parseInt(document.getElementById('invMaxPax').value, 10) || 2);
+      for (let i = 1; i <= count; i++) roomInventory.push({ id: `R-${Date.now()}-${i}`, location, roomNumber: `${prefix}${i}`, type, maxPax });
+      loadGuestForRoomAllocation();
+      renderRoomsPage();
+      showToast(`Added ${count} rooms`);
+    }
+
+    function setRoomBoardFilter(f) { currentRoomBoardFilter = f; renderRoomsPage(); }
+
+    function renderRoomsPage() {
+      const t = computeLiveWeddingTelemetry();
+      document.getElementById('roomsPageTelemetry').innerHTML = `
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">Total Rooms</span><strong class="text-lg sm:text-xl font-bold text-cream">${t.roomsTotal}</strong></div>
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">Fully Allotted</span><strong class="text-lg sm:text-xl font-bold text-emeraldSS">${t.roomsFull}</strong></div>
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">Partially Allotted</span><strong class="text-lg sm:text-xl font-bold text-amberSS">${t.roomsPartial}</strong></div>
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">Not Allotted</span><strong class="text-lg sm:text-xl font-bold text-muted">${t.roomsVacant}</strong></div>
+      `;
+      const filtered = roomInventory.filter(r => {
+        const occ = getRoomOccupants(r.id).length;
+        if (currentRoomBoardFilter === 'Full') return occ >= r.maxPax;
+        if (currentRoomBoardFilter === 'Partial') return occ > 0 && occ < r.maxPax;
+        if (currentRoomBoardFilter === 'Vacant') return occ === 0;
+        return true;
+      });
+      document.getElementById('roomInventoryGrid').innerHTML = filtered.map(r => {
+        const occ = getRoomOccupants(r.id);
+        return `
+          <div class="bg-card border border-borderWarm rounded-xl p-4 space-y-2">
+            <div class="flex justify-between">
+              <div><span class="text-[11px] font-bold text-gold uppercase">${r.location}</span><h4 class="font-bold text-base text-cream">Rm ${r.roomNumber} • ${r.type}</h4></div>
+              <span class="text-xs font-bold text-gold">${occ.length}/${r.maxPax} Pax</span>
+            </div>
+            <div class="space-y-1">
+              ${occ.length === 0 ? `<span class="text-xs text-muted italic">Not Allotted</span>` : occ.map(o => `<div class="text-xs bg-obsidian px-2.5 py-1 rounded flex justify-between"><span>${o.memberName}</span><button onclick="unassignOccupant('${o.guestId}',${o.memberIndex})" class="text-crimsonSS font-bold">✕</button></div>`).join('')}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function unassignOccupant(gId, idx) {
+      const g = guests.find(x => x.id === gId);
+      if (g && g.members[idx]) g.members[idx].roomId = '';
+      renderRoomsPage();
+    }
+
+    function setTravelFormMode(m) {
+      currentTravelFormMode = m;
+      document.getElementById('modeFlightBtn').className = m === 'Flight' ? 'py-1.5 rounded-md text-xs font-bold bg-gold text-obsidian' : 'py-1.5 rounded-md text-xs font-bold text-cream';
+      document.getElementById('modeTrainBtn').className = m === 'Train' ? 'py-1.5 rounded-md text-xs font-bold bg-gold text-obsidian' : 'py-1.5 rounded-md text-xs font-bold text-cream';
+    }
+
+    function populateTravelGuestDropdown() {
+      document.getElementById('travelGuestSelect').innerHTML = guests.filter(g => g.status !== 'Declined').map(g => `<option value="${g.id}">${g.name} (${g.pax} Pax)</option>`).join('');
+      populateTravelGuestPreview();
+    }
+
+    function populateTravelGuestPreview() {
+      const g = guests.find(x => x.id === document.getElementById('travelGuestSelect').value);
+      if (!g) return;
+      document.getElementById('travelGuestRoomHint').textContent = `Members: ${(g.members || []).map(m => m.name).join(', ')}`;
+      if (g.travel) {
+        setTravelFormMode(g.travel.mode);
+        document.getElementById('travelNumberInput').value = g.travel.number || '';
+        document.getElementById('travelPnrInput').value = g.travel.pnr || '';
+        document.getElementById('travelStationInput').value = g.travel.station || '';
+        document.getElementById('travelCoachInput').value = g.travel.coachSeat || '';
+        document.getElementById('travelTimeInput').value = g.travel.arrivalTime || '';
+      }
+    }
+
+    function saveGuestTravelRecord() {
+      const g = guests.find(x => x.id === document.getElementById('travelGuestSelect').value);
+      if (!g) return;
+      const number = document.getElementById('travelNumberInput').value.trim();
+      if (!number) return showToast('Enter Flight/Train No.');
+      g.travel = {
+        mode: currentTravelFormMode,
+        number,
+        pnr: document.getElementById('travelPnrInput').value.trim() || 'PNR-101',
+        station: document.getElementById('travelStationInput').value.trim() || 'Udaipur',
+        coachSeat: document.getElementById('travelCoachInput').value.trim() || 'Confirmed',
+        arrivalTime: document.getElementById('travelTimeInput').value.trim() || '12 Dec',
+        pickup: document.getElementById('travelPickupInput').value
+      };
+      g.status = 'Attending';
+      renderTravelPage();
+      showToast(`Connected ${currentTravelFormMode} to ${g.name}`);
+    }
+
+    function setTravelFilter(f) { currentTravelFilter = f; renderTravelPage(); }
+
+    function renderTravelPage() {
+      const t = computeLiveWeddingTelemetry();
+      document.getElementById('travelPageTelemetry').innerHTML = `
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">✈️ By Flight</span><strong class="text-lg sm:text-xl font-bold text-skySS">${t.flightPax} Pax</strong></div>
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">🚆 By Train</span><strong class="text-lg sm:text-xl font-bold text-gold">${t.trainPax} Pax</strong></div>
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">Total Linked</span><strong class="text-lg sm:text-xl font-bold text-emeraldSS">${t.flightPax + t.trainPax} Pax</strong></div>
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">Pending Travel</span><strong class="text-lg sm:text-xl font-bold text-amberSS">${Math.max(0, t.attendingPax - (t.flightPax + t.trainPax))} Pax</strong></div>
+      `;
+      const list = guests.filter(g => g.travel && g.travel.number && (currentTravelFilter === 'all' || g.travel.mode === currentTravelFilter));
+      document.getElementById('travelManifestList').innerHTML = list.map(g => `
+        <div class="bg-card border border-borderWarm rounded-xl p-4 space-y-1">
+          <div class="flex justify-between text-xs"><strong class="text-gold">${g.travel.mode === 'Flight' ? '✈️' : '🚆'} ${g.travel.number}</strong><span class="font-mono text-cream">PNR: ${g.travel.pnr}</span></div>
+          <div class="font-bold text-base text-cream">${g.name} (${g.pax} Pax)</div>
+          <div class="text-xs text-muted">${g.travel.station} • ${g.travel.arrivalTime} • <span class="text-emeraldSS font-semibold">${g.travel.pickup}</span></div>
+        </div>
+      `).join('');
+    }
+
+    function renderBudgetPage() {
+      const t = computeLiveWeddingTelemetry();
+      const due = Math.max(0, t.budgetTotal - t.budgetPaid);
+      document.getElementById('budgetPageTelemetry').innerHTML = `
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">Total Budget</span><strong class="text-lg sm:text-xl font-bold text-cream">${formatINR(t.budgetTotal)}</strong></div>
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">Advance Paid</span><strong class="text-lg sm:text-xl font-bold text-emeraldSS">${formatINR(t.budgetPaid)}</strong></div>
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">Balance Due</span><strong class="text-lg sm:text-xl font-bold text-amberSS">${formatINR(due)}</strong></div>
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">Vendors</span><strong class="text-lg sm:text-xl font-bold text-gold">${vendors.length}</strong></div>
+      `;
+      document.getElementById('budgetBreakdownTable').innerHTML = vendors.map(v => `
+        <div class="bg-card border border-borderWarm rounded-xl p-4 flex justify-between items-center">
+          <div><span class="text-xs text-gold font-bold">${v.category}</span><h4 class="font-bold text-base text-cream">${v.vendor}</h4></div>
+          <div class="text-right text-xs"><div>Total: <strong>${formatINR(v.total)}</strong></div><div class="text-emeraldSS">Paid: ${formatINR(v.paid)}</div></div>
+        </div>
+      `).join('');
+    }
+
+    function toggleVendorForm() { document.getElementById('addVendorForm').classList.toggle('hidden'); }
+    function addVendorItem() {
+      const category = document.getElementById('newVendorCategory').value;
+      const vendor = document.getElementById('newVendorName').value.trim() || `${category} Agency`;
+      const event = document.getElementById('newVendorEvent').value.trim() || 'All Events';
+      const total = parseInt(document.getElementById('newVendorTotal').value, 10) || 150000;
+      const paid = parseInt(document.getElementById('newVendorPaid').value, 10) || 50000;
+      vendors.unshift({ id: 'v-' + Date.now(), category, vendor, event, total, paid, status: 'Confirmed' });
+      document.getElementById('addVendorForm').classList.add('hidden');
+      renderVendorsPage();
+    }
+
+    function renderVendorsPage() {
+      document.getElementById('vendorsPageTelemetry').innerHTML = `
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">Agencies</span><strong class="text-lg sm:text-xl font-bold text-cream">${vendors.length}</strong></div>
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">Decor & Catering</span><strong class="text-base font-bold text-emeraldSS">Booked</strong></div>
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">DJ & Anchor</span><strong class="text-base font-bold text-gold">Booked</strong></div>
+        <div class="bento-card p-3.5"><span class="text-xs text-muted block">Events</span><strong class="text-lg sm:text-xl font-bold text-cream">${weddingEvents.length}</strong></div>
+      `;
+      document.getElementById('vendorCardsGrid').innerHTML = vendors.map(v => `
+        <div class="bg-card border border-borderWarm rounded-xl p-4 space-y-1">
+          <span class="text-xs font-bold text-gold">${v.category} • ${v.event}</span>
+          <h4 class="font-bold text-base text-cream">${v.vendor}</h4>
+          <div class="text-xs text-muted">Total: ${formatINR(v.total)} • Paid: <span class="text-emeraldSS font-bold">${formatINR(v.paid)}</span></div>
+        </div>
+      `).join('');
+    }
+
+    function renderTasksPage() {
+      const t = computeLiveWeddingTelemetry();
+      document.getElementById('tasksPageTelemetry').innerHTML = `
+        <div class="bento-card p-3 text-center"><span class="text-xs text-muted block">All</span><strong class="text-lg sm:text-xl font-bold text-cream">${t.tasksTotal}</strong></div>
+        <div class="bento-card p-3 text-center"><span class="text-xs text-muted block">Pending</span><strong class="text-lg sm:text-xl font-bold text-amberSS">${t.tasksPending}</strong></div>
+        <div class="bento-card p-3 text-center"><span class="text-xs text-muted block">In Prog</span><strong class="text-lg sm:text-xl font-bold text-skySS">${t.tasksInProgress}</strong></div>
+        <div class="bento-card p-3 text-center"><span class="text-xs text-muted block">Not Start</span><strong class="text-lg sm:text-xl font-bold text-crimsonSS">${t.tasksNotStarted}</strong></div>
+        <div class="bento-card p-3 text-center"><span class="text-xs text-muted block">Done</span><strong class="text-lg sm:text-xl font-bold text-emeraldSS">${t.tasksCompleted}</strong></div>
+      `;
+      document.getElementById('familyTasksList').innerHTML = familyTasks.map(task => `
+        <div class="bg-card border border-borderWarm rounded-xl p-3.5 flex items-center justify-between gap-2">
+          <div><div class="text-sm font-bold text-cream">${task.title}</div><span class="text-xs text-gold">Owner: ${task.owner}</span></div>
+          <button onclick="cycleTaskStatus('${task.id}')" class="px-3 py-1 rounded-full text-xs font-bold bg-obsidian border border-borderWarm text-gold shrink-0">${task.status} ↻</button>
+        </div>
+      `).join('');
+    }
+
+    function cycleTaskStatus(id) {
+      const task = familyTasks.find(x => x.id === id);
+      if (!task) return;
+      const order = ['Not Started', 'In Progress', 'Pending', 'Completed'];
+      task.status = order[(order.indexOf(task.status) + 1) % order.length];
+      renderTasksPage();
+    }
+
+    function addFamilyTask() {
+      const title = document.getElementById('newTaskTitle').value.trim();
+      if (!title) return;
+      familyTasks.unshift({ id: 't-' + Date.now(), title, owner: document.getElementById('newTaskOwner').value.trim() || 'Family', status: document.getElementById('newTaskStatus').value });
+      document.getElementById('newTaskTitle').value = '';
+      renderTasksPage();
+    }
+
+    // =====================================================================
+    // PAGE 9: EVENT-TIER INVITE VARIANTS STUDIO ENGINE
+    // =====================================================================
+
+    function renderGuestbookPage() {
+      document.getElementById('guestbookList').innerHTML = guestbookEntries.map(e => `
+        <div class="bg-card border border-borderWarm rounded-xl p-4"><strong class="text-gold text-sm">${e.author}</strong><p class="text-xs text-cream mt-1">"${e.text}"</p></div>
+      `).join('');
+    }
+    function addGuestbookEntry() {
+      const author = document.getElementById('gbAuthorInput').value.trim();
+      const text = document.getElementById('gbMessageInput').value.trim();
+      if (!author || !text) return;
+      guestbookEntries.unshift({ author, time: 'Now', text });
+      renderGuestbookPage();
+    }
+    function renderGalleryPage() {
+      document.getElementById('photoGalleryGrid').innerHTML = galleryPhotos.map(p => `
+        <div class="rounded-xl border border-borderWarm bg-gradient-to-br ${p.gradient} p-4 min-h-[150px] flex flex-col justify-between">
+          <span class="self-start px-2 py-0.5 rounded text-[11px] font-bold bg-black/50 text-gold">${p.event}</span>
+          <div><h4 class="font-serif text-lg font-bold text-cream">${p.title}</h4><span class="text-xs text-muted">${p.credit}</span></div>
+        </div>
+      `).join('');
+    }
+    function openAddPhotoModal() {
+      const title = prompt('Photo Title:', 'Grand Baraat Welcome');
+      if (!title) return;
+      galleryPhotos.unshift({ id: 'p-' + Date.now(), event: 'Shaadi', title, credit: 'Host Upload', gradient: 'from-amber-600/50 via-rose-900/70 to-obsidian' });
+      renderGalleryPage();
+    }
+
+    // CSV & MODALS
+    function getSampleCSVContent() {
+      return [
+        'Primary_Guest,Side,Group,RSVP_Status,Attending_Pax,Member_Names,Allocated_Rooms,Travel_Mode,Flight_Train_No,PNR,Invite_Variant',
+        '"Anita Sharma",Bride,Family,Attending,3,"Anita Sharma|Rajesh Sharma|Rohan Sharma","Rm 101|Rm 101|Rm 102",Flight,"6E-2142 IndiGo",VY8K2M,all_events',
+        '"Vikram Singh",Groom,Family,Attending,4,"Vikram Singh|Geeta Singh|Aarti Singh|Kabir Singh","Rm 103|Rm 103|Rm 103|Rm 203",Train,"20972 Superfast",8834120955,2_events',
+        '"Arjun Reddy",Groom,Colleagues,Attending,1,"Arjun Reddy","Unassigned",,,,1_event'
+      ].join('\n');
+    }
+    function openSampleExportPreviewModal() {
+      document.getElementById('sampleExportPre').textContent = getSampleCSVContent();
+      document.getElementById('sampleExportModal').classList.remove('hidden');
+      document.getElementById('sampleExportModal').classList.add('flex');
+    }
+    function closeSampleExportPreviewModal() { document.getElementById('sampleExportModal').classList.add('hidden'); }
+    function downloadSampleGuestCSV() {
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([getSampleCSVContent()], { type: 'text/csv' }));
+      a.download = 'Shaadi-Saathi-Sample-Guests.csv';
+      a.click();
+      showToast('Downloaded Sample CSV');
+    }
+    function exportCurrentGuestsCSV() {
+      const rows = guests.map(g => `"${g.name}",${g.side},${g.group},${g.status},${g.pax},"${(g.members || []).map(m => m.name).join('|')}","${(g.members || []).map(m => getRoomLabelById(m.roomId) || 'Unassigned').join('|')}",${g.travel?.mode || ''},"${g.travel?.number || ''}",${g.travel?.pnr || ''},${g.inviteVariant || 'all_events'}`);
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(new Blob([['Primary_Guest,Side,Group,Status,Pax,Members,Rooms,Mode,Number,PNR,Invite_Variant'].concat(rows).join('\n')], { type: 'text/csv' }));
+      a.download = 'Shaadi-Saathi-Live-Export.csv';
+      a.click();
+      showToast('Exported Live CSV');
+    }
+    function openImportGuestsModal() { document.getElementById('importGuestsModal').classList.remove('hidden'); document.getElementById('importGuestsModal').classList.add('flex'); }
+    function closeImportGuestsModal() { document.getElementById('importGuestsModal').classList.add('hidden'); }
+    function processGuestImport() {
+      const lines = document.getElementById('csvPasteArea').value.trim().split(/\r?\n/).filter(Boolean);
+      lines.forEach((l, i) => {
+        const p = l.split(',');
+        if (!p[0]) return;
+        const members = (p[5] || p[0]).split('|').map(n => ({ name: n.trim(), roomId: '' }));
+        guests.unshift({
+          id: 'g-imp-' + Date.now() + i,
+          name: p[0].trim(),
+          side: p[1] || 'Bride',
+          group: p[2] || 'Family',
+          status: p[3] || 'Attending',
+          pax: members.length,
+          inviteVariant: ['1_event', '2_events', 'all_events'].includes((p[9] || '').trim()) ? p[9].trim() : 'all_events',
+          members,
+          travel: p[7] ? { mode: p[6] || 'Flight', number: p[7], pnr: p[8] || 'PNR', station: 'Arrival', coachSeat: 'Seat', arrivalTime: '12 Dec', pickup: 'Innova Assigned' } : null
+        });
+      });
+      closeImportGuestsModal();
+      renderGuestsPage();
+      showToast('Imported guests with Event Variants');
+    }
+    function openAddGuestModal() { document.getElementById('addGuestModal').classList.remove('hidden'); document.getElementById('addGuestModal').classList.add('flex'); }
+    function closeAddGuestModal() { document.getElementById('addGuestModal').classList.add('hidden'); }
+    function createNewGuest() {
+      const name = document.getElementById('newGuestName').value.trim();
+      if (!name) return;
+      const members = (document.getElementById('newGuestMembers').value || name).split(',').map(s => ({ name: s.trim(), roomId: '' }));
+      guests.unshift({
+        id: 'g-' + Date.now(),
+        name,
+        side: document.getElementById('newGuestSide').value,
+        group: 'Family',
+        status: document.getElementById('newGuestStatus').value,
+        inviteVariant: document.getElementById('newGuestVariant').value || 'all_events',
+        pax: members.length,
+        members,
+        travel: null
+      });
+      closeAddGuestModal();
+      renderGuestsPage();
+    }
+    function openCreateWeddingModal() { document.getElementById('createWeddingModal').classList.remove('hidden'); document.getElementById('createWeddingModal').classList.add('flex'); }
+    function closeCreateWeddingModal() { document.getElementById('createWeddingModal').classList.add('hidden'); }
+    function saveNewWedding() {
+      const couple = document.getElementById('cwCoupleInput').value.trim();
+      if (!couple) return;
+      weddingsPortfolio.unshift({ id: 'w-' + Date.now(), couple, tag: 'New Celebration', city: document.getElementById('cwCityInput').value || 'Jaipur', dates: document.getElementById('cwDatesInput').value || '18–20 Nov 2026', isLiveConnected: false, hosts: ['bafna'], telemetry: computeLiveWeddingTelemetry() });
+      closeCreateWeddingModal();
+      renderCreatorDashboard();
+    }
+    window.addEventListener('DOMContentLoaded', () => { switchRoleView('home'); });
+  </script>
+<script id="revamp-js">
+(function(){if(matchMedia('(prefers-reduced-motion: reduce)').matches||!('IntersectionObserver' in window))return;
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -5% 0px'});
+document.querySelectorAll('#view-home .ss-strip,#view-home .ss-cta,#view-home section[id^="wk-"]>*').forEach(function(el){el.classList.add('rv');io.observe(el)});})();
+</script>
+<script id="hp-js">
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* days to wedding */
+  var days=Math.max(0,Math.ceil((new Date('2027-02-14')-Date.now())/864e5));
+  var dEl=document.getElementById('hpDays'); if(dEl) dEl.textContent=days+' days to go';
+  /* status pills cycle */
+  var NAMES=['Attending','Pending','Declined'];
+  document.querySelectorAll('#hpList .hp-pill').forEach(function(p){
+    p.addEventListener('click',function(){
+      var i=(+p.dataset.status+1)%3; p.dataset.status=i;
+      p.textContent=NAMES[i]; p.className='hp-pill hp-'+NAMES[i];
+      var who=p.closest('li').querySelector('strong').textContent;
+      p.setAttribute('aria-label',who+', '+NAMES[i]+'. Tap to change');
+      document.getElementById('hpMsg').textContent=who+' is now '+NAMES[i].toLowerCase()+'.';
+    });
+  });
+  var rem=document.getElementById('hpRemind');
+  if(rem) rem.addEventListener('click',function(){document.getElementById('hpMsg').textContent='Reminder queued for pending guests.';});
+  /* invite versions */
+  var VER={A:[3],B:[2,3],C:[0,1,2,3]};
+  var NOTE={A:'Guests in Version A see the Reception only.',B:'Guests in Version B see Sangeet and Reception.',C:'Guests in Version C see all four events.'};
+  function setVer(v){
+    document.querySelectorAll('[data-ver]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.ver===v)});
+    document.querySelectorAll('.hp-ev').forEach(function(e){e.classList.toggle('on',VER[v].indexOf(+e.dataset.ev)>-1)});
+    document.getElementById('hpVerNote').textContent=NOTE[v];
+  }
+  document.querySelectorAll('[data-ver]').forEach(function(b){b.addEventListener('click',function(){setVer(b.dataset.ver)})});
+  setVer('B');
+  /* routing buttons */
+  document.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(){if(typeof switchRoleView==='function'){switchRoleView(b.dataset.go);window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});}})});
+  /* counters on reveal */
+  function run(el){
+    if(el.dataset.done)return; el.dataset.done=1;
+    var to=+el.dataset.count, suf=el.dataset.suffix||'';
+    if(reduce){el.textContent=to+suf;return;}
+    var t0=performance.now();
+    (function f(t){var k=Math.min((t-t0)/1100,1);el.textContent=Math.round(to*(1-Math.pow(1-k,3)))+suf;if(k<1)requestAnimationFrame(f)})(t0);
+  }
+  if(reduce||!('IntersectionObserver' in window)){
+    document.querySelectorAll('.hp .rv').forEach(function(el){el.classList.add('in')});
+    document.querySelectorAll('[data-count]').forEach(run);
+    return;
+  }
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(!e.isIntersecting)return;
+    e.target.classList.add('in');
+    e.target.querySelectorAll('[data-count]').forEach(run);
+    io.unobserve(e.target);
+  })},{threshold:.15,rootMargin:'0px 0px -6% 0px'});
+  document.querySelectorAll('.hp .rv').forEach(function(el){io.observe(el)});
+})();
+</script><script id="hp-js5">
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  /* product tour: sample screens */
+  var TOUR={
+    guests:[['Anita Sharma','Bride side · 3 people','Attending'],['Rohit Mehra','Groom side · 2 people','Pending'],['Kavita Iyer','Bride side · 1 person','Declined']],
+    rooms:[['Haveli 101','4 beds · 4 used',100],['Haveli 102','3 beds · 2 used',67],['Garden 201','2 beds · 0 used',0]],
+    travel:[['Anita Sharma','Flight AI-471 · 12 Dec 3:10 PM','Pickup pending'],['Vikram Singh','Train 12956 · 12 Dec 9:40 AM','Pickup assigned'],['Rohit Mehra','No travel added yet','Not set']],
+    budget:[['Venue','₹3,00,000 paid of ₹4,50,000',67],['Catering','₹1,20,000 paid of ₹3,80,000',32],['Decoration','₹80,000 paid of ₹2,20,000',36],['DJ and sound','Paid in full',100]]
+  };
+  var PILL={Attending:'hp-Attending',Pending:'hp-Pending',Declined:'hp-Declined'};
+  function paintTour(k){
+    document.querySelectorAll('[data-tour]').forEach(function(b){b.setAttribute('aria-selected',b.dataset.tour===k);b.setAttribute('aria-pressed',b.dataset.tour===k)});
+    var rows=TOUR[k].map(function(r){
+      if(k==='guests') return '<div class="hp-tour-row"><div><strong>'+r[0]+'</strong><small>'+r[1]+'</small></div><span class="hp-pill '+PILL[r[2]]+'">'+r[2]+'</span></div>';
+      if(k==='rooms') return '<div class="hp-tour-row"><div><strong>'+r[0]+'</strong><small>'+r[1]+'</small></div><span class="hp-tag">'+(r[2]===100?'Full':r[2]+'% used')+'</span><div class="hp-tour-bar"><i style="width:'+r[2]+'%"></i></div></div>';
+      if(k==='travel') return '<div class="hp-tour-row"><div><strong>'+r[0]+'</strong><small>'+r[1]+'</small></div><span class="hp-tag">'+r[2]+'</span></div>';
+      return '<div class="hp-tour-row"><div><strong>'+r[0]+'</strong><small>'+r[1]+'</small></div><span class="hp-tag">'+r[2]+'%</span><div class="hp-tour-bar"><i style="width:0%" data-w="'+r[2]+'"></i></div></div>';
+    }).join('');
+    var title={guests:'Guest list',rooms:'Room board',travel:'Arrivals and pickup',budget:'Budget ledger'}[k];
+    var panel=document.getElementById('tourPanel');
+    panel.innerHTML='<h3 class="hp-tour-head">'+title+'</h3><div class="hp-tour-grid">'+rows+'</div>';
+    panel.querySelectorAll('i[data-w]').forEach(function(i){requestAnimationFrame(function(){i.style.width=i.dataset.w+'%'})});
+  }
+  document.querySelectorAll('[data-tour]').forEach(function(b){b.addEventListener('click',function(){paintTour(b.dataset.tour)})});
+  paintTour('guests');
+  /* guest experience */
+  var GX=[
+    {ev:'Haldi · Mehendi · Sangeet · Reception',room:'Room: Haveli 101 (shared with 3 family members)',n:'Anita'},
+    {ev:'Sangeet · Reception',room:'Room: Haveli 102',n:'Rohit'},
+    {ev:'Reception',room:'Room: not needed (local guest)',n:'Kavita'}
+  ];
+  function paintGx(i){
+    var g=GX[i];
+    document.querySelectorAll('[data-gx]').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.gx==i)});
+    document.getElementById('gxMsg').textContent='Namaste '+g.n+' ji,\n\nAarav & Riya invite you to:\n'+g.ev+'\n\n'+g.room+'\n\nPlease reply Yes or No.';
+  }
+  document.querySelectorAll('[data-gx]').forEach(function(b){b.addEventListener('click',function(){paintGx(+b.dataset.gx)})});
+  paintGx(0);
+  /* get started checklist */
+  var boxes=document.querySelectorAll('.hp-checklist input');
+  function paintStart(){
+    var n=0;boxes.forEach(function(b){if(b.checked)n++;b.closest('li').classList.toggle('done',b.checked)});
+    document.getElementById('startBar').style.width=(n/boxes.length*100)+'%';
+    document.getElementById('startMsg').textContent=n+' of '+boxes.length+' done'+(n===boxes.length?'. Ready to send.':'');
+  }
+  boxes.forEach(function(b){b.addEventListener('change',paintStart)});
+  paintStart();
+})();
+</script></body>
+</html>

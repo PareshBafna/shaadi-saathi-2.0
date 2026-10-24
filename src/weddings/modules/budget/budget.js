@@ -1,4 +1,4 @@
-import { formatINR } from '../utils/weddings-helpers.js';
+import { formatINR } from '../../utils/weddings-helpers.js';
 
 export function renderBudgetModule(viewport, headerBanner) {
   const budgetItems = [

@@ -1,5 +1,5 @@
-import { guests, messageCreditsRemaining, messageCreditsTotal } from '../data/weddings-store.js';
-import { getTierLabel } from '../utils/weddings-helpers.js';
+import { guests, messageCreditsRemaining, messageCreditsTotal } from '../../data/weddings-store.js';
+import { getTierLabel } from '../../utils/weddings-helpers.js';
 
 export function renderWhatsAppModule(viewport, headerBanner) {
   const sentCount = guests.filter(g => g.waInviteSent).length;

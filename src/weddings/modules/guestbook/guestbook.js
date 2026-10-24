@@ -1,4 +1,4 @@
-import { guestbookEntries } from '../data/weddings-store.js';
+import { guestbookEntries } from '../../data/weddings-store.js';
 
 export function renderGuestbookModule(viewport, headerBanner) {
   var cardsHtml = guestbookEntries.map(function(e) {

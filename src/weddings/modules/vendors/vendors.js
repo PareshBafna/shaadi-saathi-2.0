@@ -1,5 +1,5 @@
-import { vendors } from '../data/weddings-store.js';
-import { formatINR } from '../utils/weddings-helpers.js';
+import { vendors } from '../../data/weddings-store.js';
+import { formatINR } from '../../utils/weddings-helpers.js';
 
 export function renderVendorsModule(viewport, headerBanner) {
   var totalCost = vendors.reduce(function(s, v) { return s + v.cost; }, 0);
