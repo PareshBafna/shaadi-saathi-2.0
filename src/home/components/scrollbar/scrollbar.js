@@ -22,7 +22,7 @@ export async function initScrollbar(slotSelector) {
           <span class="ss-rail-ring"><span class="ss-rail-core"></span></span>
         </a>
 
-        <a href="#all-explainers" data-section="all-explainers" class="ss-rail-node" style="--dot-color: #38BDF8;">
+        <a href="#all-features-deepdives" data-section="all-features-deepdives" class="ss-rail-node" style="--dot-color: #38BDF8;">
           <span class="ss-rail-label">Feature Deep-Dives</span>
           <span class="ss-rail-ring"><span class="ss-rail-core"></span></span>
         </a>
@@ -60,21 +60,20 @@ export async function initScrollbar(slotSelector) {
     track.style.setProperty('--rail-total-h', `${totalSpan}px`);
     progressLine.style.top = `${firstCenter}px`;
 
-    const triggerY = window.scrollY + window.innerHeight * 0.42;
+    const triggerY = window.scrollY + window.innerHeight * 0.4;
 
     const positions = sectionIds.map(id => {
       const el = document.getElementById(id);
-      return el ? el.getBoundingClientRect().top + window.scrollY : 0;
+      return el ? el.getBoundingClientRect().top + window.scrollY : Number.MAX_SAFE_INTEGER;
     });
 
     let activeIdx = 0;
     for (let i = 0; i < positions.length; i++) {
-      if (triggerY >= positions[i]) {
+      if (triggerY >= positions[i] - 50) {
         activeIdx = i;
       }
     }
 
-    // Calculate fractional progress toward the next section dot
     let fraction = 0;
     if (activeIdx < positions.length - 1) {
       const startY = positions[activeIdx];
@@ -99,5 +98,5 @@ export async function initScrollbar(slotSelector) {
 
   window.addEventListener('scroll', updateRail, { passive: true });
   window.addEventListener('resize', updateRail);
-  setTimeout(updateRail, 200);
+  setTimeout(updateRail, 300);
 }
