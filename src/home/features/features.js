@@ -1,6 +1,6 @@
 import { rootUrl } from '../../../../global/core/router.js';
 
-export const HOME_SERVICE_SLUGS = [
+export const HOME_FEATURES_SLUGS = [
   'telemetry',
   'whatsapp-deck',
   'family-hosts',
@@ -29,33 +29,33 @@ export function loadCssOnce(href) {
   document.head.appendChild(l);
 }
 
-export async function initServices(slotSelector) {
+export async function initFeatures(slotSelector) {
   const slot = document.querySelector(slotSelector);
   if (!slot) return;
 
   slot.innerHTML = `
-    <section class="hp-band" id="all-services-deepdives">
+    <section class="hp-band" id="all-features-deepdives">
       <div class="hp-wrap space-y-12">
         <div class="hp-head">
           <span class="hp-kicker">Feature Deep-Dives</span>
           <h2>Explore every modular wedding system in complete detail</h2>
           <p>Scroll down to preview every capability or jump straight into any module inside your planner workspace.</p>
         </div>
-        <div id="servicesDeepDivesContainer" class="space-y-16"></div>
+        <div id="featuresDeepDivesContainer" class="space-y-16"></div>
       </div>
     </section>
   `;
 
-  const container = document.getElementById('servicesDeepDivesContainer');
+  const container = document.getElementById('featuresDeepDivesContainer');
   if (!container) return;
 
-  for (const slug of HOME_SERVICE_SLUGS) {
+  for (const slug of HOME_FEATURES_SLUGS) {
     const mod = await import(`./${slug}/${slug}.js`);
     const wrap = document.createElement('div');
-    wrap.id = `service-deepdive-${slug}`;
+    wrap.id = `feature-deepdive-${slug}`;
     container.appendChild(wrap);
-    if (typeof mod.initService === 'function') {
-      await mod.initService(wrap);
+    if (typeof mod.initFeature === 'function') {
+      await mod.initFeature(wrap);
     }
   }
 }

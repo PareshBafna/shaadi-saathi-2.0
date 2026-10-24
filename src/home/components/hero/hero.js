@@ -16,7 +16,7 @@ export async function initHero(slotSelector) {
           </p>
           <div class="hp-ctas">
             <button onclick="switchRootMode('creator')" class="hp-btn hp-gold">Open Planner OS (All Weddings) →</button>
-            <a class="hp-btn hp-ghost" href="#all-services-deepdives">Explore Features ↓</a>
+            <a class="hp-btn hp-ghost" href="#all-features-deepdives">Explore Features ↓</a>
           </div>
           <ul class="hp-proof">
             <li>Complete Wedding Suite</li>

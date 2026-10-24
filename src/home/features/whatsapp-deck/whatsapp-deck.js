@@ -1,6 +1,6 @@
 import { loadCssOnce } from '../features.js';
 
-export async function initService(mountEl) {
+export async function initFeature(mountEl) {
   loadCssOnce('./src/home/features/whatsapp-deck/whatsapp-deck.css');
   const res = await fetch('./src/home/features/whatsapp-deck/whatsapp-deck.html');
   mountEl.innerHTML = await res.text();

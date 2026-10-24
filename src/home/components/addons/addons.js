@@ -22,7 +22,7 @@ export async function initAddons(slotSelector) {
           <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
             <div>
               <span class="hp-kicker !mb-2">Optional Add-Ons</span>
-              <h3 class="text-2xl sm:text-3xl font-serif font-bold text-cream">Need a specific service not in your plan? Add it separately.</h3>
+              <h3 class="text-2xl sm:text-3xl font-serif font-bold text-cream">Need a specific feature not in your plan? Add it separately.</h3>
               <p class="text-sm text-muted mt-1">Customize any wedding plan with standalone add-ons. Tap any add-on to test adding it to your estimate.</p>
             </div>
             <div class="bg-obsidian border border-gold/50 rounded-2xl px-5 py-3 text-right shrink-0">
@@ -60,7 +60,7 @@ export function renderAddonsGrid() {
       </div>
       <div class="flex items-center justify-between pt-3 border-t border-borderWarm/60">
         <strong class="font-serif text-2xl font-bold text-gold">+ ${formatINR(a.price)}</strong>
-        <span class="text-xs font-bold ${a.selected ? 'text-emeraldSS' : 'text-cream/80'}">${a.selected ? '✓ Selected' : '+ Select Service'}</span>
+        <span class="text-xs font-bold ${a.selected ? 'text-emeraldSS' : 'text-cream/80'}">${a.selected ? '✓ Selected' : '+ Select Feature'}</span>
       </div>
     </div>
   `).join('');

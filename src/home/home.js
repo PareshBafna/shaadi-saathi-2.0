@@ -1,7 +1,7 @@
 import { initHero } from './components/hero/hero.js';
 import { initComparison } from './components/comparison/comparison.js';
 import * as suitesMod from './components/suites/suites.js';
-import * as servicesMod from './features/features.js';
+import * as featuresMod from './features/features.js';
 import { initPricing } from './components/pricing/pricing.js';
 import { initAddons } from './components/addons/addons.js';
 import { initFaq } from './components/faq/faq.js';
@@ -10,7 +10,7 @@ const htmlTemplate = `<div class="hp w-full">
   <div id="home-hero-slot"></div>
   <div id="home-comparison-slot"></div>
   <div id="home-suites-slot"></div>
-  <div id="home-services-slot"></div>
+  <div id="home-features-slot"></div>
   <div id="home-pricing-slot"></div>
   <div id="home-addons-slot"></div>
   <div id="home-faq-slot"></div>
@@ -23,7 +23,7 @@ const htmlTemplate = `<div class="hp w-full">
       </div>
       <div class="space-y-2 text-sm">
         <h4 class="font-sans font-bold text-cream">Explore</h4>
-        <a href="#all-services-deepdives" class="block text-muted hover:text-gold">All Services</a>
+        <a href="#all-features-deepdives" class="block text-muted hover:text-gold">All Features</a>
         <a href="#pricing" class="block text-muted hover:text-gold">Pricing &amp; Add-Ons</a>
         <a href="#faq" class="block text-muted hover:text-gold">FAQ</a>
       </div>
@@ -52,23 +52,23 @@ export async function initHomePage(rootSelector = '#root-home') {
     }
   }
 
-  if (!document.getElementById('home-services-slot')) {
+  if (!document.getElementById('home-features-slot')) {
     const anchor = document.getElementById('home-suites-slot') || document.getElementById('home-comparison-slot');
     if (anchor) {
-      const servicesDiv = document.createElement('div');
-      servicesDiv.id = 'home-services-slot';
-      anchor.insertAdjacentElement('afterend', servicesDiv);
+      const featuresDiv = document.createElement('div');
+      featuresDiv.id = 'home-features-slot';
+      anchor.insertAdjacentElement('afterend', featuresDiv);
     }
   }
 
   const runSuites = suitesMod.initSuites || suitesMod.renderSuites || suitesMod.default;
-  const runServices = servicesMod.initServices || servicesMod.renderServices || servicesMod.default;
+  const runFeatures = featuresMod.initFeatures || featuresMod.renderFeaturess || featuresMod.default;
 
   await Promise.all([
     initHero('#home-hero-slot'),
     initComparison('#home-comparison-slot'),
     typeof runSuites === 'function' ? runSuites('#home-suites-slot') : Promise.resolve(),
-    typeof runServices === 'function' ? runServices('#home-services-slot') : Promise.resolve(),
+    typeof runFeatures === 'function' ? runFeatures('#home-features-slot') : Promise.resolve(),
     initPricing('#home-pricing-slot'),
     initAddons('#home-addons-slot'),
     initFaq('#home-faq-slot')

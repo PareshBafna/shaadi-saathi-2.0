@@ -121,10 +121,10 @@ export async function initFaq(slotSelector) {
             <summary>
               <div class="faq-q-left">
                 <span class="faq-num">07</span>
-                <span class="faq-title">Can we buy a standalone service (like WhatsApp Broadcast or 3D Web Invite) without a full plan?</span>
+                <span class="faq-title">Can we buy a standalone feature (like WhatsApp Broadcast or 3D Web Invite) without a full plan?</span>
               </div>
               <div class="flex items-center gap-3">
-                <span class="faq-tag">Standalone Services</span>
+                <span class="faq-tag">Standalone Features</span>
                 <span class="faq-icon">+</span>
               </div>
             </summary>

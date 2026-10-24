@@ -54,7 +54,7 @@ export function buildWorkspaceShellHTML() {
       <div id="wsAppLauncherSection" class="bento-card p-6 space-y-5">
         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
           <h3 class="font-serif text-xl font-bold text-cream">Shaadi Saathi OS App Launcher (18 Modules)</h3>
-          <span class="text-xs text-muted">Click any module icon to switch service workspace</span>
+          <span class="text-xs text-muted">Click any module icon to switch feature workspace</span>
         </div>
         <div id="wsAppIconGrid" class="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-9 gap-3"></div>
         <div id="wsCriticalAlertsBox" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-borderWarm"></div>

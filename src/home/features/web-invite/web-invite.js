@@ -1,6 +1,6 @@
 import { loadCssOnce } from '../features.js';
 
-export async function initService(mountEl) {
+export async function initFeature(mountEl) {
   loadCssOnce('./src/home/features/web-invite/web-invite.css');
   const res = await fetch('./src/home/features/web-invite/web-invite.html');
   mountEl.innerHTML = await res.text();

@@ -1,6 +1,6 @@
 import { loadCssOnce } from '../features.js';
 
-export async function initService(mountEl) {
+export async function initFeature(mountEl) {
   loadCssOnce('./src/home/features/train-arrangements/train-arrangements.css');
   const res = await fetch('./src/home/features/train-arrangements/train-arrangements.html');
   mountEl.innerHTML = await res.text();

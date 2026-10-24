@@ -55,7 +55,7 @@ export async function initSuites(slotSelector) {
         <div class="hp-head">
           <span class="hp-kicker">Complete Wedding Suite</span>
           <h2>Every wedding capability, organized into four logical suites.</h2>
-          <p>Switch between suite tabs below to explore Command &amp; Invites, Hospitality &amp; Travel, Memories &amp; Shagun, and Vendors &amp; Finance. Click any service to open it directly inside the workspace.</p>
+          <p>Switch between suite tabs below to explore Command &amp; Invites, Hospitality &amp; Travel, Memories &amp; Shagun, and Vendors &amp; Finance. Click any feature to open it directly inside the workspace.</p>
         </div>
         <div class="hp-tabs" id="suiteTabsBar" role="tablist" aria-label="Wedding Suite Tabs"></div>
         <div id="allSuitesContainer" class="space-y-8"></div>
@@ -81,7 +81,7 @@ export function renderSuiteTabsAndContent() {
     { id: 'suite2', icon: '🏨', label: '2. Stay, Travel & Sangeeth (4)' },
     { id: 'suite3', icon: '🎁', label: '3. Memories, Shagun & Tasks (4)' },
     { id: 'suite4', icon: '₹', label: '4. Vendors, Budget & Timeline (4)' },
-    { id: 'all', icon: '✨', label: 'View All 18 Services' }
+    { id: 'all', icon: '✨', label: 'View All Features' }
   ];
 
   tabsBar.innerHTML = tabLabels.map(t => `

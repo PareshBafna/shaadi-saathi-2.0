@@ -26,7 +26,7 @@ export function buildModuleHeaderHTML(moduleId) {
     icon: '📊',
     name: moduleId.toUpperCase(),
     badge: 'Module',
-    desc: 'Service module view'
+    desc: 'Feature module view'
   };
 
   return `
@@ -34,7 +34,7 @@ export function buildModuleHeaderHTML(moduleId) {
       <div class="flex items-center gap-4">
         <div class="w-14 h-14 rounded-2xl bg-gold/15 border border-gold/40 flex items-center justify-center text-3xl shrink-0">${modInfo.icon}</div>
         <div>
-          <span class="text-xs font-mono uppercase tracking-wider text-gold">Service Workspace</span>
+          <span class="text-xs font-mono uppercase tracking-wider text-gold">Feature Workspace</span>
           <h3 class="font-serif text-3xl font-bold text-cream mt-0.5">${modInfo.name}</h3>
           <p class="text-sm text-muted">${modInfo.desc}</p>
         </div>
