@@ -23,7 +23,7 @@ export async function initScrollbar(slotSelector) {
         </a>
 
         <a href="#all-explainers" data-section="all-explainers" class="ss-rail-node" style="--dot-color: #38BDF8;">
-          <span class="ss-rail-label">18 Service Deep-Dives</span>
+          <span class="ss-rail-label">Feature Deep-Dives</span>
           <span class="ss-rail-ring"><span class="ss-rail-core"></span></span>
         </a>
 

@@ -2,26 +2,26 @@ import { rootUrl } from '../../../../global/core/router.js';
 
 export const HOME_SERVICE_SLUGS = [
   'telemetry',
-  'whatsapp',
-  'hosts',
+  'whatsapp-deck',
+  'family-hosts',
   'events',
   'guests',
   'web-invite',
-  'rooms',
-  'flights',
-  'trains',
-  'sangeet',
+  'stay-accommodation',
+  'flight-arrangements',
+  'train-arrangements',
+  'sangeeth-lineup',
   'guestbook',
   'gallery',
-  'shagun',
-  'tasks',
-  'vendors',
-  'budget',
+  'shagun-gifts',
+  'tasks-checklist',
+  'event-vendors',
+  'budget-planner',
   'team-access',
   'calendar'
 ];
 
-function loadCss(href) {
+export function loadCssOnce(href) {
   if (document.querySelector(`link[href="${href}"]`)) return;
   const l = document.createElement('link');
   l.rel = 'stylesheet';
@@ -33,18 +33,29 @@ export async function initServices(slotSelector) {
   const slot = document.querySelector(slotSelector);
   if (!slot) return;
 
-  loadCss(rootUrl('src/home/features/features.css'));
-  const res = await fetch(rootUrl('src/home/features/features.html'));
-  slot.innerHTML = await res.text();
+  slot.innerHTML = `
+    <section class="hp-band" id="all-services-deepdives">
+      <div class="hp-wrap space-y-12">
+        <div class="hp-head">
+          <span class="hp-kicker">Feature Deep-Dives</span>
+          <h2>Explore every modular wedding system in complete detail</h2>
+          <p>Scroll down to preview every capability or jump straight into any module inside your planner workspace.</p>
+        </div>
+        <div id="servicesDeepDivesContainer" class="space-y-16"></div>
+      </div>
+    </section>
+  `;
 
   const container = document.getElementById('servicesDeepDivesContainer');
   if (!container) return;
 
   for (const slug of HOME_SERVICE_SLUGS) {
-    loadCss(rootUrl(`src/home/features/${slug}/${slug}.css`));
-    const sRes = await fetch(rootUrl(`src/home/features/${slug}/${slug}.html`));
+    const mod = await import(`./${slug}/${slug}.js`);
     const wrap = document.createElement('div');
-    wrap.innerHTML = await sRes.text();
+    wrap.id = `service-deepdive-${slug}`;
     container.appendChild(wrap);
+    if (typeof mod.initService === 'function') {
+      await mod.initService(wrap);
+    }
   }
 }
