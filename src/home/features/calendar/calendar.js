@@ -2,8 +2,32 @@ import { loadCssOnce } from '../features.js';
 
 export async function initFeature(mountEl) {
   loadCssOnce('./src/home/features/calendar/calendar.css');
-  const res = await fetch('./src/home/features/calendar/calendar.html');
-  mountEl.innerHTML = await res.text();
+  mountEl.innerHTML = `
+    <div class="hp-split pt-14 border-t border-borderWarm">
+      <div>
+        <span class="hp-kicker">CALENDAR</span>
+        <h2>Multi-Days Timeline across every function and venue</h2>
+        <p class="mt-3">Keep family hosts, photographers, and hospitality staff synchronized with a chronological Multi-Days Timeline spanning your entire celebration.</p>
+        <div class="mt-6"><button onclick="openWorkspaceDirect('calendar')" class="hp-link">🗓️ Open Multi-Days Timeline →</button></div>
+      </div>
+      <div class="bento-card p-6 space-y-4">
+        <div class="relative pl-6 border-l-2 border-gold/50 space-y-4">
+          <div>
+            <span class="text-xs font-bold text-gold">DAY 1 &bull; 12 DEC 2026</span>
+            <strong class="block text-sm text-cream">12:30 PM Haldi Carnival &rarr; 04:30 PM Rajwada Mehendi</strong>
+          </div>
+          <div>
+            <span class="text-xs font-bold text-gold">DAY 2 &bull; 13 DEC 2026</span>
+            <strong class="block text-sm text-cream">08:00 PM Starlight Sangeet Gala at Crystal Ballroom</strong>
+          </div>
+          <div>
+            <span class="text-xs font-bold text-gold">DAY 3 &bull; 14 DEC 2026</span>
+            <strong class="block text-sm text-cream">06:45 PM Royal Wedding &amp; Reception at Jagmandir Island</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
 
   const btn = mountEl.querySelector('.hp-link');
   if (btn) btn.onclick = () => window.openWorkspaceDirect('calendar');

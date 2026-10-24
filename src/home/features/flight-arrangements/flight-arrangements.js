@@ -2,8 +2,30 @@ import { loadCssOnce } from '../features.js';
 
 export async function initFeature(mountEl) {
   loadCssOnce('./src/home/features/flight-arrangements/flight-arrangements.css');
-  const res = await fetch('./src/home/features/flight-arrangements/flight-arrangements.html');
-  mountEl.innerHTML = await res.text();
+  mountEl.innerHTML = `
+    <div class="hp-split pt-14 border-t border-borderWarm">
+      <div>
+        <span class="hp-kicker">FLIGHT ARRANGEMENTS</span>
+        <h2>Dedicated airport manifest for terminal pickups</h2>
+        <p class="mt-3">Keep your airport hospitality team focused exclusively on air travellers. Track flight numbers, airline PNRs, terminal gates, and landing times to coordinate Innova &amp; coach convoys.</p>
+        <div class="mt-6"><button onclick="openWorkspaceDirect('flights')" class="hp-link">✈️ Open Flight Arrangements →</button></div>
+      </div>
+      <div class="bg-[#09131C] border border-skySS/40 rounded-2xl p-5 font-mono text-xs space-y-3">
+        <div class="flex justify-between items-center text-skySS border-b border-skySS/20 pb-2">
+          <span class="font-bold">✈️ MAHARANA PRATAP AIRPORT (UDR) ARRIVALS</span>
+          <span>LIVE TELEMETRY</span>
+        </div>
+        <div class="flex justify-between items-center bg-black/40 p-3 rounded-xl">
+          <div><strong class="text-cream block">6E-2142 IndiGo (PNR: VY8K2M)</strong><span class="text-muted">Anita Sharma Family &bull; 3 Pax &bull; Terminal 1</span></div>
+          <span class="text-emeraldSS font-bold">12 Dec &bull; 10:30 AM</span>
+        </div>
+        <div class="flex justify-between items-center bg-black/40 p-3 rounded-xl">
+          <div><strong class="text-cream block">AI-471 Air India (PNR: MN442P)</strong><span class="text-muted">Kavita Iyer &bull; 1 Pax &bull; Terminal 1</span></div>
+          <span class="text-emeraldSS font-bold">14 Dec &bull; 01:15 PM</span>
+        </div>
+      </div>
+    </div>
+  `;
 
   const btn = mountEl.querySelector('.hp-link');
   if (btn) btn.onclick = () => window.openWorkspaceDirect('flights');

@@ -3,8 +3,37 @@ import { rootUrl } from '../../../../global/core/router.js';
 
 export async function initFeature(mountEl) {
   loadCssOnce(rootUrl('src/home/features/telemetry/telemetry.css'));
-  const res = await fetch(rootUrl('src/home/features/telemetry/telemetry.html'));
-  mountEl.innerHTML = await res.text();
+  mountEl.innerHTML = `
+    <div class="hp-split">
+      <div>
+        <span class="hp-kicker">TELEMETRY</span>
+        <h2>Bird’s-eye command pulse across every department</h2>
+        <p class="mt-3">Stop cross-checking five different spreadsheets. Telemetry aggregates confirmed headcounts, room allotments, airport/station arrivals, and vendor payouts into a single live pulse board.</p>
+        <ul class="mt-4 space-y-2 text-sm text-cream">
+          <li>✦ Instant headcount split between Bride &amp; Groom sides</li>
+          <li>✦ Real-time hotel room allotment saturation meter</li>
+          <li>✦ Automated alert flags for pending RSVPs and unallotted rooms</li>
+        </ul>
+        <div class="mt-6"><button onclick="openWorkspaceDirect('overview')" class="hp-link">📊 Launch Telemetry Board →</button></div>
+      </div>
+      <div class="bento-card p-6 space-y-4">
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+          <div class="bg-obsidian p-3.5 rounded-2xl border border-borderWarm"><span class="text-xs text-muted block">Confirmed</span><strong class="text-2xl font-serif text-emeraldSS">78%</strong></div>
+          <div class="bg-obsidian p-3.5 rounded-2xl border border-borderWarm"><span class="text-xs text-muted block">Rooms Filled</span><strong class="text-2xl font-serif text-gold">5 / 6</strong></div>
+          <div class="bg-obsidian p-3.5 rounded-2xl border border-borderWarm"><span class="text-xs text-muted block">Flight + Train</span><strong class="text-2xl font-serif text-skySS">12 Pax</strong></div>
+          <div class="bg-obsidian p-3.5 rounded-2xl border border-borderWarm"><span class="text-xs text-muted block">Budget Settled</span><strong class="text-2xl font-serif text-cream">62%</strong></div>
+        </div>
+        <div class="bg-obsidian p-4 rounded-2xl border border-borderWarm space-y-2">
+          <div class="flex justify-between text-xs font-bold"><span>RSVP Progress Bar</span><span class="text-emeraldSS">412 Attending • 46 Pending</span></div>
+          <div class="w-full h-3 bg-surface rounded-full overflow-hidden flex">
+            <div class="bg-emeraldSS h-full" style="width:78%"></div>
+            <div class="bg-amberSS h-full" style="width:14%"></div>
+            <div class="bg-crimsonSS h-full" style="width:8%"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
 
   const btn = mountEl.querySelector('.hp-link');
   if (btn) btn.onclick = () => window.openWorkspaceDirect('overview');

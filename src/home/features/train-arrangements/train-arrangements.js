@@ -2,8 +2,30 @@ import { loadCssOnce } from '../features.js';
 
 export async function initFeature(mountEl) {
   loadCssOnce('./src/home/features/train-arrangements/train-arrangements.css');
-  const res = await fetch('./src/home/features/train-arrangements/train-arrangements.html');
-  mountEl.innerHTML = await res.text();
+  mountEl.innerHTML = `
+    <div class="hp-split pt-14 border-t border-borderWarm">
+      <div>
+        <span class="hp-kicker">TRAIN ARRANGEMENTS</span>
+        <h2>Dedicated railway manifest for station platform pickups</h2>
+        <p class="mt-3">Separate from air arrivals, Train Arrangements tracks 10-digit IRCTC PNRs, train numbers, platform numbers, and early-morning station arrival timings for seamless luggage &amp; porter assistance.</p>
+        <div class="mt-6"><button onclick="openWorkspaceDirect('trains')" class="hp-link">🚆 Open Train Arrangements →</button></div>
+      </div>
+      <div class="bg-[#191209] border border-amberSS/40 rounded-2xl p-5 font-mono text-xs space-y-3">
+        <div class="flex justify-between items-center text-amberSS border-b border-amberSS/20 pb-2">
+          <span class="font-bold">🚆 UDAIPUR CITY STATION (UDZ) ARRIVALS</span>
+          <span>PLATFORM DESK</span>
+        </div>
+        <div class="flex justify-between items-center bg-black/40 p-3 rounded-xl">
+          <div><strong class="text-cream block">12951 Tejas Rajdhani (PNR: 2458910)</strong><span class="text-muted">Rohit Mehra &amp; Karan &bull; 2 Pax &bull; Platform 1</span></div>
+          <span class="text-gold font-bold">12 Dec &bull; 09:15 AM</span>
+        </div>
+        <div class="flex justify-between items-center bg-black/40 p-3 rounded-xl">
+          <div><strong class="text-cream block">20972 Superfast Exp (PNR: 8834120)</strong><span class="text-muted">Vikram Singh Family &bull; 4 Pax &bull; Platform 2</span></div>
+          <span class="text-gold font-bold">12 Dec &bull; 07:45 AM</span>
+        </div>
+      </div>
+    </div>
+  `;
 
   const btn = mountEl.querySelector('.hp-link');
   if (btn) btn.onclick = () => window.openWorkspaceDirect('trains');

@@ -2,8 +2,39 @@ import { loadCssOnce } from '../features.js';
 
 export async function initFeature(mountEl) {
   loadCssOnce('./src/home/features/gallery/gallery.css');
-  const res = await fetch('./src/home/features/gallery/gallery.html');
-  mountEl.innerHTML = await res.text();
+  mountEl.innerHTML = `
+    <div class="hp-split pt-14 border-t border-borderWarm">
+      <div>
+        <span class="hp-kicker">GALLERY</span>
+        <h2>High-resolution wedding photo albums organized by ceremony</h2>
+        <p class="mt-3">Share official photographer highlights and candid moments with every guest right inside their Guest Pass&mdash;organized cleanly by Haldi, Mehendi, Sangeet, and Reception.</p>
+        <div class="mt-6"><button onclick="openWorkspaceDirect('gallery')" class="hp-link">📸 Open Photo Gallery →</button></div>
+      </div>
+      <div class="grid grid-cols-3 gap-3">
+        <div class="relative h-44 rounded-2xl overflow-hidden border border-borderWarm">
+          <img src="https://images.unsplash.com/photo-1583939003579-730e3918a45a?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover" alt="Royal Lawns Mehendi" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3">
+            <span class="text-[10px] font-bold uppercase text-gold">Mehendi</span>
+            <strong class="text-xs text-cream leading-tight">Royal Lawns Mehendi</strong>
+          </div>
+        </div>
+        <div class="relative h-44 rounded-2xl overflow-hidden border border-borderWarm">
+          <img src="https://images.unsplash.com/photo-1545232972-90456021c622?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover" alt="Starlight Sangeet Entry" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3">
+            <span class="text-[10px] font-bold uppercase text-gold">Sangeet</span>
+            <strong class="text-xs text-cream leading-tight">Starlight Sangeet Entry</strong>
+          </div>
+        </div>
+        <div class="relative h-44 rounded-2xl overflow-hidden border border-borderWarm">
+          <img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover" alt="Jagmandir Island Mandap" />
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3">
+            <span class="text-[10px] font-bold uppercase text-gold">Shaadi</span>
+            <strong class="text-xs text-cream leading-tight">Jagmandir Island Mandap</strong>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
 
   const btn = mountEl.querySelector('.hp-link');
   if (btn) btn.onclick = () => window.openWorkspaceDirect('gallery');

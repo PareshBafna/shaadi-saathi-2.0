@@ -34,14 +34,15 @@ export async function initFeatures(slotSelector) {
   if (!slot) return;
 
   slot.innerHTML = `
-    <section class="hp-band" id="all-features-deepdives">
-      <div class="hp-wrap space-y-12">
+    <section class="hp-band" id="all-explainers">
+      <div class="hp-wrap space-y-20">
         <div class="hp-head">
           <span class="hp-kicker">Feature Deep-Dives</span>
-          <h2>Explore every modular wedding system in complete detail</h2>
-          <p>Scroll down to preview every capability or jump straight into any module inside your planner workspace.</p>
+          <h2>Every feature explained &mdash; custom workflows built for Indian weddings</h2>
+          <p>Each feature is purpose-built for a specific wedding bottleneck, with tailored visual boards, live matrices, and interactive controls.</p>
         </div>
-        <div id="featuresDeepDivesContainer" class="space-y-16"></div>
+
+        <div id="featuresDeepDivesContainer" class="space-y-20"></div>
       </div>
     </section>
   `;
