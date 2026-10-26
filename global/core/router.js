@@ -44,11 +44,6 @@ export function navigateTo(mode, extraState = {}, replace = false) {
   if (mode === 'creator' && extraState.wedding) {
     const mod = extraState.module || 'hub';
     targetHash = `#wedding-details?id=${encodeURIComponent(extraState.wedding)}&module=${encodeURIComponent(mod)}`;
-    sessionStorage.setItem('ss_active_wedding', extraState.wedding);
-    sessionStorage.setItem('ss_active_module', mod);
-  } else {
-    sessionStorage.removeItem('ss_active_wedding');
-    sessionStorage.removeItem('ss_active_module');
   }
 
   if (window.location.hash !== targetHash) {
@@ -59,20 +54,30 @@ export function navigateTo(mode, extraState = {}, replace = false) {
     }
   }
 
-  // Force toggle DOM roots
   const rootHome = document.getElementById('root-home');
   const rootCreator = document.getElementById('root-creator');
   const singleWorkspace = document.getElementById('creator-single-workspace');
   const allWeddingsGrid = document.getElementById('creator-all-weddings');
 
   if (targetHash.startsWith('#home') || targetHash === '#') {
-    if (rootHome) rootHome.style.display = 'block';
-    if (rootCreator) rootCreator.style.display = 'none';
-    if (singleWorkspace) singleWorkspace.classList.add('hidden');
-    if (allWeddingsGrid) allWeddingsGrid.classList.add('hidden');
+    if (rootHome) rootHome.classList.remove('hidden');
+    if (rootCreator) rootCreator.classList.add('hidden');
   } else {
-    if (rootHome) rootHome.style.display = 'none';
-    if (rootCreator) rootCreator.style.display = 'block';
+    if (rootHome) rootHome.classList.add('hidden');
+    if (rootCreator) rootCreator.classList.remove('hidden');
+
+    if (targetHash.includes('wedding-details') || targetHash.includes('id=')) {
+      if (allWeddingsGrid) allWeddingsGrid.classList.add('hidden');
+      if (singleWorkspace) singleWorkspace.classList.remove('hidden');
+
+      const routeInfo = parseHashRoute();
+      if (routeInfo.wedding && typeof window.openWeddingWorkspace === 'function') {
+        window.openWeddingWorkspace(routeInfo.wedding, routeInfo.module, true);
+      }
+    } else {
+      if (singleWorkspace) singleWorkspace.classList.add('hidden');
+      if (allWeddingsGrid) allWeddingsGrid.classList.remove('hidden');
+    }
   }
 
   window.dispatchEvent(new HashChangeEvent('hashchange'));
