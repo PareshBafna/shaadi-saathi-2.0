@@ -39,6 +39,7 @@ export {
 
 const MODULE_LOADERS = {
   overview: () => import('./modules/telemetry/telemetry.js').then(m => m.renderTelemetryModule),
+  telemetry: () => import('./modules/telemetry/telemetry.js').then(m => m.renderTelemetryModule),
   whatsapp: () => import('./modules/whatsapp/whatsapp.js').then(m => m.renderWhatsAppModule),
   hosts: () => import('./modules/hosts/hosts.js').then(m => m.renderHostsModule),
   events: () => import('./modules/events/events.js').then(m => m.renderEventsModule),
@@ -60,29 +61,71 @@ const MODULE_LOADERS = {
   'team-access': () => import('./modules/team-access/team-access.js').then(m => m.renderTeamAccessModule || m.default)
 };
 
+export function backToLauncherHub(skipPush = false) {
+  setCurrentModuleId(null);
+
+  const launcherSection = document.getElementById('wsAppLauncherSection');
+  const viewport = document.getElementById('activeModuleViewport');
+  const topHubBtn = document.getElementById('wsBackToHubTopBtn');
+
+  if (launcherSection) launcherSection.classList.remove('hidden');
+  if (topHubBtn) topHubBtn.classList.add('hidden');
+  if (viewport) {
+    viewport.classList.add('hidden');
+    viewport.innerHTML = '';
+  }
+
+  if (!skipPush && !document.getElementById('creator-single-workspace')?.classList.contains('hidden')) {
+    navigateTo('creator', { wedding: activeWeddingId, module: 'hub' });
+  }
+
+  renderWorkspaceAppLauncher();
+  window.scrollTo({ top: 0, behavior: 'instant' });
+}
+
 export async function openSubPage(moduleId, skipPush = false) {
+  if (!moduleId || moduleId === 'hub') {
+    backToLauncherHub(skipPush);
+    return;
+  }
+
   setCurrentModuleId(moduleId);
+
+  const launcherSection = document.getElementById('wsAppLauncherSection');
+  const viewport = document.getElementById('activeModuleViewport');
+  const topHubBtn = document.getElementById('wsBackToHubTopBtn');
+  if (!viewport) return;
+
+  if (launcherSection) launcherSection.classList.add('hidden');
+  if (topHubBtn) topHubBtn.classList.remove('hidden');
+  viewport.classList.remove('hidden');
 
   if (!skipPush && !document.getElementById('creator-single-workspace')?.classList.contains('hidden')) {
     navigateTo('creator', { wedding: activeWeddingId, module: moduleId });
   }
 
-  renderWorkspaceAppLauncher();
-  const viewport = document.getElementById('activeModuleViewport');
-  if (!viewport) return;
+  const backBarHTML = `
+    <div class="flex items-center justify-between">
+      <button onclick="backToLauncherHub()" class="px-4 py-2 rounded-xl bg-card border border-gold/40 text-gold hover:bg-gold hover:text-obsidian text-xs font-bold flex items-center gap-2 transition cursor-pointer">
+        <span>←</span> Back to All Modules (18 Apps)
+      </button>
+    </div>
+  `;
 
-  const headerBanner = buildModuleHeaderHTML(moduleId);
+  const headerBanner = backBarHTML + buildModuleHeaderHTML(moduleId);
 
   try {
     const loader = MODULE_LOADERS[moduleId];
     if (loader) {
       const renderFn = await loader();
       if (typeof renderFn === 'function') {
-        renderFn(viewport, headerBanner);
+        await renderFn(viewport, headerBanner);
+        window.scrollTo({ top: 0, behavior: 'instant' });
         return;
       }
     }
     viewport.innerHTML = headerBanner + `<div class="bento-card p-6 text-cream">Module <strong>${moduleId}</strong> active.</div>`;
+    window.scrollTo({ top: 0, behavior: 'instant' });
   } catch (err) {
     console.warn(`Module ${moduleId} fallback:`, err);
     viewport.innerHTML = headerBanner + `<div class="bento-card p-6 text-cream">Module <strong>${moduleId}</strong> ready.</div>`;
@@ -115,6 +158,7 @@ Object.assign(window, {
   renderCreatorWeddings,
   openWeddingWorkspace,
   backToAllWeddings,
+  backToLauncherHub,
   toggleAppGridLauncher,
   switchWorkspaceModule,
   openSubPage,

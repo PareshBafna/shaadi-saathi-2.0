@@ -36,7 +36,7 @@ export function buildWorkspaceShellHTML() {
     <div id="creator-single-workspace" class="hidden space-y-6">
       <div class="bento-card p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div class="flex items-center gap-4">
-          <button onclick="backToAllWeddings()" class="px-4 py-2 rounded-xl bg-card border border-borderWarm text-xs font-bold text-cream hover:bg-gold hover:text-obsidian transition">← All Weddings</button>
+          <button onclick="backToAllWeddings()" class="px-4 py-2 rounded-xl bg-card border border-borderWarm text-xs font-bold text-cream hover:bg-gold hover:text-obsidian transition cursor-pointer">← All Weddings</button>
           <div>
             <div class="flex items-center gap-2.5 flex-wrap">
               <h2 id="wsBannerCouple" class="font-serif text-3xl font-bold text-cream">Wedding Workspace</h2>
@@ -46,22 +46,22 @@ export function buildWorkspaceShellHTML() {
           </div>
         </div>
         <div class="flex items-center gap-3">
-          <button onclick="toggleAppGridLauncher()" class="px-4 py-2.5 rounded-xl bg-gold/20 border border-gold/40 text-gold text-xs font-bold hover:bg-gold hover:text-obsidian transition">📂 Toggle App Launcher</button>
+          <button id="wsBackToHubTopBtn" onclick="backToLauncherHub()" class="hidden px-4 py-2.5 rounded-xl bg-gold/20 border border-gold/40 text-gold text-xs font-bold hover:bg-gold hover:text-obsidian transition cursor-pointer">📂 All 18 Modules</button>
         </div>
       </div>
 
-      <!-- App Launcher Section -->
+      <!-- Page 1: App Launcher Hub Section -->
       <div id="wsAppLauncherSection" class="bento-card p-6 space-y-5">
         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2">
           <h3 class="font-serif text-xl font-bold text-cream">Shaadi Saathi OS App Launcher (18 Modules)</h3>
-          <span class="text-xs text-muted">Click any module icon to switch feature workspace</span>
+          <span class="text-xs text-muted">Tap any module to open its dedicated workspace page</span>
         </div>
         <div id="wsAppIconGrid" class="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-9 gap-3"></div>
         <div id="wsCriticalAlertsBox" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-4 border-t border-borderWarm"></div>
       </div>
 
-      <!-- Active Module Viewport -->
-      <div id="activeModuleViewport" class="space-y-6"></div>
+      <!-- Page 2: Active Module Dedicated Page Viewport -->
+      <div id="activeModuleViewport" class="hidden space-y-6"></div>
     </div>
 
     <!-- Create New Wedding Modal -->
@@ -130,11 +130,12 @@ export function renderWorkspaceAppLauncher() {
 }
 
 export function toggleAppGridLauncher() {
-  const el = document.getElementById('wsAppLauncherSection');
-  if (el) el.classList.toggle('hidden');
+  if (typeof window.backToLauncherHub === 'function') {
+    window.backToLauncherHub();
+  }
 }
 
-export function openWeddingWorkspace(weddingId = 'w1', initialModule = 'overview', skipPush = false) {
+export function openWeddingWorkspace(weddingId = 'w1', initialModule = 'hub', skipPush = false) {
   setActiveWeddingId(weddingId);
   const w = weddingsPortfolio.find(item => item.id === weddingId) || weddingsPortfolio[0];
 
@@ -158,7 +159,11 @@ export function openWeddingWorkspace(weddingId = 'w1', initialModule = 'overview
     navigateTo('creator', { wedding: w.id, module: initialModule });
   }
 
-  if (typeof window.openSubPage === 'function') {
+  if ( !initialModule || initialModule === 'hub' ) {
+    if (typeof window.backToLauncherHub === 'function') {
+      window.backToLauncherHub(true);
+    }
+  } else if (typeof window.openSubPage === 'function') {
     window.openSubPage(initialModule, true);
   }
 }
@@ -222,7 +227,6 @@ export function saveNewWedding() {
   showToast(`Created ${couple} (${roleConfig.id})`);
 }
 
-// Keep modal/CSV helpers exported so existing modules calling them never break
 export function openImportGuestsModal() { showToast('Import CSV modal ready'); }
 export function closeImportGuestsModal() {}
 export function openSampleExportPreviewModal() {}

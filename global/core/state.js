@@ -32,7 +32,7 @@ window.switchRootMode = async function(mode, skipPush = false) {
   if (mode === 'home') {
     await initHomePage('#root-home');
   } else if (mode === 'creator') {
-    loadCss('src/pages/weddings/weddings.css');
+    loadCss('src/weddings/weddings.css');
     await initWeddingsView('#root-creator');
     if (!skipPush) {
       backToAllWeddings(true);
