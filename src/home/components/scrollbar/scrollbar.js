@@ -50,7 +50,6 @@ export async function initScrollbar(slotSelector) {
   const nodes = Array.from(slot.querySelectorAll('.ss-rail-node'));
   const sectionIds = nodes.map(n => n.dataset.section);
 
-  // Add smooth scroll click handling for anchor targets
   nodes.forEach(node => {
     node.addEventListener('click', (e) => {
       const targetId = node.getAttribute('href');
@@ -66,6 +65,16 @@ export async function initScrollbar(slotSelector) {
 
   function updateRail() {
     if (!track || !progressLine || !nodes.length) return;
+
+    // If on home view and scrolled near top, force reset progress
+    if (window.scrollY < 50) {
+      progressLine.style.height = `0px`;
+      nodes.forEach((node, idx) => {
+        node.classList.toggle('reached', idx === 0);
+        node.classList.toggle('active', idx === 0);
+      });
+      return;
+    }
 
     const firstCenter = nodes[0].offsetTop + nodes[0].offsetHeight / 2;
     const lastCenter = nodes[nodes.length - 1].offsetTop + nodes[nodes.length - 1].offsetHeight / 2;
@@ -112,5 +121,6 @@ export async function initScrollbar(slotSelector) {
 
   window.addEventListener('scroll', updateRail, { passive: true });
   window.addEventListener('resize', updateRail);
-  setTimeout(updateRail, 300);
+  setTimeout(updateRail, 150);
+  setTimeout(updateRail, 500);
 }
