@@ -33,38 +33,34 @@ export const WORKSPACE_APPS = [
 export function buildWorkspaceShellHTML() {
   return `
     <!-- Single Wedding Workspace View -->
-    <div id="creator-single-workspace" class="hidden max-w-7xl mx-auto px-3 sm:px-6 pb-28 space-y-4 sm:space-y-6">
-      <div class="bento-card p-4 sm:p-6 flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div class="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
-          <div class="flex items-center justify-between sm:justify-start gap-2">
-            <button onclick="backToAllWeddings()" class="px-3.5 py-2 rounded-xl bg-card border border-borderWarm text-xs font-bold text-cream hover:bg-gold hover:text-obsidian transition whitespace-nowrap shrink-0 cursor-pointer">← All Weddings</button>
-            <button id="wsBackToHubTopBtnMobile" onclick="backToLauncherHub()" class="hidden sm:hidden px-3.5 py-2 rounded-xl bg-gold/20 border border-gold/40 text-gold text-xs font-bold hover:bg-gold hover:text-obsidian transition whitespace-nowrap shrink-0 cursor-pointer">📂 All 18 Apps</button>
-          </div>
-          <div class="min-w-0">
-            <div class="flex items-center gap-2 flex-wrap">
-              <h2 id="wsBannerCouple" class="font-serif text-2xl sm:text-3xl font-bold text-cream truncate">Wedding Workspace</h2>
-              <span id="wsBannerRoleBadge" class="px-2.5 py-0.5 rounded-full text-[10px] sm:text-xs font-mono font-bold uppercase bg-gold text-obsidian shrink-0">ROLE: CREATOR</span>
-            </div>
-            <span id="wsBannerDates" class="text-xs text-gold block mt-1">18–20 Nov 2026 • Udaipur</span>
-          </div>
+    <div id="creator-single-workspace" class="hidden max-w-7xl mx-auto px-3 sm:px-6 pb-28 space-y-4">
+      <div class="bento-card p-4 sm:p-6 space-y-3">
+        <div class="flex items-center justify-between gap-2">
+          <button onclick="backToAllWeddings()" class="px-3 py-1.5 rounded-xl bg-card border border-borderWarm text-xs font-bold text-cream hover:bg-gold hover:text-obsidian transition cursor-pointer">&larr; All Weddings</button>
+          <button id="wsBackToHubTopBtn" onclick="backToLauncherHub()" class="hidden px-3 py-1.5 rounded-xl bg-gold/20 border border-gold/40 text-gold text-xs font-bold hover:bg-gold hover:text-obsidian transition cursor-pointer">📂 All 18 Modules</button>
         </div>
-        <div class="hidden sm:flex items-center gap-3 shrink-0">
-          <button id="wsBackToHubTopBtn" onclick="backToLauncherHub()" class="hidden px-4 py-2.5 rounded-xl bg-gold/20 border border-gold/40 text-gold text-xs font-bold hover:bg-gold hover:text-obsidian transition whitespace-nowrap cursor-pointer">📂 All 18 Modules</button>
+        
+        <div class="flex items-center justify-between gap-3 pt-2 border-t border-borderWarm/50 flex-wrap">
+          <div>
+            <h2 id="wsBannerCouple" class="font-serif text-xl sm:text-2xl font-bold text-cream">Wedding Workspace</h2>
+            <span id="wsBannerDates" class="text-xs text-gold block mt-0.5">18–20 Nov 2026 • Udaipur</span>
+          </div>
+          <span id="wsBannerRoleBadge" class="px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold uppercase bg-gold text-obsidian">ROLE: CREATOR</span>
         </div>
       </div>
 
       <!-- Page 1: App Launcher Hub Section -->
-      <div id="wsAppLauncherSection" class="bento-card p-4 sm:p-6 space-y-4 sm:space-y-5">
+      <div id="wsAppLauncherSection" class="bento-card p-4 sm:p-6 space-y-4">
         <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
-          <h3 class="font-serif text-lg sm:text-xl font-bold text-cream leading-snug">Shaadi Saathi OS App Launcher (18 Modules)</h3>
-          <span class="text-[11px] sm:text-xs text-muted">Tap any module to open its dedicated workspace page</span>
+          <h3 class="font-serif text-lg sm:text-xl font-bold text-cream">Shaadi Saathi OS App Launcher (18 Modules)</h3>
+          <span class="text-[11px] sm:text-xs text-muted">Tap any module to open workspace</span>
         </div>
-        <div id="wsAppIconGrid" class="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-9 gap-2.5 sm:gap-3"></div>
-        <div id="wsCriticalAlertsBox" class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 pt-4 border-t border-borderWarm"></div>
+        <div id="wsAppIconGrid" class="grid grid-cols-3 sm:grid-cols-6 lg:grid-cols-9 gap-2.5"></div>
+        <div id="wsCriticalAlertsBox" class="grid grid-cols-2 lg:grid-cols-4 gap-2.5 pt-3 border-t border-borderWarm"></div>
       </div>
 
       <!-- Page 2: Active Module Dedicated Page Viewport -->
-      <div id="activeModuleViewport" class="hidden space-y-4 sm:space-y-6"></div>
+      <div id="activeModuleViewport" class="hidden space-y-4"></div>
     </div>
 
     <!-- Create New Wedding Modal -->
@@ -111,11 +107,11 @@ export function renderWorkspaceAppLauncher() {
   grid.innerHTML = WORKSPACE_APPS.map(app => {
     const isActive = currentModuleId === app.id;
     const cls = isActive
-      ? 'p-2.5 sm:p-3 min-h-[76px] rounded-xl bg-gold text-obsidian font-bold flex flex-col items-center justify-center gap-1.5 text-center shadow transition cursor-pointer'
-      : 'p-2.5 sm:p-3 min-h-[76px] rounded-xl bg-surface border border-borderWarm text-cream hover:border-gold/50 flex flex-col items-center justify-center gap-1.5 text-center transition cursor-pointer';
+      ? 'p-2.5 rounded-xl bg-gold text-obsidian font-bold flex flex-col items-center justify-center gap-1.5 text-center shadow transition cursor-pointer'
+      : 'p-2.5 rounded-xl bg-surface border border-borderWarm text-cream hover:border-gold/50 flex flex-col items-center justify-center gap-1.5 text-center transition cursor-pointer';
     return `
       <button onclick="openSubPage('${app.id}')" class="${cls}">
-        <span class="text-xl sm:text-2xl leading-none">${app.icon}</span>
+        <span class="text-xl leading-none">${app.icon}</span>
         <span class="text-[11px] leading-tight break-words w-full">${app.label}</span>
       </button>
     `;
