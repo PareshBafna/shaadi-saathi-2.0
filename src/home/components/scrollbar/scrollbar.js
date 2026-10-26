@@ -50,6 +50,20 @@ export async function initScrollbar(slotSelector) {
   const nodes = Array.from(slot.querySelectorAll('.ss-rail-node'));
   const sectionIds = nodes.map(n => n.dataset.section);
 
+  // Add smooth scroll click handling for anchor targets
+  nodes.forEach(node => {
+    node.addEventListener('click', (e) => {
+      const targetId = node.getAttribute('href');
+      if (targetId && targetId.startsWith('#')) {
+        e.preventDefault();
+        const targetEl = document.querySelector(targetId);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth' });
+        }
+      }
+    });
+  });
+
   function updateRail() {
     if (!track || !progressLine || !nodes.length) return;
 

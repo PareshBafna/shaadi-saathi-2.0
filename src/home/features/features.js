@@ -67,7 +67,7 @@ export async function initFeatures(slotSelector) {
 
   for (const slug of HOME_FEATURES_SLUGS) {
     const wrap = document.createElement('div');
-    wrap.id = `feature-deepdive-${slug}`;
+    wrap.id = `feature-${slug}`; // FIXED: changed from feature-deepdive-${slug} to feature-${slug} to match scrollbar node targets
     wrap.dataset.slug = slug;
     wrap.style.minHeight = '300px';
     container.appendChild(wrap);
