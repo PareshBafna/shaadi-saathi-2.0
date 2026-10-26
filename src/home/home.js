@@ -29,13 +29,42 @@ const htmlTemplate = `<div class="hp w-full">
       </div>
       <div class="space-y-2 text-sm">
         <h4 class="font-sans font-bold text-cream">Switch Role Portal</h4>
-        <button onclick="switchRootMode('creator')" class="block text-gold font-bold hover:underline">👑 Open Planner OS (All Weddings by Role)</button>
-        <button onclick="switchRootMode('host')" class="block text-muted hover:text-gold">🏠 Open Family Host Portal</button>
-        <button onclick="switchRootMode('guest')" class="block text-muted hover:text-gold">🎟️ Open Private Guest Pass</button>
+        <button onclick="switchRootMode('creator')" class="block text-gold font-bold hover:underline cursor-pointer">👑 Open Planner OS (All Weddings by Role)</button>
+        <button onclick="switchRootMode('host')" class="block text-muted hover:text-gold cursor-pointer">🏠 Open Family Host Portal</button>
+        <button onclick="switchRootMode('guest')" class="block text-muted hover:text-gold cursor-pointer">🎟️ Open Private Guest Pass</button>
       </div>
     </div>
   </footer>
 </div>`;
+
+// Global click delegation so Explore Features and anchor scroll buttons work on 1st click
+if (typeof window !== 'undefined' && !window.__ssExploreBound) {
+  window.__ssExploreBound = true;
+  document.addEventListener('click', (e) => {
+    const targetBtn = e.target.closest('a[href^="#"], button, .btn, [data-scroll]');
+    if (!targetBtn) return;
+
+    const href = targetBtn.getAttribute('href');
+    const text = (targetBtn.textContent || '').trim().toLowerCase();
+
+    if (href && href.startsWith('#') && href.length > 1) {
+      const targetEl = document.querySelector(href);
+      if (targetEl) {
+        e.preventDefault();
+        targetEl.scrollIntoView({ behavior: 'smooth' });
+        return;
+      }
+    }
+
+    if (text.includes('explore features')) {
+      e.preventDefault();
+      const featuresEl = document.querySelector('#home-features-slot') || document.querySelector('#grouped-features') || document.querySelector('#all-features-deepdives');
+      if (featuresEl) {
+        featuresEl.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  });
+}
 
 export async function initHomePage(rootSelector = '#root-home') {
   const rootEl = document.querySelector(rootSelector);
