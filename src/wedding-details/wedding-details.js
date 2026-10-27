@@ -1,6 +1,7 @@
 import { activeWeddingId, setCurrentModuleId } from '../weddings/data/weddings-store.js';
 import { buildModuleHeaderHTML } from '../weddings/components/module-header/module-header.js';
 import { navigateTo } from '../../global/core/router.js';
+import { loadCss } from '../../global/core/state.js';
 
 export const COMPONENT_LOADERS = {
   overview: () => import('./components/telemetry/telemetry.js').then(m => m.renderTelemetryModule),
@@ -45,7 +46,7 @@ export function backToLauncherHub(skipPush = false) {
   }
 
   if (!skipPush && !document.getElementById('creator-single-workspace')?.classList.contains('hidden')) {
-    navigateTo('creator', { wedding: activeWeddingId, module: 'hub' });
+    navigateTo('creator', { wedding: activeWeddingId, component: 'hub' });
   }
   window.scrollTo({ top: 0, behavior: 'instant' });
 }
@@ -55,6 +56,8 @@ export async function openSubPage(componentId, skipPush = false) {
     backToLauncherHub(skipPush);
     return;
   }
+  
+  loadCss('src/wedding-details/wedding-details.css');
   setCurrentModuleId(componentId);
 
   const launcherSection = document.getElementById('wsAppLauncherSection');
@@ -67,7 +70,7 @@ export async function openSubPage(componentId, skipPush = false) {
   viewport.classList.remove('hidden');
 
   if (!skipPush && !document.getElementById('creator-single-workspace')?.classList.contains('hidden')) {
-    navigateTo('creator', { wedding: activeWeddingId, module: componentId });
+    navigateTo('creator', { wedding: activeWeddingId, component: componentId });
   }
 
   const backBarHTML = `
