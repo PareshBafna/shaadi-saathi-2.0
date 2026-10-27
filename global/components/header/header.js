@@ -3,13 +3,15 @@ export async function initHeader(slotSelector) {
   if (!slot) return;
 
   slot.innerHTML = `
-    <header class="fixed top-0 left-0 right-0 z-50 bg-obsidian/95 backdrop-blur-md border-b border-borderWarm py-3">
-      <div class="hp-wrap flex items-center justify-between px-4 sm:px-6">
-        <div class="flex items-center gap-2.5">
-          <span class="w-8 h-8 rounded-xl bg-gold text-obsidian font-serif font-bold flex items-center justify-center text-sm shadow">SS</span>
+    <header class="sticky top-0 z-40 bg-obsidian/90 backdrop-blur-xl border-b border-borderWarm w-full px-4 sm:px-8 lg:px-14 py-3.5">
+      <div class="w-full flex items-center">
+        <div onclick="switchRootMode('home')" class="flex items-center gap-3 cursor-pointer" role="link" tabindex="0" aria-label="Shaadi Saathi home">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-gold to-amber-700 p-[1.5px] shrink-0">
+            <div class="w-full h-full bg-obsidian rounded-[10px] flex items-center justify-center font-serif font-bold text-lg gold-text">SS</div>
+          </div>
           <div>
-            <span class="font-serif italic text-lg sm:text-xl font-bold text-cream block leading-none">Shaadi Saathi</span>
-            <span class="text-[10px] text-muted tracking-wide uppercase">Planning &amp; Hospitality OS</span>
+            <span class="font-serif italic text-2xl font-bold gold-text block leading-none">Shaadi Saathi</span>
+            <span class="text-xs text-muted">Complete Wedding Hospitality &amp; Planning OS</span>
           </div>
         </div>
       </div>
