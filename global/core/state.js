@@ -34,7 +34,7 @@ window.switchRootMode = async function(mode, skipPush = false) {
   if (mode === 'home') {
     await initHomePage('#root-home');
   } else if (mode === 'creator') {
-    loadCss('src/weddings/weddings.css');
+    loadCss('src/wedding-details/wedding-details.css');
     await initWeddingsView('#root-creator');
     if (!skipPush) {
       backToAllWeddings(true);
@@ -48,11 +48,11 @@ window.switchRootMode = async function(mode, skipPush = false) {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 };
 
-window.openWorkspaceDirect = async function(moduleId) {
-  const mod = moduleId || 'overview';
+window.openWorkspaceDirect = async function(componentId) {
+  const comp = componentId || 'overview';
   await window.switchRootMode('creator', true);
-  navigateTo('creator', { wedding: 'w1', module: mod });
-  openWeddingWorkspace('w1', mod, true);
+  navigateTo('creator', { wedding: 'w1', component: comp });
+  openWeddingWorkspace('w1', comp, true);
 };
 
 window.showToast = function(msg) {
@@ -65,13 +65,13 @@ window.showToast = function(msg) {
 };
 
 async function handleRouting() {
-  const { mode, wedding, module } = parseHashRoute();
+  const { mode, wedding, component } = parseHashRoute();
 
   await window.switchRootMode(mode, true);
 
   if (mode === 'creator') {
     if (wedding) {
-      openWeddingWorkspace(wedding, module, true);
+      openWeddingWorkspace(wedding, component, true);
     } else {
       backToAllWeddings(true);
     }

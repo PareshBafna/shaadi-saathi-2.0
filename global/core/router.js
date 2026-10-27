@@ -30,7 +30,7 @@ export function parseHashRoute() {
     route: route || '#home',
     mode,
     wedding: params.get('id') || params.get('wedding') || null,
-    module: params.get('module') || 'hub'
+    component: params.get('component') || params.get('module') || 'hub'
   };
 }
 
@@ -42,8 +42,8 @@ export function navigateTo(mode, extraState = {}, replace = false) {
   let targetHash = ROUTE_HASHES[mode] || '#home';
 
   if (mode === 'creator' && extraState.wedding) {
-    const mod = extraState.module || 'hub';
-    targetHash = `#wedding-details?id=${encodeURIComponent(extraState.wedding)}&module=${encodeURIComponent(mod)}`;
+    const comp = extraState.component || extraState.module || 'hub';
+    targetHash = `#wedding-details?id=${encodeURIComponent(extraState.wedding)}&component=${encodeURIComponent(comp)}`;
   }
 
   if (window.location.hash !== targetHash) {
@@ -72,7 +72,7 @@ export function navigateTo(mode, extraState = {}, replace = false) {
 
       const routeInfo = parseHashRoute();
       if (routeInfo.wedding && typeof window.openWeddingWorkspace === 'function') {
-        window.openWeddingWorkspace(routeInfo.wedding, routeInfo.module, true);
+        window.openWeddingWorkspace(routeInfo.wedding, routeInfo.component, true);
       }
     } else {
       if (singleWorkspace) singleWorkspace.classList.add('hidden');
