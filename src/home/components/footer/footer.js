@@ -1,0 +1,27 @@
+export async function initFooter(slotSelector) {
+  const slot = document.querySelector(slotSelector);
+  if (!slot) return;
+
+  slot.innerHTML = `
+    <footer class="border-t border-borderWarm py-12 bg-obsidian mt-12">
+      <div class="hp-wrap grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <span class="font-serif italic text-2xl font-bold text-gold">Shaadi Saathi</span>
+          <p class="mt-2 text-sm text-muted">Complete Wedding Hospitality &amp; Planning OS.</p>
+        </div>
+        <div class="space-y-2 text-sm">
+          <h4 class="font-sans font-bold text-cream">Explore</h4>
+          <a href="#all-features-deepdives" class="block text-muted hover:text-gold">All Features</a>
+          <a href="#pricing" class="block text-muted hover:text-gold">Pricing &amp; Add-Ons</a>
+          <a href="#faq" class="block text-muted hover:text-gold">FAQ</a>
+        </div>
+        <div class="space-y-2 text-sm">
+          <h4 class="font-sans font-bold text-cream">Switch Role Portal</h4>
+          <button onclick="switchRootMode('creator')" class="block text-gold font-bold hover:underline cursor-pointer">👑 Open Planner OS (All Weddings by Role)</button>
+          <button onclick="switchRootMode('host')" class="block text-muted hover:text-gold cursor-pointer">🏠 Open Family Host Portal</button>
+          <button onclick="switchRootMode('guest')" class="block text-muted hover:text-gold cursor-pointer">🎟️ Open Private Guest Pass</button>
+        </div>
+      </div>
+    </footer>
+  `;
+}

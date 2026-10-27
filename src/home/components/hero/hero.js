@@ -3,7 +3,7 @@ export async function initHero(slotSelector) {
   if (!slot) return;
 
   slot.innerHTML = `
-    <section class="hp-hero" id="top">
+    <section class="hp-hero mt-16 sm:mt-20 pt-6" id="top">
       <div class="hp-wrap hp-hero-grid">
         <div>
           <span class="hp-eyebrow">
