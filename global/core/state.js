@@ -1,6 +1,8 @@
 import { initHomePage } from '../../src/home/home.js';
 import { initScrollbar } from '../../src/home/components/scrollbar/scrollbar.js';
 import { initWeddingsView, openWeddingWorkspace, backToAllWeddings } from '../../src/weddings/weddings.js';
+import { initHeader } from '../components/header/header.js';
+import { initFooter } from '../components/footer/footer.js';
 import { rootUrl, parseHashRoute, navigateTo } from './router.js';
 
 export function loadCss(href) {
@@ -88,7 +90,11 @@ export async function initAllModules() {
   loadCss('global/components/navigation/navigation.css');
 
   const navSlot = document.getElementById('home-navigation-slot');
-  if (navSlot) navSlot.innerHTML = await (await fetch(rootUrl('global/components/navigation/navigation.html'))).text();
+  if (navSlot) {
+    try {
+      navSlot.innerHTML = await (await fetch(rootUrl('global/components/navigation/navigation.html'))).text();
+    } catch (e) {}
+  }
 
   if (mode === 'home') {
     loadCss('src/home/home.css');
@@ -101,12 +107,9 @@ export async function initAllModules() {
     loadCss('src/home/components/addons/addons.css');
     loadCss('src/home/components/faq/faq.css');
 
-    const headerSlot = document.getElementById('home-header-slot');
-    if (headerSlot) headerSlot.innerHTML = await (await fetch(rootUrl('global/components/header/header.html'))).text();
+    await initHeader('#home-header-slot');
     await initScrollbar('#home-scrollbar-slot');
-
-    const footerSlot = document.getElementById('home-footer-slot');
-    if (footerSlot) footerSlot.innerHTML = await (await fetch(rootUrl('global/components/footer/footer.html'))).text();
+    await initFooter('#home-footer-slot');
   }
 
   await handleRouting();

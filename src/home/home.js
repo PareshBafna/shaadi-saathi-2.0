@@ -1,5 +1,5 @@
-import { initHeader } from './components/header/header.js';
-import { initFooter } from './components/footer/footer.js';
+import { initHeader } from '../../global/components/header/header.js';
+import { initFooter } from '../../global/components/footer/footer.js';
 import { initHero } from './components/hero/hero.js';
 import { initComparison } from './components/comparison/comparison.js';
 import * as suitesMod from './components/suites/suites.js';
@@ -8,7 +8,7 @@ import { initPricing } from './components/pricing/pricing.js';
 import { initAddons } from './components/addons/addons.js';
 import { initFaq } from './components/faq/faq.js';
 
-const htmlTemplate = `<div class="hp w-full pt-16 sm:pt-20">
+const htmlTemplate = `<div class="hp w-full">
   <div id="home-header-slot"></div>
   <div id="home-hero-slot"></div>
   <div id="home-comparison-slot"></div>
