@@ -20,6 +20,7 @@ html, body {
   scroll-behavior: smooth;
 }
 body {
+  padding-top: 70px;
   padding-bottom: calc(104px + var(--safe-bottom));
 }
 .no-scrollbar::-webkit-scrollbar { display: none; }
