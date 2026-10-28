@@ -34,7 +34,6 @@ window.switchRootMode = async function(mode, skipPush = false) {
   if (mode === 'home') {
     await initHomePage('#root-home');
   } else if (mode === 'creator') {
-    loadCss('src/wedding-details/wedding-details.css');
     await initWeddingsView('#root-creator');
     if (!skipPush) {
       backToAllWeddings(true);
@@ -96,6 +95,9 @@ export async function initAllModules() {
     } catch (e) {}
   }
 
+  await initHeader('#home-header-slot');
+  await initFooter('#home-footer-slot');
+
   if (mode === 'home') {
     loadCss('src/home/home.css');
     loadCss('src/home/components/scrollbar/scrollbar.css');
@@ -107,9 +109,7 @@ export async function initAllModules() {
     loadCss('src/home/components/addons/addons.css');
     loadCss('src/home/components/faq/faq.css');
 
-    await initHeader('#home-header-slot');
     await initScrollbar('#home-scrollbar-slot');
-    await initFooter('#home-footer-slot');
   }
 
   await handleRouting();
